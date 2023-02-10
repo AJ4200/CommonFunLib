@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch CommonFunctions",
+            "request": "launch",
+            "mainClass": "CommonFunctions",
+            "projectName": "CommonFunLib_911c22ba"
+        },
+        {
+            "name": "Launch Chrome",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${Register.js}"
+        }
+    ]
+}
