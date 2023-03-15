@@ -86,4 +86,21 @@ public class Generator {
   public ArrayList<String> getLastNames() {
     return new ArrayList<String>(lastNames);
   }
+
+  public String genPassword(int length)
+  {
+    String pass = "";
+    char nums[] = {'1','2','3'};
+    String alphs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char syms[] = {'!','@'};
+char nNum;
+
+for (int index = 0; index < length; index++) {
+  nNum =  nums[generateRandomNumber(0, nums.length)];
+pass += nNum;
+
+}
+
+    return pass;
+  }
 }
