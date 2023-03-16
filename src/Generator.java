@@ -22,6 +22,7 @@ public class Generator {
   private Random rand;
 
   public Generator() {
+   
     rand = new Random();
     firstNames = new ArrayList<String>();
     lastNames = new ArrayList<String>();
@@ -87,20 +88,32 @@ public class Generator {
     return new ArrayList<String>(lastNames);
   }
 
-  public String genPassword(int length)
-  {
-    String pass = "";
-    char nums[] = {'1','2','3'};
-    String alphs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char syms[] = {'!','@'};
-char nNum;
+  /**
 
-for (int index = 0; index < length; index++) {
-  nNum =  nums[generateRandomNumber(0, nums.length)];
-pass += nNum;
+This method generates a random password with the given length.
 
+The password contains letters, numbers, and special characters.
+
+@param length The length of the password to be generated
+
+@return A string that represents the generated password
+/* */
+public String generatePassword(int length) {
+// List of characters to be used in the password
+String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;,.?@!#$%&()-_=+[]{}<>";
+
+char[] all = characters.toCharArray();
+
+// Generate random characters from the list and concatenate them to form the password
+String password = "";
+for (int i = 0; i < length; i++) {
+char randomChar = all[generateRandomNumber(0, all.length)];
+password += randomChar;
 }
 
-    return pass;
-  }
+return password;
 }
+
+  
+}
+
