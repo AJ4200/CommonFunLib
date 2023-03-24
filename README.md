@@ -24,7 +24,7 @@ The Generator class provides functions for generating random numbers and names. 
 
 ## Getting started
 
-To use these classes in your Java project, simply include the source files in your project and `import` the classes as needed.
+To use these classes in your Java project, simply include the `jar` file in your project and `import` the classes as needed.
 
 - `import` CommonFunctions;
 - `import` Generator;
