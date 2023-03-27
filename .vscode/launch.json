@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CommonFunLib",
+            "request": "launch",
+            "mainClass": "CommonFunLib",
+            "projectName": "CommonFunLib_4b007a5a"
+        },
+        {
+            "type": "java",
             "name": "main",
             "request": "launch",
             "mainClass": "main",
