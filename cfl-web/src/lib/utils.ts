@@ -1,3 +1,9 @@
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 // Function to lighten a color
 export const lighten = (color: string, amount: number): string => {
   const colorCode = parseInt(color.replace("#", ""), 16);
