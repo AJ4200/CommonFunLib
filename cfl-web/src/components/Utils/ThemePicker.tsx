@@ -1,85 +1,80 @@
-import { getTheme } from "@/lib/themes";
-import { lighten } from "@/utils/utils";
+// ThemePickerModal.tsx
 import React, { useState, useEffect } from "react";
+import ThemeButton from "./ThemeButton";
+import { applyTheme } from "./ThemeManager";
+import { getTheme } from "@/lib/themes";
+import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
 
-const ThemePickerModal = () => {
-  const [open, setOpen] = useState(false);
+const ThemePickerModal = ({ initialOpen = false }) => {
+  const [open, setOpen] = useState(initialOpen);
+  const [pattern, setPattern] = useState("");
+  const [themes, setThemes] = useState<Theme[]>([]);
 
   useEffect(() => {
-    const storedTheme = sessionStorage.getItem("THEME");
-    if (!storedTheme) {
-      setOpen(true);
-    }
+    setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
   }, []);
 
   const handleThemeChange = (themeName: string) => {
     const selectedTheme = getTheme(themeName);
-    sessionStorage.setItem("THEME", themeName);
     applyTheme(selectedTheme);
     setOpen(false);
   };
 
-  const applyTheme = (theme: any) => {
-    // Set CSS variables for each theme color
-    document.documentElement.style.setProperty(
-      "--primary-color",
-      theme.primaryColor
-    );
-    document.documentElement.style.setProperty(
-      "--secondary-color",
-      theme.secondaryColor
-    );
-    document.documentElement.style.setProperty(
-      "--foreground-color",
-      theme.foreground
-    );
-    document.documentElement.style.setProperty(
-      "--background-color",
-      theme.background
-    );
+  const handleThemeHover = (themePattern: string) => {
+    setPattern(themePattern);
   };
 
   return (
     <div
-      className={`fixed top-0 center-0 w-full h-full backdrop-blur-lg bg-opacity-50 flex items-center justify-center ${
+      className={`fixed w-full h-full backdrop-blur-lg flex items-center justify-center flex-col bg-no-repeat bg-cover ${
         open ? "" : "hidden"
       }`}
+      style={{
+        background: themes.find((theme) => theme.background_pattern === pattern)
+          ?.background,
+        backgroundImage: pattern,
+      }}
     >
-      <div className="bg-teal-100 rounded-lg p-8 border shadow-2xl">
-        <h2 className="text-2xl font-bold mb-4">Choose a Theme</h2>
-        <button
-          onClick={() => handleThemeChange("Classic")}
-          className="block w-full py-2 px-4 mb-2 text-center border rounded-lg border-gray-400"
+      <h1
+        className="text-6xl md:text-8xl font-bold m-5"
+        style={{
+          color: themes.find((theme) => theme.background_pattern === pattern)
+            ?.foreground,
+        }}
+      >
+        Customize your Experience
+      </h1>
+      <div
+        className="backdrop-blur-md rounded-lg p-8 border-[2px] shadow-2xl md:w-1/2"
+        style={{
+          borderColor: themes.find(
+            (theme) => theme.background_pattern === pattern
+          )?.secondaryColor,
+        }}
+      >
+        <h2
+          className="text-3xl font-bold mb-4 flex m-4 items-center space-x-2"
           style={{
-            color: getTheme("Classic").primaryColor,
-            background: getTheme("Classic").background_pattern,
+            color: themes.find((theme) => theme.background_pattern === pattern)
+              ?.foreground,
           }}
         >
-          <RiPaletteFill className="inline-block mr-2" /> Classic
-        </button>
-        <button
-          onClick={() => handleThemeChange("Vanilla")}
-          className="block w-full py-2 px-4 mb-2 text-center border border-gray-400 rounded-lg"
-          style={{ color: getTheme("Vanilla").primaryColor }}
-        >
-          <RiPaletteFill className="inline-block mr-2" /> Vanilla
-        </button>
-        <button
-          onClick={() => handleThemeChange("Cherry")}
-          className="block w-full py-2 px-4 mb-2 text-center border border-gray-400 rounded-lg"
-          style={{ color: getTheme("Cherry").primaryColor }}
-        >
-          <RiPaletteFill className="inline-block mr-2" /> Cherry
-        </button>
-        <button
-          onClick={() => handleThemeChange("Blokz")}
-          className="block w-full py-2 px-4 mb-2 text-center border border-gray-400 rounded-lg"
-          style={{ color: getTheme("Blokz").primaryColor }}
-        >
-          <RiPaletteFill className="inline-block mr-2" /> Blokz
-        </button>
+          <RiPaletteFill className="text-4xl" /> Choose a Theme
+        </h2>
+        {themes.map((theme) => (
+          <ThemeButton
+            key={theme.name}
+            theme={theme}
+            onClick={() => handleThemeChange(theme.name)}
+            onMouseEnter={() => handleThemeHover(theme.background_pattern)}
+          />
+        ))}
       </div>
+      <span>
+        You can still change your theme later by clicking this icon on the
+        bottom right of your screen
+      </span>
     </div>
   );
 };

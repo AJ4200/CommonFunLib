@@ -1,11 +1,10 @@
 import React from'react';
  
 interface HeaderProps{
-prop: string
 }
  
-const Header: React.FC<HeaderProps> = ({prop}) => 
+const Header: React.FC<HeaderProps> = ({...props}) => 
 {
-return (<header>Header</header>);
+return (<header className='z-9999'{...props}>Header</header>);
 }
 export default Header;
