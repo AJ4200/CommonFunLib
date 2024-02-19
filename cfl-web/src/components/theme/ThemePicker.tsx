@@ -1,29 +1,43 @@
-// ThemePickerModal.tsx
+// ThemePicker.tsx
 import React, { useState, useEffect } from "react";
 import ThemeButton from "./ThemeButton";
-import { applyTheme } from "./ThemeManager";
+import { applyTheme, storeTheme } from "./ThemeManager";
 import { getTheme } from "@/lib/themes";
 import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
+import { useRouter } from "next/router";
 
-const ThemePickerModal = ({ initialOpen = false }) => {
+interface ThemeProps {
+  initialOpen: boolean;
+}
+
+const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
   const [open, setOpen] = useState(initialOpen);
   const [pattern, setPattern] = useState("");
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [themes, setThemes ] = useState<Theme[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
   }, []);
 
+  const getCurrentTheme = () => {
+    return themes.find((theme) => theme.background_pattern === pattern);
+  };
+
   const handleThemeChange = (themeName: string) => {
     const selectedTheme = getTheme(themeName);
     applyTheme(selectedTheme);
     setOpen(false);
+    storeTheme(selectedTheme.name);
+    router.push("/homepage");
   };
 
   const handleThemeHover = (themePattern: string) => {
     setPattern(themePattern);
   };
+
+  const currentTheme = getCurrentTheme();
 
   return (
     <div
@@ -31,16 +45,14 @@ const ThemePickerModal = ({ initialOpen = false }) => {
         open ? "" : "hidden"
       }`}
       style={{
-        background: themes.find((theme) => theme.background_pattern === pattern)
-          ?.background,
+        background: currentTheme?.background,
         backgroundImage: pattern,
       }}
     >
       <h1
         className="text-6xl md:text-8xl font-bold m-5"
         style={{
-          color: themes.find((theme) => theme.background_pattern === pattern)
-            ?.foreground,
+          color: currentTheme?.foreground,
         }}
       >
         Customize your Experience
@@ -48,16 +60,13 @@ const ThemePickerModal = ({ initialOpen = false }) => {
       <div
         className="backdrop-blur-md rounded-lg p-8 border-[2px] shadow-2xl md:w-1/2"
         style={{
-          borderColor: themes.find(
-            (theme) => theme.background_pattern === pattern
-          )?.secondaryColor,
+          borderColor: currentTheme?.secondaryColor,
         }}
       >
         <h2
           className="text-3xl font-bold mb-4 flex m-4 items-center space-x-2"
           style={{
-            color: themes.find((theme) => theme.background_pattern === pattern)
-              ?.foreground,
+            color: currentTheme?.foreground,
           }}
         >
           <RiPaletteFill className="text-4xl" /> Choose a Theme
@@ -71,12 +80,15 @@ const ThemePickerModal = ({ initialOpen = false }) => {
           />
         ))}
       </div>
-      <span>
-        You can still change your theme later by clicking this icon on the
-        bottom right of your screen
-      </span>
+
+      <button
+        className="absolute top-5 right-5 bg-red-500 text-white rounded-full p-2 shadow-lg"
+        onClick={() => setOpen(false)}
+      >
+        Close
+      </button>
     </div>
   );
 };
 
-export default ThemePickerModal;
+export default ThemePicker;

@@ -1,11 +1,9 @@
-import React, { ReactNode } from'react';
- 
-interface ComponentProps{
-    children: ReactNode
+import React from "react";
+
+interface ComponentProps {
 }
- 
-const Component: React.FC<ComponentProps> = ({children, ...props}) => 
-{
-    return (<main {...props}>{children}</main>);
-}
+
+const Component: React.FC<ComponentProps> = ({ ...props }) => {
+  return <section {...props}></section>;
+};
 export default Component;

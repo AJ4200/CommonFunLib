@@ -1,32 +1,25 @@
 // Home.tsx
 import React, { useState, useEffect } from "react";
-import ThemePickerModal from "@/components/Utils/ThemePicker";
-import { getStoredTheme } from "@/components/Utils/ThemeManager";
+import ThemePicker from "@/components/theme/ThemePicker";
+import { getStoredTheme } from "@/components/theme/ThemeManager";
 import { RiPaletteFill } from "react-icons/ri";
+import { useRouter } from "next/router";
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const storedTheme = getStoredTheme();
-    if (!storedTheme) {
-      setShowModal(true);
+    if (storedTheme) {
+      router.push("/homepage");
     }
   }, []);
 
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
 
   return (
     <>
-      <button
-        className="fixed bottom-5 right-5 bg-blue-500 text-white rounded-full p-3 shadow-lg"
-        onClick={handleOpenModal}
-      >
-        <RiPaletteFill className="text-2xl" />
-      </button>
-      {showModal && <ThemePickerModal />}
+      <ThemePicker initialOpen={showModal} />
     </>
   );
 };
