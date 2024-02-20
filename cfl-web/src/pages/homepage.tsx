@@ -1,3 +1,4 @@
+import FloatingThemeToggle from "@/components/theme/FloatingThemeToggle";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
 import Main from "@/layout/Main";
@@ -9,8 +10,11 @@ const Homepage: React.FC<HomepageProps> = ({ ...prop }) => {
   return (
     <main>
       <Header />
-      <Main></Main>
+      <Main>
+
+      </Main>
       <Footer />
+      <FloatingThemeToggle/>
     </main>
   );
 };

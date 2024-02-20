@@ -14,7 +14,7 @@ interface ThemeProps {
 const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
   const [open, setOpen] = useState(initialOpen);
   const [pattern, setPattern] = useState("");
-  const [themes, setThemes ] = useState<Theme[]>([]);
+  const [themes, setThemes] = useState<Theme[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -80,13 +80,6 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
           />
         ))}
       </div>
-
-      <button
-        className="absolute top-5 right-5 bg-red-500 text-white rounded-full p-2 shadow-lg"
-        onClick={() => setOpen(false)}
-      >
-        Close
-      </button>
     </div>
   );
 };
