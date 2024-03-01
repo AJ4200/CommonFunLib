@@ -24,7 +24,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
       }}
       onMouseEnter={onMouseEnter}
     >
- {theme.name}
+      {theme.name}
     </Button>
   );
 };

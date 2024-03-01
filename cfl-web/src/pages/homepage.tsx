@@ -6,15 +6,13 @@ import React from "react";
 
 interface HomepageProps {}
 
-const Homepage: React.FC<HomepageProps> = ({ ...prop }) => {
+const Homepage: React.FC<HomepageProps> = () => {
   return (
     <main>
       <Header />
-      <Main>
-
-      </Main>
+      <Main></Main>
       <Footer />
-      <FloatingThemeToggle/>
+      <FloatingThemeToggle />
     </main>
   );
 };

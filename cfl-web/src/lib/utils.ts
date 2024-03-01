@@ -16,6 +16,6 @@ export const lighten = (color: string, amount: number): string => {
   return "#" + newColor.padStart(6, "0");
 };
 
-export const getCurrentTheme = () => { 
+export const getCurrentTheme = () => {
   return getTheme(getStoredTheme.toString());
-}
+};

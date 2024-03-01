@@ -27,6 +27,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const [themes, setThemes] = useState<Theme[]>([]);
   const [loading, setLoading] = useState(false);
   const [themeApplied, setThemeApplied] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<Theme>();
 
   useEffect(() => {
     setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
@@ -39,6 +40,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const handleThemeChange = (themeName: string) => {
     setLoading(true);
     const selectedTheme = getTheme(themeName);
+    setCurrentTheme(selectedTheme);
     applyTheme(selectedTheme);
     storeTheme(selectedTheme.name);
 
@@ -55,9 +57,11 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
           <RiPaletteFill
             className="rounded-full p-4 w-14 h-14 transition-transform active:scale-75 "
             style={{
-              color: getCurrentTheme().foreground,
-              backgroundColor: getCurrentTheme().background,
-              backgroundImage: getCurrentTheme().background_pattern,
+              color: currentTheme?.foreground,
+              backgroundColor: currentTheme?.background,
+              backgroundImage: currentTheme?.background_pattern,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           />
         </PopoverTrigger>
