@@ -56,7 +56,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   };
 
   return (
-    <div {...props} className="fixed right-3 bottom-2">
+    <div {...props} className="">
       <Drawer>
         <DrawerTrigger>
           <RiPaletteFill

@@ -2,7 +2,6 @@ import React from "react";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
 import Main from "@/layout/Main";
-import FloatingThemeToggle from "@/components/theme/FloatingThemeToggle";
 import { getCurrentTheme } from "@/lib/utils";
 import Theme from "@/models/Theme";
 import { useEffect, useState } from "react";
@@ -22,12 +21,11 @@ const Homepage: React.FC<HomepageProps> = () => {
         backgroundColor: currentTheme?.background,
         backgroundImage: "var(--background-image)",
       }}
-      className="bg-[]"
+      className="flex justify-center flex-col"
     >
       <Header />
       <Main>Main</Main>
       <Footer />
-      <FloatingThemeToggle />
     </main>
   );
 };

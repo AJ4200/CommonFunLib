@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 h-16 rounded-xl bg-[var(--primary)] border-[var(--secondary)] border-2 shadow-2xl"
+      className="top-0 h-16 rounded-xl bg-[var(--primary)] border-[var(--secondary)] border-2 shadow-2xl w-full"
       style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0" }}
       {...props}
     >

@@ -7,19 +7,10 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({ children }) => {
   return (
     <section
-      className="flex flex-col justify-center items-center"
-      style={{ minHeight: "calc(100vh - 5rem)", position: "relative" }} // Adjusted for header and footer height
+      className="w-full m-2 h-full rounded-xl backdrop-blur-md border-[var(--secondary)] border-2 shadow-2xl "
+      style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0.5rem" }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        {children}
-      </div>
+      <div>{children}</div>
     </section>
   );
 };
