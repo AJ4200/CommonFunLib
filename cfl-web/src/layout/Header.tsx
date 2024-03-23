@@ -14,14 +14,11 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
 
   return (
     <header
-      style={{
-        backgroundColor: currentTheme?.background,
-        backgroundImage: currentTheme?.background_pattern,
-      }}
-      className="w-full top-0 m-2 h-16 rounded-lg"
+      className="fixed top-0 left-0 right-0 h-16 rounded-xl bg-[var(--primary)] border-[var(--secondary)] border-2 shadow-2xl"
+      style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0" }}
       {...props}
     >
-      <h1 className="h-[3.5rem] flex text-4xl font-bold items-center">
+      <h1 className="flex text-4xl font-bold items-center">
         <Logo />
         CommonFunLib
       </h1>

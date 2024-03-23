@@ -11,12 +11,16 @@ import {
   CardFooter,
 } from "../ui/card";
 import ThemeButton from "./ThemeButton";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { getTheme } from "@/lib/themes";
 import { applyTheme, storeTheme } from "./ThemeManager";
-import { PopoverClose } from "@radix-ui/react-popover";
-import { Loader } from "lucide-react";
 import { BiLoaderCircle } from "react-icons/bi";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
 
@@ -31,6 +35,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
 
   useEffect(() => {
     setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
+    setCurrentTheme(getCurrentTheme);
   }, []);
 
   const handleThemeHover = (themePattern: string) => {
@@ -47,15 +52,15 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
     setTimeout(() => {
       setLoading(false);
       setThemeApplied(true);
-    }, 5000); // Set loading to false after 5 seconds
+    }, 5000);
   };
 
   return (
-    <div {...props} className="fixed right-2 bottom-2">
-      <Popover>
-        <PopoverTrigger>
+    <div {...props} className="fixed right-3 bottom-2">
+      <Drawer>
+        <DrawerTrigger>
           <RiPaletteFill
-            className="rounded-full p-4 w-14 h-14 transition-transform active:scale-75 "
+            className="rounded-full p-4 w-12 h-12 transition-transform active:scale-75 border border-[var(--secondary)]"
             style={{
               color: currentTheme?.foreground,
               backgroundColor: currentTheme?.background,
@@ -64,10 +69,12 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
               backgroundSize: "cover",
             }}
           />
-        </PopoverTrigger>
-        <PopoverContent className="backdrop-blur-md shadow-2xl">
+        </DrawerTrigger>
+
+        <DrawerContent className="backdrop-blur-md shadow-2xl border-[var(--secondary)]">
+          <div className="m-2" />
           <Card
-            className="shadow-inner"
+            className="shadow-inner border-[var(--secondary)] m-4"
             style={{
               background: getCurrentTheme()?.background,
               backgroundImage: pattern,
@@ -102,14 +109,14 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
               ) : themeApplied ? (
                 <p className="font-semibold text-sm">
                   Theme applied. Click{" "}
-                  <PopoverClose className="underline">HERE!</PopoverClose> to
+                  <DrawerClose className="underline">HERE!</DrawerClose> to
                   close theme picker
                 </p>
               ) : null}
             </CardFooter>
           </Card>
-        </PopoverContent>
-      </Popover>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
