@@ -5,6 +5,7 @@ import Main from "@/layout/Main";
 import { getCurrentTheme } from "@/lib/utils";
 import Theme from "@/models/Theme";
 import { useEffect, useState } from "react";
+import IconNav from "@/layout/IconNav";
 
 interface HomepageProps {}
 
@@ -24,7 +25,14 @@ const Homepage: React.FC<HomepageProps> = () => {
       className="flex justify-center flex-col"
     >
       <Header />
-      <Main>Main</Main>
+      <div
+        className="w-full h-full flex space-x-2"
+        style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0.5rem" }}
+      >
+        <IconNav />
+        <Main>Main</Main>
+      </div>
+
       <Footer />
     </main>
   );
