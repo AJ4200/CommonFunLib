@@ -64,7 +64,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
       >
         <DrawerTrigger>
           <RiPaletteFill
-            className="rounded-xl ml-2 mt-2 p-4 w-12 h-12 transition-transform active:scale-75 border border-[var(--secondary)]"
+            className="rounded-xl ml-1 mt-1 p-2 w-12 h-12 transition-transform active:scale-75 border border-[var(--secondary)]"
             style={{
               color: currentTheme?.foreground,
               backgroundColor: currentTheme?.background,
