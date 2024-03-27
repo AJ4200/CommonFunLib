@@ -18,7 +18,12 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
   const router = useRouter();
 
   useEffect(() => {
-    setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
+    setThemes([
+      getTheme("Classic"),
+      getTheme("Vanilla"),
+      getTheme("Cherry"),
+      getTheme("Emerald"),
+    ]);
   }, []);
 
   const getCurrentTheme = () => {

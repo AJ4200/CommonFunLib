@@ -34,7 +34,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const [currentTheme, setCurrentTheme] = useState<Theme>();
 
   useEffect(() => {
-    setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry")]);
+    setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry"), getTheme("Emerald")]);
     setCurrentTheme(getCurrentTheme);
   }, []);
 
