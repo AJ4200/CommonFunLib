@@ -74,6 +74,7 @@
     @apply bg-background text-foreground;
     height: 100vh;
     width: 100vw;
+  
   }
 }
 main {
@@ -81,5 +82,8 @@ main {
   width: 100vw;
 }
 .logoshadow {
-  filter: drop-shadow(2px 2px 2px var(--primary));
+  filter: drop-shadow(4px 4px var(--primary));
+}
+.theme-shadow {
+  text-shadow: 4px 3px 1px var(--secondary);
 }

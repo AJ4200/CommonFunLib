@@ -4,19 +4,23 @@ import NavIcon from "@/models/NavIcon";
 const navIcons: NavIcon[] = [
   {
     icon: <FaCog />,
-    label: 'CommonFunctions'
+    label: 'CommonFunctions',
+    content:""
   },
   {
     icon: <FaTools />, 
-    label: 'Generators'
+    label: 'Generators',
+    content:""
   },
   {
     icon: <FaExchangeAlt />,
-    label: "Convertors"
+    label: "Convertors",
+    content:""
   }, 
   {
     icon: <FaLock />,
-    label: "Hashing"
+    label: "Hashing",
+    content:"Hashing"
   }
 ];
 

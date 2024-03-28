@@ -1,5 +1,5 @@
 // Home.tsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ThemePicker from "@/components/theme/ThemePicker";
 import { getStoredTheme } from "@/components/theme/ThemeManager";
 import { useRouter } from "next/router";

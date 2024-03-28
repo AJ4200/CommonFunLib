@@ -4,10 +4,10 @@ import navIcons from "@/lib/navicons";
 import FloatingLabel from "@/components/iconnav/FloatingLabel";
 
 interface IconNavProps {
-  setActiveIconLabel: (label: string) => void;
+  setActiveIconContent: (content: React.ReactNode) => void;
 }
 
-const IconNav: React.FC<IconNavProps> = ({ setActiveIconLabel }) => {
+const IconNav: React.FC<IconNavProps> = ({ setActiveIconContent }) => {
   const [activeIcon, setActiveIcon] = useState<string | null>(null);
   const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
 
@@ -19,9 +19,9 @@ const IconNav: React.FC<IconNavProps> = ({ setActiveIconLabel }) => {
     setHoveredLabel(null);
   };
 
-  const handleClick = (label: string) => {
+  const handleClick = (label: string,content: React.ReactNode) => {
     setActiveIcon(label);
-    setActiveIconLabel(label); // Set active icon label
+    setActiveIconContent(content); // Set active icon content
   };
 
   return (
@@ -34,7 +34,7 @@ const IconNav: React.FC<IconNavProps> = ({ setActiveIconLabel }) => {
           }`}
           onMouseOver={() => handleMouseOver(icon.label)}
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleClick(icon.label)}
+          onClick={() => handleClick(icon.label,icon.content)}
         >
           <span>{icon.icon}</span>
         </div>

@@ -6,15 +6,19 @@ import { getCurrentTheme } from "@/lib/utils";
 import Theme from "@/models/Theme";
 import { useEffect } from "react";
 import IconNav from "@/layout/IconNav";
+import { getTheme } from "@/lib/themes";
+import { applyTheme, getStoredTheme } from "@/components/theme/ThemeManager";
 
 interface HomepageProps {}
 
 const Homepage: React.FC<HomepageProps> = () => {
   const [currentTheme, setCurrentTheme] = useState<Theme>();
-  const [activeIconLabel, setActiveIconLabel] = useState<string | null>(null);
+  const [activeIconContent, setActiveIconContent] =
+    useState<React.ReactNode | null>(null);
 
   useEffect(() => {
-    setCurrentTheme(getCurrentTheme());
+    setCurrentTheme(getTheme(getStoredTheme() as string));
+    applyTheme(getTheme(getStoredTheme() as string))
   }, []);
 
   return (
@@ -30,8 +34,8 @@ const Homepage: React.FC<HomepageProps> = () => {
         className="w-full h-full flex space-x-2"
         style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0.5rem" }}
       >
-        <IconNav setActiveIconLabel={setActiveIconLabel} />
-        <Main>{activeIconLabel ? activeIconLabel : "Main"}</Main>
+        <IconNav setActiveIconContent={setActiveIconContent} />
+        <Main>{activeIconContent ? activeIconContent : "Main"}</Main>
       </div>
       <Footer />
     </main>

@@ -12,7 +12,7 @@ import {
 } from "../ui/card";
 import ThemeButton from "./ThemeButton";
 import { getTheme } from "@/lib/themes";
-import { applyTheme, storeTheme } from "./ThemeManager";
+import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
 import { BiLoaderCircle } from "react-icons/bi";
 import {
   Drawer,
@@ -34,8 +34,13 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const [currentTheme, setCurrentTheme] = useState<Theme>();
 
   useEffect(() => {
-    setThemes([getTheme("Classic"), getTheme("Vanilla"), getTheme("Cherry"), getTheme("Emerald")]);
-    setCurrentTheme(getCurrentTheme);
+    setThemes([
+      getTheme("Classic"),
+      getTheme("Vanilla"),
+      getTheme("Cherry"),
+      getTheme("Emerald"),
+    ]);
+    setCurrentTheme(getTheme(getStoredTheme() as string));
   }, []);
 
   const handleThemeHover = (themePattern: string) => {

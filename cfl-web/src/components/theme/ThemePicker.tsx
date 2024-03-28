@@ -1,7 +1,7 @@
 // ThemePicker.tsx
 import React, { useState, useEffect } from "react";
 import ThemeButton from "./ThemeButton";
-import { applyTheme, storeTheme } from "./ThemeManager";
+import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
 import { getTheme } from "@/lib/themes";
 import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
@@ -26,9 +26,6 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
     ]);
   }, []);
 
-  const getCurrentTheme = () => {
-    return themes.find((theme) => theme.background_pattern === pattern);
-  };
 
   const handleThemeChange = (themeName: string) => {
     const selectedTheme = getTheme(themeName);
@@ -42,7 +39,7 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
     setPattern(themePattern);
   };
 
-  const currentTheme = getCurrentTheme();
+  const currentTheme = getTheme(getStoredTheme() as string);
 
   return (
     <div

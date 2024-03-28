@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
       style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0" }}
       {...props}
     >
-      <h1 className="flex text-4xl font-bold items-center">
+      <h1 className="flex text-4xl font-bold items-center theme-shadow">
         <Logo />
         CommonFunLib
       </h1>
