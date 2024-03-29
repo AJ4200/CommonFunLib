@@ -18,7 +18,13 @@ export const applyTheme = (theme: Theme) => {
 };
 
 export const getStoredTheme = () => {
-  return sessionStorage.getItem("THEME");
+  if (typeof sessionStorage !== "undefined") {
+    const storedTheme: string | null = sessionStorage.getItem("THEME");
+    return storedTheme;
+  } else {
+    // Handle the case where sessionStorage is not available
+    return null;
+  }
 };
 
 export const storeTheme = (themeName: string) => {

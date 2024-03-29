@@ -19,7 +19,7 @@ const IconNav: React.FC<IconNavProps> = ({ setActiveIconContent }) => {
     setHoveredLabel(null);
   };
 
-  const handleClick = (label: string,content: React.ReactNode) => {
+  const handleClick = (label: string, content: React.ReactNode) => {
     setActiveIcon(label);
     setActiveIconContent(content); // Set active icon content
   };
@@ -30,13 +30,15 @@ const IconNav: React.FC<IconNavProps> = ({ setActiveIconContent }) => {
         <div
           key={index}
           className={`text-4xl text-[var(--secondary)] hover:text-[var(--secondary)] hover:bg-[var(--primary)] m-2 p-2 rounded-md ${
-            activeIcon === icon.label ? "bg-[var(--primary)]" : ""
+            activeIcon === icon.label
+              ? "bg-[var(--primary)] border border-[var(--secondary)]"
+              : ""
           }`}
           onMouseOver={() => handleMouseOver(icon.label)}
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleClick(icon.label,icon.content)}
+          onClick={() => handleClick(icon.label, icon.content)}
         >
-          <span>{icon.icon}</span>
+          <span className="icon-shadow">{icon.icon}</span>
         </div>
       ))}
       {hoveredLabel && <FloatingLabel label={hoveredLabel} />}

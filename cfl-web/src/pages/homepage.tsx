@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
 import Main from "@/layout/Main";
-import { getCurrentTheme } from "@/lib/utils";
 import Theme from "@/models/Theme";
 import { useEffect } from "react";
 import IconNav from "@/layout/IconNav";
 import { getTheme } from "@/lib/themes";
 import { applyTheme, getStoredTheme } from "@/components/theme/ThemeManager";
+import MainPage from "@/components/nasec/MainPage";
 
 interface HomepageProps {}
 
@@ -35,7 +35,7 @@ const Homepage: React.FC<HomepageProps> = () => {
         style={{ maxWidth: "calc(100% - 1rem)", margin: "0.5rem auto 0.5rem" }}
       >
         <IconNav setActiveIconContent={setActiveIconContent} />
-        <Main>{activeIconContent ? activeIconContent : "Main"}</Main>
+        <Main>{activeIconContent ? activeIconContent : <MainPage/>}</Main>
       </div>
       <Footer />
     </main>
