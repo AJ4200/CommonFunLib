@@ -25,34 +25,37 @@ const NavSection: React.FC<NavSectionProps> = ({
     setActiveTab(tabIndex);
   };
 
+  const icons = [
+    { icon: <BsInfoCircle />, tabIndex: 0 },
+    { icon: <MdGames />, tabIndex: 1 },
+    { icon: <FaServer />, tabIndex: 2 },
+  ];
+
   return (
-    <div className="border rounded p-4 shadow-md" {...props}>
-      <h2 className="text-xl font-bold mb-2">{heading}</h2>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <div className="flex space-x-4">
-        <BsInfoCircle
-          className={`cursor-pointer ${
-            activeTab === 0 ? "text-blue-500" : "text-gray-500"
-          }`}
-          onClick={() => handleTabClick(0)}
-        />
-        <MdGames
-          className={`cursor-pointer ${
-            activeTab === 1 ? "text-blue-500" : "text-gray-500"
-          }`}
-          onClick={() => handleTabClick(1)}
-        />
-        <FaServer
-          className={`cursor-pointer ${
-            activeTab === 2 ? "text-blue-500" : "text-gray-500"
-          }`}
-          onClick={() => handleTabClick(2)}
-        />
-      </div>
-      <div>
-        {activeTab === 0 && infoContent}
-        {activeTab === 1 && playgroundContent}
-        {activeTab === 2 && apiContent}
+    <div className="h-full" {...props}>
+      <h2 className="text-2xl m-2 theme-shadow font-bold mb-2 text-center">
+        {heading}
+      </h2>
+      <p className=" mb-4 text-center">{description}</p>
+      <div className="border border-[var(--secondary)] rounded-md p-4 shadow-lg flex m-8 flex-row justify-between backdrop-blur-2xl h-[80%]">
+        <div>
+          {activeTab === 0 && infoContent}
+          {activeTab === 1 && playgroundContent}
+          {activeTab === 2 && apiContent}
+        </div>{" "}
+        <div className="flex space-y-4 flex-col justify-evenly">
+          {icons.map(({ icon, tabIndex }) => (
+            <div
+              key={tabIndex}
+              className={`cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 ${
+                activeTab === tabIndex ? "icon-shadow" : "text-[var(--primary)]"
+              }`}
+              onClick={() => handleTabClick(tabIndex)}
+            >
+              {icon}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
