@@ -5,32 +5,54 @@ interface infoContentProps {}
 const infoContent: React.FC<infoContentProps> = ({ ...props }) => {
   return (
     <div {...props}>
-      <ul>
+      <ul className="space-y-2 align-middle text-center">
         <li>
-          <span>isEven</span>: Checks if a number is even.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            isEven
+          </span>
+          : Checks if a number is even.
         </li>
         <li>
-          <span>isOdd</span>: Checks if a number is odd.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            isOdd
+          </span>
+          : Checks if a number is odd.
         </li>
         <li>
-          <span>factorial</span>: Calculates the factorial of a number.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            factorial
+          </span>
+          : Calculates the factorial of a number.
         </li>
         <li>
-          <span>gcd</span>: Calculates the greatest common divisor (GCD) of two
-          numbers.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            gcd
+          </span>
+          : Calculates the greatest common divisor (GCD) of two numbers.
         </li>
         <li>
-          <span>lcm</span>: Calculates the least common multiple (LCM) of two
-          numbers.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            lcm
+          </span>
+          : Calculates the least common multiple (LCM) of two numbers.
         </li>
         <li>
-          <span>isPrime</span>: Checks if a number is prime.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            isPrime
+          </span>
+          : Checks if a number is prime.
         </li>
         <li>
-          <span>swapVariableValue</span>: Swaps the values of two variables.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            swapVariableValue
+          </span>
+          : Swaps the values of two variables.
         </li>
         <li>
-          <span>reverseString</span>: Reverses a string.
+          <span className="border-[var(--secondary)] border p-1 font-semibold rounded bg-white/15 italic">
+            reverseString
+          </span>
+          : Reverses a string.
         </li>
       </ul>
     </div>

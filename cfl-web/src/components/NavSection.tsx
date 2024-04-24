@@ -20,15 +20,17 @@ const NavSection: React.FC<NavSectionProps> = ({
   ...props
 }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [hoveredTab, setHoveredTab] = useState(0);
+  const [showLabel, setShowLabel] = useState(false);
 
   const handleTabClick = (tabIndex: number) => {
     setActiveTab(tabIndex);
   };
 
   const icons = [
-    { icon: <BsInfoCircle />, tabIndex: 0 },
-    { icon: <MdGames />, tabIndex: 1 },
-    { icon: <FaServer />, tabIndex: 2 },
+    { icon: <BsInfoCircle />, tabIndex: 0, label: "Information" },
+    { icon: <MdGames />, tabIndex: 1, label: "Playground" },
+    { icon: <FaServer />, tabIndex: 2, label: "API Route" },
   ];
 
   return (
@@ -43,16 +45,35 @@ const NavSection: React.FC<NavSectionProps> = ({
           {activeTab === 1 && playgroundContent}
           {activeTab === 2 && apiContent}
         </div>{" "}
-        <div className="flex space-y-4 flex-col justify-evenly">
-          {icons.map(({ icon, tabIndex }) => (
+        <div className="flex space-y-4 flex-col ">
+          {icons.map(({ icon, label, tabIndex }) => (
             <div
               key={tabIndex}
-              className={`cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 ${
+              className={` w-max cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
                 activeTab === tabIndex ? "icon-shadow" : "text-[var(--primary)]"
-              }`}
+              } `}
               onClick={() => handleTabClick(tabIndex)}
+              onMouseEnter={() => {
+                setShowLabel(true);
+                setHoveredTab(tabIndex);
+              }}
+              onMouseLeave={() => setShowLabel(false)}
             >
-              {icon}
+              <div className="flex items-center transition-all delay-300 space-x-2 ">
+                {activeTab === tabIndex ? (
+                  <span className="text-sm">{label}</span>
+                ) : (
+                  ""
+                )}
+                {showLabel &&
+                hoveredTab === tabIndex &&
+                activeTab != tabIndex ? (
+                  <span className="text-sm">{label}</span>
+                ) : (
+                  ""
+                )}
+                {icon}
+              </div>
             </div>
           ))}
         </div>
