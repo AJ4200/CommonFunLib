@@ -39,7 +39,7 @@ const NavSection: React.FC<NavSectionProps> = ({
         {heading}
       </h2>
       <p className=" mb-4 text-center">{description}</p>
-      <div className="border border-[var(--secondary)] rounded-md p-4 shadow-lg flex m-8 flex-row justify-between backdrop-blur-2xl h-[80%]">
+      <div className="border border-[var(--secondary)] rounded-md p-4 shadow-lg flex m-8 flex-row justify-between backdrop-blur-2xl max-h-96">
         <div>
           {activeTab === 0 && infoContent}
           {activeTab === 1 && playgroundContent}
