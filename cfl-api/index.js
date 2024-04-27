@@ -158,6 +158,6 @@ app.get('/common/reverse', (req, res) => {
   res.json({ reversedString });
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log('API server is running on port 3000');
 });
