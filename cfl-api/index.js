@@ -5,9 +5,9 @@ const cors = require("cors");
 app.use(cors());
 
 // Importing routes
- const converterRoutes = require("./routes/converter");
+ const converterRoutes = require("./routes/route.converter");
  const generatorRoutes = require("./routes/route.generator");
- const hashingRoutes = require("./routes/hashing");
+ const hashingRoutes = require("./routes/route.hashing");
 const commonFunctionsRoutes = require("./routes/route.commonfunctions");
 
 // Using the imported routes

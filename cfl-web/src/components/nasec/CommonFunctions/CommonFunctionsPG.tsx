@@ -1,87 +1,79 @@
 import useCommonFunctions from "@/hooks/useCommonFunctions";
-import { SetStateAction, useState } from "react";
+import React from "react";
+import { FaCalculator } from "react-icons/fa";
 
-const CommonFunctionsPG = () => {
-  const [inputNumber, setInputNumber] = useState(0);
-  const [inputString, setInputString] = useState("");
-  const {
-    commonFunctionsData,
-    checkEven,
-    checkOdd,
-    calculateFactorial,
-    calculateGCD,
-    calculateLCM,
-    checkPrime,
-    reverseString,
-  } = useCommonFunctions();
-
-  const handleNumberChange = (e: { target: { value: string } }) => {
-    setInputNumber(parseInt(e.target.value));
-  };
-
-  const handleStringChange = (e: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setInputString(e.target.value);
-  };
-
-  const handleCalculate = () => {
-    checkEven(inputNumber);
-    checkOdd(inputNumber);
-    calculateFactorial(inputNumber);
-    calculateGCD(inputNumber, 10);
-    calculateLCM(inputNumber, 10);
-    checkPrime(inputNumber);
-    reverseString(inputString);
-  };
+function CommonFunctionsPG() {
+  const [
+    { input1, input2, result, functionType, loading },
+    {
+      handleInput1Change,
+      handleInput2Change,
+      handleFunctionTypeChange,
+      handleComputeFunction,
+    },
+  ] = useCommonFunctions();
 
   return (
-    <div className="p-8 rounded-lg shadow-md w-96">
-      <h2 className="text-2xl font-bold mb-4">Common Functions</h2>
-      <div className="mb-4">
-        <label htmlFor="number" className="block font-medium mb-2">
-          Number:
-        </label>
-        <input
-          type="number"
-          id="number"
-          value={inputNumber}
-          onChange={handleNumberChange}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="string" className="block font-medium mb-2">
-          String:
-        </label>
-        <input
-          type="text"
-          id="string"
-          value={inputString}
-          onChange={handleStringChange}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full"
-        />
-      </div>
-      <button
-        onClick={handleCalculate}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md"
-      >
-        Calculate
-      </button>
-      <div className="mt-8">
-        <h3 className="text-lg font-medium mb-2">Results:</h3>
-        <div className="space-y-2">
-          <p>Is Even: {commonFunctionsData.isEven ? "Yes" : "No"}</p>
-          <p>Is Odd: {commonFunctionsData.isOdd ? "Yes" : "No"}</p>
-          <p>Factorial: {commonFunctionsData.factorial}</p>
-          <p>GCD: {commonFunctionsData.gcd}</p>
-          <p>LCM: {commonFunctionsData.lcm}</p>
-          <p>Is Prime: {commonFunctionsData.isPrime ? "Yes" : "No"}</p>
-          <p>Reversed String: {commonFunctionsData.reversedString}</p>
+    <div>
+      <section>
+        <div className="flex flex-row mt-2 space-x-2">
+          <select
+            className="bg-[var(--secondary)] rounded  font-bold flex items-center  icon-shadow focus:outline-[var(--secondary)] focus:border-none"
+            value={functionType}
+            onChange={handleFunctionTypeChange}
+          >
+            <option value="">Select function type</option>
+            <option value="even">Is Even</option>
+            <option value="odd">Is Odd</option>
+            <option value="factorial">Factorial</option>
+            <option value="gcd">GCD</option>
+            <option value="lcm">LCM</option>
+            <option value="prime">Is Prime</option>
+            <option value="reverse">Reverse String</option>
+          </select>
+          <div className=" flex flex-col space-y-2">
+            <input
+              type="text"
+              className="bg-[var(--primary)] rounded font-semibold p-1 icon-shadow outline-[var(--secondary)] border-[var(--secondary)]  border-[1px] placeholder:text-[var(--secondary)]"
+              value={input1}
+              onChange={handleInput1Change}
+              placeholder={`value ${
+                functionType === "gcd" || functionType === "lcm" ? "A" : ""
+              }`}
+            />
+            {functionType === "gcd" || functionType === "lcm" ? (
+              <input
+                type="text"
+                className="bg-[var(--primary)] rounded font-semibold p-1 icon-shadow outline-[var(--secondary)] border-[var(--secondary)]  border-[1px] placeholder:text-[var(--secondary)]"
+                value={input2}
+                onChange={handleInput2Change}
+                placeholder="value B"
+              />
+            ) : null}
+          </div>{" "}
+          <button
+            className="flex items-center cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-2 self-end active:icon-shadow text-[var(--primary)]"
+            onClick={handleComputeFunction}
+          >
+            <FaCalculator className={``} />
+            Compute
+          </button>
         </div>
-      </div>
+
+        <div
+          className={` w-full h-full mt-2 cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
+            !result ? "icon-shadow" : "text-[var(--primary)]"
+          } `}
+        >
+          {loading
+            ? "Loading..."
+            : result !== ""
+            ? `Result: ${result}`
+            : "No result computed yet."}
+        </div>
+      </section>
     </div>
   );
-};
+}
 
 export default CommonFunctionsPG;
