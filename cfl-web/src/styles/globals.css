@@ -92,3 +92,17 @@ main {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.custome-scroll::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+  margin-left: 2px;
+}
+
+.custome-scroll::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+.custome-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--secondary); /* color of the scroll thumb */
+  border-radius: 10px; /* roundness of the scroll thumb */
+  border: 2px solid var(--primary); /* creates padding around scroll thumb */
+}

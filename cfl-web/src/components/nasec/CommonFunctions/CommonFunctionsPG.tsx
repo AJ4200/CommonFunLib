@@ -61,7 +61,7 @@ function CommonFunctionsPG() {
         </div>
 
         <div
-          className={` w-full h-full mt-2 cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
+          className={` h-full mt-2 cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
             !result ? "icon-shadow" : "text-[var(--primary)]"
           } `}
         >

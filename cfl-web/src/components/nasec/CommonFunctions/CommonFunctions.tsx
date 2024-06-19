@@ -2,6 +2,7 @@ import NavSection from "@/components/NavSection";
 import React from "react";
 import infoContent from "./infoContent";
 import CommonFunctionsPG from "./CommonFunctionsPG";
+import EndpointList from "./Endpoints";
 
 interface CommonFunctionsProps {}
 
@@ -9,7 +10,7 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
   const InfoContentComponent = infoContent as React.FC;
 
   return (
-    <div {...props}>
+    <div {...props} >
       <NavSection
         heading={"Common Functions"}
         description={
@@ -17,7 +18,7 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
         }
         infoContent={<InfoContentComponent />}
         playgroundContent={<CommonFunctionsPG/>}
-        apiContent={undefined}
+        apiContent={<EndpointList/>}
       />
     </div>
   );

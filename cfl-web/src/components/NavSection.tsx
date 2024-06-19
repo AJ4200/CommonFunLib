@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
 import { FaServer } from "react-icons/fa";
+import Logo from "@/icons/Logo";
 
 interface NavSectionProps {
   heading: string;
@@ -34,18 +35,19 @@ const NavSection: React.FC<NavSectionProps> = ({
   ];
 
   return (
-    <div className="h-full" {...props}>
+    <div className="h-full w-full" {...props}>
+      <div className="absolute scale-[6.5] blur-[1px] pointer-events-none left-[50%] top-[50%]"><Logo/></div>
       <h2 className="text-2xl m-2 theme-shadow font-bold mb-2 text-center">
         {heading}
       </h2>
       <p className=" mb-4 text-center">{description}</p>
       <div className="border border-[var(--secondary)] rounded-md p-4 shadow-lg flex m-8 flex-row justify-between backdrop-blur-2xl max-h-96">
-        <div>
+        <div className="w-full">
           {activeTab === 0 && infoContent}
           {activeTab === 1 && playgroundContent}
           {activeTab === 2 && apiContent}
         </div>{" "}
-        <div className="flex space-y-4 flex-col ">
+        <div className="flex space-y-4 flex-col w-[15%]">
           {icons.map(({ icon, label, tabIndex }) => (
             <div
               key={tabIndex}
