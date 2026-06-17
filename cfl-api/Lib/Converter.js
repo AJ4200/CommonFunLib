@@ -3,11 +3,15 @@ require('dotenv').config();
 
 class Converter {
   constructor() {
-    this.apiKey = process.env.FREECURRENCYAPI_KEY || 'your_default_api_key';
+    this.apiKey = process.env.FREECURRENCYAPI_KEY;
     this.exchangeRates = {};
   }
 
   async fetchExchangeRates() {
+    if (!this.apiKey) {
+      return;
+    }
+
     try {
       const response = await axios.get(`https://api.freecurrencyapi.com/v1/latest?apikey=${this.apiKey}`);
       this.exchangeRates = response.data.data;

@@ -1,78 +1,34 @@
 import useCommonFunctions from "@/hooks/useCommonFunctions";
-import React from "react";
+import { commonTools } from "@/lib/commonTools";
 import { FaCalculator } from "react-icons/fa";
 
 function CommonFunctionsPG() {
-  const [
-    { input1, input2, result, functionType, loading },
-    {
-      handleInput1Change,
-      handleInput2Change,
-      handleFunctionTypeChange,
-      handleComputeFunction,
-    },
-  ] = useCommonFunctions();
+  const [{ values, result, functionType, loading, error }, { handleValueChange, handleFunctionTypeChange, handleComputeFunction }] = useCommonFunctions();
+  const selectedTool = commonTools.find((tool) => tool.value === functionType) || commonTools[0];
 
   return (
-    <div>
-      <section>
-        <div className="flex flex-row mt-2 space-x-2">
-          <select
-            className="bg-[var(--secondary)] rounded  font-bold flex items-center  icon-shadow focus:outline-[var(--secondary)] focus:border-none"
-            value={functionType}
-            onChange={handleFunctionTypeChange}
-          >
-            <option value="">Select function type</option>
-            <option value="even">Is Even</option>
-            <option value="odd">Is Odd</option>
-            <option value="factorial">Factorial</option>
-            <option value="gcd">GCD</option>
-            <option value="lcm">LCM</option>
-            <option value="prime">Is Prime</option>
-            <option value="reverse">Reverse String</option>
-          </select>
-          <div className=" flex flex-col space-y-2">
-            <input
-              type="text"
-              className="bg-[var(--primary)] rounded font-semibold p-1 icon-shadow outline-[var(--secondary)] border-[var(--secondary)]  border-[1px] placeholder:text-[var(--secondary)]"
-              value={input1}
-              onChange={handleInput1Change}
-              placeholder={`value ${
-                functionType === "gcd" || functionType === "lcm" ? "A" : ""
-              }`}
-            />
-            {functionType === "gcd" || functionType === "lcm" ? (
-              <input
-                type="text"
-                className="bg-[var(--primary)] rounded font-semibold p-1 icon-shadow outline-[var(--secondary)] border-[var(--secondary)]  border-[1px] placeholder:text-[var(--secondary)]"
-                value={input2}
-                onChange={handleInput2Change}
-                placeholder="value B"
-              />
-            ) : null}
-          </div>{" "}
-          <button
-            className="flex items-center cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-2 self-end active:icon-shadow text-[var(--primary)]"
-            onClick={handleComputeFunction}
-          >
-            <FaCalculator className={``} />
-            Compute
-          </button>
+    <section className="space-y-4">
+      <div className="grid gap-3 md:grid-cols-[240px_1fr_auto]">
+        <select className="rounded-xl border border-[var(--secondary)] bg-[var(--primary)] p-3 font-bold shadow-lg outline-none" value={functionType} onChange={handleFunctionTypeChange}>
+          {commonTools.map((tool) => <option key={tool.value} value={tool.value}>{tool.label}</option>)}
+        </select>
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {selectedTool.inputs.map((input) => (
+            <label key={input.name} className="text-sm font-semibold">
+              {input.label}
+              <input type={input.type || "text"} className="mt-1 w-full rounded-xl border border-[var(--secondary)] bg-[var(--primary)] p-3 font-semibold placeholder:text-black/40 outline-none" value={values[input.name] || ""} onChange={handleValueChange(input.name)} placeholder={input.placeholder} />
+            </label>
+          ))}
         </div>
-
-        <div
-          className={` h-full mt-2 cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
-            !result ? "icon-shadow" : "text-[var(--primary)]"
-          } `}
-        >
-          {loading
-            ? "Loading..."
-            : result !== ""
-            ? `Result: ${result}`
-            : "No result computed yet."}
-        </div>
-      </section>
-    </div>
+        <button className="flex items-center justify-center gap-2 rounded-xl bg-[var(--secondary)] px-5 py-3 font-bold text-[var(--primary)] shadow-lg active:scale-95" onClick={handleComputeFunction}>
+          <FaCalculator /> Compute
+        </button>
+      </div>
+      <p className="text-sm opacity-80">{selectedTool.description}</p>
+      <div className="rounded-2xl border border-[var(--secondary)] bg-black/10 p-5 text-lg font-bold shadow-inner">
+        {loading ? "Loading..." : error ? error : result !== null ? `Result: ${String(result)}` : "No result computed yet."}
+      </div>
+    </section>
   );
 }
 

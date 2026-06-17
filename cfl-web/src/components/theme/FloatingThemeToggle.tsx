@@ -39,6 +39,8 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
       getTheme("Vanilla"),
       getTheme("Cherry"),
       getTheme("Emerald"),
+      getTheme("Midnight"),
+      getTheme("Sunset"),
     ]);
     setCurrentTheme(getTheme(getStoredTheme() as string));
   }, []);
@@ -57,7 +59,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
     setTimeout(() => {
       setLoading(false);
       setThemeApplied(true);
-    }, 5000);
+    }, 500);
   };
 
   return (

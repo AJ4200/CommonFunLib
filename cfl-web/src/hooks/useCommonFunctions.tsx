@@ -1,82 +1,44 @@
 import { useState, ChangeEvent } from "react";
 import axios from "axios";
+import { commonTools } from "@/lib/commonTools";
 
-interface CommonFunctionState {
-  input1: string;
-  input2: string;
-  result: string | number | boolean | null;
-  functionType: string;
-  loading: boolean;
-}
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
+type Values = Record<string, string>;
+
+interface CommonFunctionState { values: Values; result: string | number | boolean | null; functionType: string; loading: boolean; error: string; }
 interface CommonFunctionActions {
-  handleInput1Change: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleInput2Change: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleValueChange: (name: string) => (event: ChangeEvent<HTMLInputElement>) => void;
   handleFunctionTypeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleComputeFunction: () => Promise<void>;
 }
 
 const useCommonFunctions = (): [CommonFunctionState, CommonFunctionActions] => {
-  const [state, setState] = useState<CommonFunctionState>({
-    input1: "",
-    input2: "",
-    result: null,
-    functionType: "",
-    loading: false,
-  });
+  const [state, setState] = useState<CommonFunctionState>({ values: {}, result: null, functionType: "even", loading: false, error: "" });
 
-  const handleInput1Change = (event: ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, input1: event.target.value });
-  };
-
-  const handleInput2Change = (event: ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, input2: event.target.value });
+  const handleValueChange = (name: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setState((current) => ({ ...current, values: { ...current.values, [name]: event.target.value } }));
   };
 
   const handleFunctionTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setState({ ...state, functionType: event.target.value });
+    setState((current) => ({ ...current, functionType: event.target.value, result: null, error: "" }));
   };
 
   const handleComputeFunction = async () => {
-    setState({ ...state, loading: true });
-    let apiUrl = `http://localhost:3001/common/`;
-
-    if (state.functionType === "even" || state.functionType === "odd") {
-      apiUrl += `${state.functionType}?num=${state.input1}`;
-    } else if (
-      state.functionType === "factorial" ||
-      state.functionType === "reverse"
-    ) {
-      apiUrl += `${state.functionType}?str=${state.input1}`;
-    } else if (state.functionType === "gcd" || state.functionType === "lcm") {
-      apiUrl += `${state.functionType}?a=${state.input1}&b=${state.input2}`;
-    } else if (state.functionType === "prime") {
-      apiUrl += `${state.functionType}?num=${state.input1}`;
-    }
-
+    const tool = commonTools.find((item) => item.value === state.functionType);
+    if (!tool) return;
+    setState((current) => ({ ...current, loading: true, error: "" }));
     try {
-      const response = await axios.get(apiUrl);
-      const result = response.data[state.functionType];
-      setState({
-        ...state,
-        result: result !== null ? result : null,
-        loading: false,
-      });
+      const params = new URLSearchParams();
+      tool.inputs.forEach((input) => params.set(input.name, state.values[input.name] || ""));
+      const response = await axios.get(`${API_BASE_URL}/common/${tool.value}?${params.toString()}`);
+      setState((current) => ({ ...current, result: response.data[tool.resultKey], loading: false }));
     } catch (error) {
-      console.error("Error fetching data:", error);
-      setState({ ...state, loading: false });
+      setState((current) => ({ ...current, loading: false, error: "Unable to compute result. Check the API server and inputs." }));
     }
   };
 
-  return [
-    state,
-    {
-      handleInput1Change,
-      handleInput2Change,
-      handleFunctionTypeChange,
-      handleComputeFunction,
-    },
-  ];
+  return [state, { handleValueChange, handleFunctionTypeChange, handleComputeFunction }];
 };
 
 export default useCommonFunctions;

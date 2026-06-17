@@ -43,7 +43,31 @@ class CommonFunctions {
   }
 
   static reverseString(str) {
-    return str.split("").reverse().join("");
+    return String(str).split("").reverse().join("");
+  }
+
+  static isPalindrome(str) {
+    const normalized = String(str).toLowerCase().replace(/[^a-z0-9]/g, "");
+    return normalized === CommonFunctions.reverseString(normalized);
+  }
+
+  static slugify(str) {
+    return String(str)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  static clamp(num, min, max) {
+    return Math.min(Math.max(num, min), max);
+  }
+
+  static percentage(part, total) {
+    if (total === 0) {
+      return null;
+    }
+    return Number(((part / total) * 100).toFixed(2));
   }
 }
 

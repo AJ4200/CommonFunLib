@@ -23,6 +23,8 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
       getTheme("Vanilla"),
       getTheme("Cherry"),
       getTheme("Emerald"),
+      getTheme("Midnight"),
+      getTheme("Sunset"),
     ]);
   }, []);
 

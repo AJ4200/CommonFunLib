@@ -26,4 +26,18 @@ router.get("/lastNames", (req, res) => {
   res.json({ lastNames });
 });
 
+
+router.get("/uuid", (req, res) => {
+  res.json({ uuid: generator.generateUuid() });
+});
+
+router.get("/color", (req, res) => {
+  res.json({ color: generator.generateColor() });
+});
+
+router.get("/lorem", (req, res) => {
+  const words = req.query.words ? parseInt(req.query.words) : 24;
+  res.json({ lorem: generator.generateLorem(words) });
+});
+
 module.exports = router;
