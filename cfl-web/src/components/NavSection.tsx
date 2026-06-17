@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
-import { FaChevronRight, FaServer } from "react-icons/fa";
+import { FaChevronRight, FaNpm, FaServer } from "react-icons/fa";
 
 interface NavSectionProps {
   heading: string;
@@ -9,6 +9,7 @@ interface NavSectionProps {
   infoContent: React.ReactNode;
   playgroundContent: React.ReactNode;
   apiContent: React.ReactNode;
+  packageContent?: React.ReactNode;
 }
 
 const NavSection: React.FC<NavSectionProps> = ({
@@ -17,6 +18,7 @@ const NavSection: React.FC<NavSectionProps> = ({
   infoContent,
   playgroundContent,
   apiContent,
+  packageContent,
   ...props
 }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -43,6 +45,17 @@ const NavSection: React.FC<NavSectionProps> = ({
       eyebrow: "Routes",
       content: apiContent,
     },
+    ...(packageContent
+      ? [
+          {
+            icon: <FaNpm />,
+            tabIndex: 3,
+            label: "Package",
+            eyebrow: "npm",
+            content: packageContent,
+          },
+        ]
+      : []),
   ];
   const activeMode = tabs.find((tab) => tab.tabIndex === activeTab) ?? tabs[0];
 
@@ -65,6 +78,7 @@ const NavSection: React.FC<NavSectionProps> = ({
 
         <div
           className="nav-mode-switch mt-4"
+          style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
           role="tablist"
           aria-label={`${heading} workspace modes`}
         >

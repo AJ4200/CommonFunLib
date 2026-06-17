@@ -1,47 +1,91 @@
-# CommonFunLib Java Library
+# CommonFunLib
 
-This repository contains Java classes: CommonFunctions, Generator and Hashing.
+CommonFunLib is a small developer utility toolkit for common functions, sample data generation, unit conversion, and hashing.
 
-## CommonFunctions
+Use it three ways:
 
-The CommonFunctions class provides a collection of commonly used functions for performing mathematical operations and manipulating variables and strings. The following functions are available:
+- Explore and test utilities in the `cfl-web` playground.
+- Call the Express API from another app or service.
+- Install the npm package and import only the helpers you need.
 
-- `isEven`: Checks if a number is even.
-- `isOdd`: Checks if a number is odd.
-- `factorial`: Calculates the factorial of a number.
-- `gcd`: Calculates the greatest common divisor (GCD) of two numbers.
-- `lcm`: Calculates the least common multiple (LCM) of two numbers.
-- `isPrime`: Checks if a number is prime.
-- `swapVariableValue`: Swaps the values of two variables.
-- `reverseString`: Reverses a string.
+The original Java implementation is deprecated and kept only for historical reference.
 
-## Generator
+## Quick Start
 
-The Generator class provides functions for generating random numbers and names. The following functions are available:
+### Web Playground
 
-- `generateRandomNumber`: Generates a random number between a minimum and maximum value.
-- `generateRandomName`: Generates a random name by combining a random first name with a random last name.
+```sh
+cd cfl-web
+npm install
+npm run dev
+```
 
-## Hashing
+Open `http://localhost:3000`.
 
-This Java class provides an implementation of common hashing functions:
+### API Server
 
-- `md5`: Computes the MD5 hash of a given input string.
-- `sha1`: Computes the SHA-1 hash of a given input string.
-- `sha256`: Computes the SHA-256 hash of a given input string.
-- `sha512`: Computes the SHA-512 hash of a given input string.
+```sh
+cd cfl-api
+pnpm install
+pnpm start
+```
 
-## Getting started
+The API runs on `PORT` or `3001` by default.
 
-To use these classes in your Java project, simply include the `jar` file in your project and `import` the classes as needed.
+### npm Package
 
-- `import` CommonFunctions;
-- `import` Generator;
-- `import` Hashing;
+After publishing:
 
-## Credits
+```sh
+npm install commonfunlib
+```
 
-- The  `CommonFunctions` class was written by AJ4200 at GitHub.
-- The  `Hashing` class was written by AJ4200 at GitHub.
-- The `Generator` class was also written by AJ4200 at GitHub and uses data `files first_names.txt` and `last_names.txt` for generating random names.
+```js
+import { isEven, generatePassword, convertLength, sha256 } from "commonfunlib";
 
+isEven(42);
+generatePassword(16);
+convertLength(12, "m", "foot");
+sha256("CommonFunLib");
+```
+
+CommonJS is supported too:
+
+```js
+const { common, generate, convert, hash } = require("commonfunlib");
+
+common.isPrime(17);
+generate.uuid();
+convert.temperature(22, "C", "F");
+hash.base64Encode("hello");
+```
+
+## What It Includes
+
+- Common functions: even/odd checks, factorial, GCD, LCM, prime checks, string reversal, palindrome checks, slugify, clamp, and percentage.
+- Generators: random names, numbers, passwords, UUIDs, tokens, PINs, colors, and placeholder text.
+- Converters: length, weight, temperature, area, data size, speed, and optional currency conversion.
+- Hashing: MD5, SHA variants, Base64 encode/decode, and HMAC SHA256.
+
+## API Examples
+
+- `GET /common/even?num=42`
+- `GET /generate/uuid`
+- `POST /convert/length`
+- `POST /hash/sha256`
+- `GET /status`
+
+## Project Layout
+
+```txt
+cfl-api/   Express API and npm package entry
+cfl-web/   Next.js playground and docs app
+src/       Deprecated Java source files
+data/      Deprecated Java name data files
+```
+
+## Deprecated Java Library
+
+The Java source in `src`, name data in `data`, and `CommonFunLib.jar` are no longer the active implementation.
+
+New work should use the npm package, API server, or web playground.

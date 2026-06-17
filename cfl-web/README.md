@@ -1,40 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CommonFunLib Web
+
+The web app is a Next.js playground and documentation surface for CommonFunLib.
+
+It lets users:
+
+- Try utilities in browser playgrounds.
+- Inspect API routes and request examples.
+- Copy npm install and import snippets.
+- Switch themes from the app shell.
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The app redirects to `/homepage` after a theme is selected.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## API Configuration
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The web app calls the CommonFunLib API through `NEXT_PUBLIC_API_BASE_URL`.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```sh
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001 npm run dev
+```
 
-## Learn More
+If no value is provided, it defaults to `http://localhost:3001`.
 
-To learn more about Next.js, take a look at the following resources:
+## Main Areas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `Overview`: project summary, npm package examples, API summary.
+- `Functions`: common number and string helpers.
+- `Generators`: sample data and identifiers.
+- `Converters`: unit and data-size conversions.
+- `Hashing`: digests, Base64, and HMAC helpers.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Each utility section has `Docs`, `Playground`, `API`, and `Package` modes.
 
-## Deploy on Vercel
+## Validation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+npx tsc --noEmit
+```

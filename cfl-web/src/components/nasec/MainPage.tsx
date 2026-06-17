@@ -1,5 +1,6 @@
 import { commonTools } from "@/lib/commonTools";
 import { converterTools, generatorTools, hashingTools } from "@/lib/utilityTools";
+import CopyableSnippet from "@/components/ui/CopyableSnippet";
 import {
   FaArrowRight,
   FaBookOpen,
@@ -28,6 +29,12 @@ isEven(42);
 generatePassword(16);
 convertLength(12, "m", "foot");
 sha256("CommonFunLib");`;
+const requireExample = `const { common, generate, convert, hash } = require("commonfunlib");
+
+common.isPrime(17);
+generate.uuid();
+convert.temperature(22, "C", "F");
+hash.base64Encode("hello");`;
 const configuredApiBaseUrl = (
   process.env.API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -35,32 +42,32 @@ const configuredApiBaseUrl = (
 ).replace(/\/+$/, "");
 
 const MainPage = () => (
-  <div className="h-full overflow-y-auto p-3 custome-scroll sm:p-6">
+  <div className="h-full overflow-y-auto p-2 custome-scroll sm:p-6">
     <section className="hero-grid glass-panel relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-[var(--secondary)] shadow-2xl backdrop-blur-xl">
       <div className="absolute right-4 top-4 hidden rounded-full border border-[var(--secondary)] bg-black/15 px-4 py-2 text-xs font-black uppercase tracking-[0.28em] md:block">
         developer utility library
       </div>
-      <div className="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1fr_21rem]">
-        <div className="relative z-10">
-          <p className="mb-3 inline-flex rounded-full bg-[var(--secondary)] px-4 py-1.5 text-sm font-black text-[var(--primary)] shadow-lg">
+      <div className="grid min-w-0 gap-5 p-4 sm:gap-6 sm:p-8 lg:grid-cols-[1fr_21rem]">
+        <div className="relative z-10 min-w-0">
+          <p className="mb-3 inline-flex max-w-full rounded-full bg-[var(--secondary)] px-3 py-1.5 text-left text-xs font-black leading-5 text-[var(--primary)] shadow-lg sm:px-4 sm:text-sm">
             Test small tasks before they become app code
           </p>
-          <h1 className="brand-type max-w-4xl text-5xl font-black leading-none theme-shadow sm:text-7xl">
+          <h1 className="brand-type max-w-full overflow-wrap-anywhere text-[2.15rem] font-black leading-none theme-shadow sm:text-7xl">
             CommonFunLib
           </h1>
-          <p className="mt-5 max-w-3xl text-sm font-semibold leading-7 opacity-90 sm:text-lg">
+          <p className="mt-4 max-w-3xl text-sm font-semibold leading-6 opacity-90 sm:mt-5 sm:text-lg sm:leading-7">
             A compact place to try common functions, generate test data, convert units,
             and hash text before using the same tools through the API or npm package.
           </p>
-          <div className="mt-6 grid gap-3 text-xs font-black uppercase sm:grid-cols-2 lg:max-w-3xl lg:grid-cols-4">
+          <div className="mt-5 grid min-w-0 gap-2 text-[0.7rem] font-black uppercase sm:mt-6 sm:grid-cols-2 sm:gap-3 sm:text-xs lg:max-w-3xl lg:grid-cols-4">
             {["Try utilities", "View results", "Inspect API", "Install npm"].map((label) => (
-              <span key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-3 text-center shadow-inner">
+              <span key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 px-2 py-2 text-center shadow-inner sm:px-3 sm:py-3">
                 {label}
               </span>
             ))}
           </div>
         </div>
-        <div className="tool-card relative z-10 rounded-2xl border border-[var(--secondary)] p-4">
+        <div className="tool-card relative z-10 min-w-0 rounded-2xl border border-[var(--secondary)] p-4">
           <div className="mb-4 flex items-center gap-3 text-lg font-black">
             <FaBookOpen className="text-[var(--secondary)]" />
             Start here
@@ -79,9 +86,9 @@ const MainPage = () => (
           </div>
         </div>
       </div>
-      <div className="grid gap-4 p-5 pt-0 sm:grid-cols-2 sm:p-8 sm:pt-0 lg:grid-cols-4">
+      <div className="grid min-w-0 gap-3 p-4 pt-0 sm:grid-cols-2 sm:gap-4 sm:p-8 sm:pt-0 lg:grid-cols-4">
         {toolStats.map((item) => (
-          <div key={item.label} className="tool-card group rounded-2xl border border-[var(--secondary)] p-4 font-bold transition hover:-translate-y-1 sm:p-5">
+          <div key={item.label} className="tool-card group min-w-0 rounded-2xl border border-[var(--secondary)] p-4 font-bold transition hover:-translate-y-1 sm:p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="block w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)] sm:text-2xl">{item.icon}</span>
               <span className="rounded-full border border-[var(--secondary)] px-2 py-1 text-[0.65rem] uppercase opacity-75">{item.accent}</span>
@@ -94,38 +101,43 @@ const MainPage = () => (
       </div>
     </section>
 
-    <section className="mx-auto mt-6 grid max-w-6xl gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+    <section className="mx-auto mt-4 grid max-w-6xl min-w-0 gap-4 sm:mt-6 xl:grid-cols-[0.75fr_1fr_1fr]">
+      <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
+        <div className="mb-3 flex min-w-0 items-center gap-3 text-lg font-black sm:text-xl">
           <FaNpm className="text-[var(--secondary)]" />
           Install as npm
         </div>
-        <p className="font-semibold leading-7 opacity-85">
+        <p className="text-sm font-semibold leading-6 opacity-85 sm:text-base sm:leading-7">
           Skip the API when you just need the utilities inside your own Node or TypeScript
           project. Install CommonFunLib and import only the helpers you want.
         </p>
-        <code className="mono-surface code-surface mt-5 block overflow-x-auto rounded-xl border border-[var(--secondary)] px-3 py-3 text-sm font-black">
-          {installCommand}
-        </code>
-      </div>
-      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-3 flex items-center gap-3 text-xl font-black">
-          <FaCode className="text-[var(--secondary)]" />
-          Import what you need
+        <div className="mt-5">
+          <CopyableSnippet compact label="Install" value={installCommand} />
         </div>
-        <pre className="mono-surface code-surface max-h-72 overflow-auto whitespace-pre-wrap rounded-xl border border-[var(--secondary)] p-4 text-xs font-bold leading-6 sm:text-sm">
-          <code>{importExample}</code>
-        </pre>
+      </div>
+      <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
+        <div className="mb-3 flex min-w-0 items-center gap-3 text-lg font-black sm:text-xl">
+          <FaCode className="text-[var(--secondary)]" />
+          ESM imports
+        </div>
+        <CopyableSnippet label="import" value={importExample} />
+      </div>
+      <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
+        <div className="mb-3 flex min-w-0 items-center gap-3 text-lg font-black sm:text-xl">
+          <FaCode className="text-[var(--secondary)]" />
+          CommonJS require
+        </div>
+        <CopyableSnippet label="require" value={requireExample} />
       </div>
     </section>
 
-    <section className="mx-auto mt-6 grid max-w-6xl gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+    <section className="mx-auto mt-4 grid max-w-6xl min-w-0 gap-4 sm:mt-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
+        <div className="mb-3 flex min-w-0 items-center gap-3 text-lg font-black sm:text-xl">
           <FaPlug className="text-[var(--secondary)]" />
           Built for quick checks
         </div>
-        <p className="font-semibold leading-7 opacity-85">
+        <p className="text-sm font-semibold leading-6 opacity-85 sm:text-base sm:leading-7">
           Use the playground when you want a fast answer without writing a scratch script.
           Each tool keeps the input, result, and matching endpoint close together so you can
           move from testing to implementation without hunting through docs.
@@ -138,19 +150,19 @@ const MainPage = () => (
           ))}
         </div>
       </div>
-      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+      <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
+        <div className="mb-3 flex min-w-0 items-center gap-3 text-lg font-black sm:text-xl">
           <FaServer className="text-[var(--secondary)]" />
           API-ready by design
         </div>
-        <p className="font-semibold leading-7 opacity-85">
+        <p className="text-sm font-semibold leading-6 opacity-85 sm:text-base sm:leading-7">
           The app is connected to <span className="mono-surface">{configuredApiBaseUrl}</span>.
           Use the API view in each category to see request formats, curl snippets, JavaScript
           examples, and response shapes.
         </p>
         <div className="mt-5 grid gap-3">
           {apiRoutes.map((route) => (
-            <code key={route} className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
+            <code key={route} className="mono-surface overflow-wrap-anywhere rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
               {route}
             </code>
           ))}
@@ -158,13 +170,13 @@ const MainPage = () => (
       </div>
     </section>
 
-    <section className="mx-auto mt-6 grid max-w-6xl gap-4 md:grid-cols-3">
+    <section className="mx-auto mt-4 grid max-w-6xl min-w-0 gap-4 sm:mt-6 md:grid-cols-3">
       {[
-        { icon: <FaCode />, title: "Practical inputs", text: "Forms use sensible defaults so you can try a utility immediately and adjust only what matters." },
-        { icon: <FaBookOpen />, title: "Plain descriptions", text: "Each tool explains what it does in normal language before showing request details." },
-        { icon: <FaServer />, title: "Use it your way", text: "Call the hosted API for routes, or install the npm package when you want local imports in your app." },
+        { icon: <FaCode />, title: "Playground", text: "Try a utility in the browser first, with practical defaults and a result panel beside the request preview." },
+        { icon: <FaServer />, title: "HTTP API", text: "Use route docs when another app or service needs to call CommonFunLib over HTTP." },
+        { icon: <FaNpm />, title: "npm package", text: "Install the package when you want local imports without running or calling the API." },
       ].map((card) => (
-        <article key={card.title} className="tool-card rounded-2xl border border-[var(--secondary)] p-5">
+        <article key={card.title} className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-5">
           <div className="mb-4 w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)]">{card.icon}</div>
           <h3 className="brand-type text-xl font-black">{card.title}</h3>
           <p className="mt-2 text-sm font-semibold leading-6 opacity-80">{card.text}</p>

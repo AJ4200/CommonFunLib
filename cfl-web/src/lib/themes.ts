@@ -10,6 +10,7 @@ export const themeNames = [
   "Aurora",
   "Graphite",
   "Synthwave",
+  "Terminal",
 ] as const;
 
 export const getTheme = (themeName: string): Theme => {
@@ -79,6 +80,14 @@ export const getTheme = (themeName: string): Theme => {
       foreground: "#FFF1F2",
       background: "#19002E",
       background_pattern: "radial-gradient(circle at 50% 0%, rgba(240,171,252,.44), transparent 30%), linear-gradient(135deg, #19002E 0%, #4C1D95 45%, #BE123C 100%)",
+    },
+    Terminal: {
+      name: "Terminal",
+      primaryColor: "#07130D",
+      secondaryColor: "#4ADE80",
+      foreground: "#DCFCE7",
+      background: "#020704",
+      background_pattern: "linear-gradient(180deg, rgba(74,222,128,.12) 0 1px, transparent 1px 8px), linear-gradient(90deg, rgba(74,222,128,.08) 0 1px, transparent 1px 28px), radial-gradient(circle at 22% 18%, rgba(34,197,94,.28), transparent 28%), linear-gradient(135deg, #020704 0%, #07130D 55%, #0F2A1B 100%)",
     },
     Emerald: {
       name: "Emerald",

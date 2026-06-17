@@ -194,6 +194,11 @@ main {
   letter-spacing: 0;
 }
 
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
 .mono-surface {
   font-family: var(--font-mono), ui-monospace, monospace;
 }
@@ -410,7 +415,6 @@ select option {
 .nav-mode-switch {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
   border-radius: 0.75rem;
   border: 1px solid var(--secondary);
