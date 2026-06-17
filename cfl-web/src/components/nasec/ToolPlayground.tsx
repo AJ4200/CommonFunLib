@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useMemo, useState } from "react";
-import { FaBolt, FaCopy } from "react-icons/fa";
+import { FaBolt, FaCopy, FaFileCode, FaRedo, FaTerminal } from "react-icons/fa";
 import { UtilityTool } from "@/models/Tool";
 
 interface ToolPlaygroundProps {
@@ -58,11 +58,45 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
     }
   };
 
-  const copyResult = async () => {
-    if (result && typeof navigator !== "undefined") {
-      await navigator.clipboard.writeText(result);
+  const requestPreview = useMemo(() => {
+    const populatedValues = Object.fromEntries(
+      Object.entries(values).filter(([, value]) => value !== "")
+    );
+
+    if (selectedTool.method === "GET") {
+      const params = new URLSearchParams(populatedValues).toString();
+      return params ? `${selectedTool.endpoint}?${params}` : selectedTool.endpoint;
+    }
+
+    return JSON.stringify(populatedValues, null, 2);
+  }, [selectedTool.endpoint, selectedTool.method, values]);
+
+  const curlPreview = useMemo(() => {
+    if (selectedTool.method === "GET") {
+      return `curl "${requestPreview}"`;
+    }
+
+    return `curl -X POST "${selectedTool.endpoint}" \
+  -H "Content-Type: application/json" \
+  -d '${requestPreview}'`;
+  }, [requestPreview, selectedTool.endpoint, selectedTool.method]);
+
+  const copyText = async (text: string) => {
+    if (text && typeof navigator !== "undefined") {
+      await navigator.clipboard.writeText(text);
     }
   };
+
+  const resetTool = () => {
+    setValuesByTool((current) => ({
+      ...current,
+      [selectedTool.value]: buildInitialValues(selectedTool),
+    }));
+    setResult("");
+    setError("");
+  };
+
+  const copyResult = async () => copyText(result);
 
   return (
     <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.7fr)]">
@@ -119,23 +153,43 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
             )}
           </div>
 
-          <button
-            className="flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[var(--secondary)] px-5 py-3 font-black text-[var(--primary)] shadow-lg transition hover:-translate-y-0.5 active:scale-95"
-            onClick={runTool}
-            disabled={loading}
-          >
-            <FaBolt /> {loading ? "Running" : "Run"}
-          </button>
+          <div className="grid gap-2">
+            <button
+              className="flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[var(--secondary)] px-5 py-3 font-black text-[var(--primary)] shadow-lg transition hover:-translate-y-0.5 active:scale-95"
+              onClick={runTool}
+              disabled={loading}
+            >
+              <FaBolt /> {loading ? "Running" : "Run"}
+            </button>
+            <button
+              className="flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[var(--secondary)] bg-black/10 px-5 py-2 text-xs font-black uppercase shadow-inner transition hover:-translate-y-0.5 active:scale-95"
+              onClick={resetTool}
+              type="button"
+            >
+              <FaRedo /> Reset
+            </button>
+          </div>
         </div>
 
-        <p className="tool-card rounded-lg border border-[var(--secondary)] p-3 text-sm font-semibold">
-          {selectedTool.description}
-        </p>
+        <div className="grid gap-3 lg:grid-cols-[1fr_1fr]">
+          <p className="tool-card rounded-lg border border-[var(--secondary)] p-3 text-sm font-semibold">
+            {selectedTool.description}
+          </p>
+          <div className="tool-card rounded-lg border border-[var(--secondary)] p-3 text-sm font-semibold">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <span className="flex items-center gap-2 font-black uppercase tracking-wide"><FaFileCode /> Request preview</span>
+              <button className="rounded-md bg-[var(--secondary)] px-2 py-1 text-[var(--primary)]" onClick={() => copyText(curlPreview)} title="Copy curl">
+                <FaCopy />
+              </button>
+            </div>
+            <code className="mono-surface block whitespace-pre-wrap break-words rounded-md bg-[var(--primary)] p-3 text-xs">{curlPreview}</code>
+          </div>
+        </div>
       </div>
 
       <aside className="tool-card rounded-lg border border-[var(--secondary)] p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="text-sm font-black uppercase tracking-wide">Result</h3>
+          <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wide"><FaTerminal /> Result</h3>
           <button
             className="rounded-md bg-[var(--secondary)] p-2 text-[var(--primary)] disabled:opacity-40"
             onClick={copyResult}

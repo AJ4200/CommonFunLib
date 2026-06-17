@@ -25,6 +25,9 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
       getTheme("Emerald"),
       getTheme("Midnight"),
       getTheme("Sunset"),
+      getTheme("Aurora"),
+      getTheme("Graphite"),
+      getTheme("Synthwave"),
     ]);
   }, []);
 
@@ -62,7 +65,7 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
         Customize your Experience
       </h1>
       <div
-        className="w-full max-w-2xl rounded-lg border-[2px] bg-black/10 p-5 shadow-2xl backdrop-blur-md sm:p-8"
+        className="w-full max-w-4xl rounded-lg border-[2px] bg-black/10 p-5 shadow-2xl backdrop-blur-md sm:p-8"
         style={{
           borderColor: currentTheme?.secondaryColor,
         }}
@@ -75,14 +78,16 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
         >
           <RiPaletteFill className="text-4xl" /> Choose a Theme
         </h2>
-        {themes.map((theme) => (
-          <ThemeButton
-            key={theme.name}
-            theme={theme}
-            onClick={() => handleThemeChange(theme.name)}
-            onMouseEnter={() => handleThemeHover(theme.background_pattern)}
-          />
-        ))}
+        <div className="grid gap-3 md:grid-cols-2">
+          {themes.map((theme) => (
+            <ThemeButton
+              key={theme.name}
+              theme={theme}
+              onClick={() => handleThemeChange(theme.name)}
+              onMouseEnter={() => handleThemeHover(theme.background_pattern)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

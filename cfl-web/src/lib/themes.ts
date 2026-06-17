@@ -43,6 +43,31 @@ export const getTheme = (themeName: string): Theme => {
       background: "#431407",
       background_pattern: "linear-gradient(135deg, #7C2D12 0%, #C2410C 45%, #FDBA74 100%)",
     },
+
+    Aurora: {
+      name: "Aurora",
+      primaryColor: "#082F49",
+      secondaryColor: "#67E8F9",
+      foreground: "#ECFEFF",
+      background: "#071A2C",
+      background_pattern: "radial-gradient(circle at 18% 18%, rgba(103,232,249,.42), transparent 28%), radial-gradient(circle at 80% 20%, rgba(192,132,252,.36), transparent 24%), linear-gradient(135deg, #071A2C 0%, #0F172A 48%, #164E63 100%)",
+    },
+    Graphite: {
+      name: "Graphite",
+      primaryColor: "#18181B",
+      secondaryColor: "#FACC15",
+      foreground: "#FAFAFA",
+      background: "#09090B",
+      background_pattern: "linear-gradient(135deg, rgba(250,204,21,.16), transparent 32%), repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0 1px, transparent 1px 18px), linear-gradient(160deg, #09090B, #27272A)",
+    },
+    Synthwave: {
+      name: "Synthwave",
+      primaryColor: "#2E1065",
+      secondaryColor: "#F0ABFC",
+      foreground: "#FFF1F2",
+      background: "#19002E",
+      background_pattern: "radial-gradient(circle at 50% 0%, rgba(240,171,252,.44), transparent 30%), linear-gradient(135deg, #19002E 0%, #4C1D95 45%, #BE123C 100%)",
+    },
     Emerald: {
       name: "Emerald",
       primaryColor: "#77FF33",

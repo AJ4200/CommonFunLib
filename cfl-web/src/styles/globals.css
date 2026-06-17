@@ -299,3 +299,40 @@ main {
   background-position: 5px 3px, 5px 7px;
   background-size: 4px 4px, 4px 4px;
 }
+
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: -35% -15% auto auto;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 30%, transparent);
+  filter: blur(28px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: auto auto -45% -10%;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 52%, var(--secondary));
+  filter: blur(34px);
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+button,
+select,
+input {
+  accent-color: var(--secondary);
+}
+
+select option {
+  color: var(--foreground);
+  background: var(--background);
+}
