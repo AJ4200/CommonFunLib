@@ -10,31 +10,26 @@ import {
   CardFooter,
 } from "../ui/card";
 import ThemeButton from "./ThemeButton";
-import { getTheme } from "@/lib/themes";
+import { getTheme, getThemes } from "@/lib/themes";
 import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
 import { BiLoaderCircle } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
+
+const availableThemes = getThemes();
 
 const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   ...props
 }) => {
   const [pattern, setPattern] = useState("");
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [themes] = useState<Theme[]>(availableThemes);
   const [loading, setLoading] = useState(false);
   const [themeApplied, setThemeApplied] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Theme>();
 
   useEffect(() => {
-    setThemes([
-      getTheme("Classic"),
-      getTheme("Vanilla"),
-      getTheme("Cherry"),
-      getTheme("Emerald"),
-      getTheme("Midnight"),
-      getTheme("Sunset"),
-    ]);
     setCurrentTheme(getTheme(getStoredTheme() ?? "Classic"));
   }, []);
 
@@ -58,6 +53,8 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   return (
     <div {...props}>
       <Drawer
+        direction="bottom"
+        shouldScaleBackground={false}
         onClose={() => {
           setThemeApplied(false);
         }}
@@ -80,49 +77,56 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
           </button>
         </DrawerTrigger>
 
-        <DrawerContent className="chrome-panel left-auto right-0 top-0 bottom-auto inset-x-auto mt-0 h-dvh w-full max-w-md rounded-l-lg rounded-t-none border-l-2 border-[var(--secondary)] backdrop-blur-md">
-          <Card
-            className="m-4 max-h-[calc(100dvh-2rem)] overflow-y-auto border-[var(--secondary)] shadow-inner app-scroll"
-            style={{
-              background: currentTheme?.background,
-              backgroundImage: pattern,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          >
-            <CardHeader>
-              <CardTitle className="brand-type text-xl font-black">Change Theme</CardTitle>
-              <CardDescription>
-                Click on desired theme to apply.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {themes.map((theme) => (
-                <ThemeButton
-                  key={theme.name}
-                  theme={theme}
-                  onClick={() => handleThemeChange(theme.name)}
-                  onMouseEnter={() =>
-                    handleThemeHover(theme.background_pattern)
-                  }
-                />
-              ))}
-            </CardContent>
-            <CardFooter>
-              {loading ? (
-                <a className="font-semibold flex space-x-2 items-center">
-                  <BiLoaderCircle size={23} />
-                  Applying theme...
-                </a>
-              ) : themeApplied ? (
-                <p className="font-semibold text-sm">
-                  Theme applied. Click{" "}
-                  <DrawerClose className="underline">HERE!</DrawerClose> to
-                  close theme picker
-                </p>
-              ) : null}
-            </CardFooter>
-          </Card>
+        <DrawerContent className="fixed inset-x-0 bottom-0 top-auto z-50 mt-0 h-[82dvh] w-full rounded-t-2xl border-0 bg-transparent p-0 outline-none sm:h-[78dvh] [&>div:first-child]:hidden">
+          <div className="chrome-panel flex h-full w-full overflow-hidden rounded-t-2xl border-t-2 border-[var(--secondary)]">
+            <Card
+              className="glass-panel flex h-full w-full flex-col overflow-hidden rounded-t-2xl border-0 shadow-2xl"
+              style={{
+                backgroundImage: pattern,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <CardHeader className="flex-row items-start justify-between gap-4 space-y-0 border-b-2 border-[var(--secondary)] bg-black/10">
+                <div>
+                  <CardTitle className="brand-type text-2xl font-black">Change Theme</CardTitle>
+                  <CardDescription>
+                    Click on desired theme to apply.
+                  </CardDescription>
+                </div>
+                <DrawerClose className="icon-action shrink-0" title="Close theme picker">
+                  <FaTimes />
+                </DrawerClose>
+              </CardHeader>
+              <CardContent className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-4 app-scroll sm:px-6">
+                <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {themes.map((theme) => (
+                    <ThemeButton
+                      key={theme.name}
+                      theme={theme}
+                      active={currentTheme?.name === theme.name}
+                      onClick={() => handleThemeChange(theme.name)}
+                      onMouseEnter={() =>
+                        handleThemeHover(theme.background_pattern)
+                      }
+                    />
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter className="min-h-14 border-t-2 border-[var(--secondary)] bg-black/10">
+                {loading ? (
+                  <a className="flex items-center space-x-2 font-semibold">
+                    <BiLoaderCircle size={23} />
+                    Applying theme...
+                  </a>
+                ) : themeApplied ? (
+                  <p className="text-sm font-semibold">
+                    Theme applied.
+                  </p>
+                ) : null}
+              </CardFooter>
+            </Card>
+          </div>
         </DrawerContent>
       </Drawer>
     </div>

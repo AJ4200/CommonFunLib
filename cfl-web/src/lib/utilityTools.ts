@@ -1,5 +1,25 @@
 import { EndpointData } from "@/models/endpoint";
 import { UtilityTool } from "@/models/Tool";
+import { API_BASE_URL } from "@/lib/apiConfig";
+
+export const shellSingleQuote = (value: string) =>
+  `'${value.replace(/'/g, "'\\''")}'`;
+
+export const buildCurlCommand = (
+  tool: Pick<UtilityTool, "method" | "endpoint">,
+  values: Record<string, string>
+) => {
+  const url = `${API_BASE_URL}${tool.endpoint}`;
+
+  if (tool.method === "GET") {
+    const query = new URLSearchParams(values).toString();
+    return `curl ${shellSingleQuote(`${url}${query ? `?${query}` : ""}`)}`;
+  }
+
+  return `curl -X POST ${shellSingleQuote(url)} \\
+  -H ${shellSingleQuote("Content-Type: application/json")} \\
+  --data-raw ${shellSingleQuote(JSON.stringify(values))}`;
+};
 
 const lengthUnits = ["mm", "cm", "m", "km", "inch", "foot", "yard", "mile"];
 const weightUnits = ["mg", "g", "kg", "lb", "oz", "ton"];
@@ -222,7 +242,6 @@ export const buildEndpointDocs = (tools: UtilityTool[]): EndpointData[] =>
       tool.fields.map((field) => [field.name, field.placeholder])
     );
     const query = new URLSearchParams(sample).toString();
-    const url = `http://localhost:3001${tool.endpoint}`;
     const body = JSON.stringify(sample, null, 2);
 
     return {
@@ -235,8 +254,11 @@ export const buildEndpointDocs = (tools: UtilityTool[]): EndpointData[] =>
       ),
       curlExample:
         tool.method === "GET"
-          ? `curl '${url}${query ? `?${query}` : ""}'`
-          : `curl -X POST '${url}' \\\n  -H 'Content-Type: application/json' \\\n  -d '${body}'`,
+          ? buildCurlCommand(tool, sample)
+          : buildCurlCommand(tool, sample).replace(
+              shellSingleQuote(JSON.stringify(sample)),
+              shellSingleQuote(body)
+            ),
       jsExample:
         tool.method === "GET"
           ? `fetch('${tool.endpoint}${query ? `?${query}` : ""}')\n  .then((response) => response.json())\n  .then(console.log);`

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ThemeButton from "./ThemeButton";
 import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
-import { getTheme } from "@/lib/themes";
+import { getTheme, getThemes } from "@/lib/themes";
 import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
@@ -18,17 +18,7 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
   const router = useRouter();
 
   useEffect(() => {
-    setThemes([
-      getTheme("Classic"),
-      getTheme("Vanilla"),
-      getTheme("Cherry"),
-      getTheme("Emerald"),
-      getTheme("Midnight"),
-      getTheme("Sunset"),
-      getTheme("Aurora"),
-      getTheme("Graphite"),
-      getTheme("Synthwave"),
-    ]);
+    setThemes(getThemes());
   }, []);
 
 

@@ -9,23 +9,23 @@ function CommonFunctionsPG() {
   return (
     <section className="space-y-4">
       <div className="grid gap-3 md:grid-cols-[240px_1fr_auto]">
-        <select className="rounded-lg border border-[var(--secondary)] bg-[var(--primary)] p-3 font-bold shadow-lg outline-none" value={functionType} onChange={handleFunctionTypeChange}>
+        <select className="control-surface" value={functionType} onChange={handleFunctionTypeChange}>
           {commonTools.map((tool) => <option key={tool.value} value={tool.value}>{tool.label}</option>)}
         </select>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {selectedTool.inputs.map((input) => (
-            <label key={input.name} className="text-sm font-semibold">
-              {input.label}
-              <input type={input.type || "text"} className="mt-1 w-full rounded-lg border border-[var(--secondary)] bg-[var(--primary)] p-3 font-semibold outline-none placeholder:text-current/45" value={values[input.name] || ""} onChange={handleValueChange(input.name)} placeholder={input.placeholder} />
+            <label key={input.name} className="field-label">
+              <span>{input.label}</span>
+              <input type={input.type || "text"} className="control-surface placeholder:text-current/45" value={values[input.name] || ""} onChange={handleValueChange(input.name)} placeholder={input.placeholder} />
             </label>
           ))}
         </div>
-        <button className="flex items-center justify-center gap-2 rounded-lg bg-[var(--secondary)] px-5 py-3 font-bold text-[var(--primary)] shadow-lg active:scale-95" onClick={handleComputeFunction}>
+        <button className="action-primary" onClick={handleComputeFunction}>
           <FaCalculator /> Compute
         </button>
       </div>
-      <p className="rounded-lg bg-black/10 p-3 text-sm font-semibold opacity-80">{selectedTool.description}</p>
-      <div className="rounded-lg border border-[var(--secondary)] bg-black/10 p-5 text-lg font-bold shadow-inner">
+      <p className="tool-card rounded-lg border border-[var(--secondary)] p-3 text-sm font-semibold opacity-90">{selectedTool.description}</p>
+      <div className="code-surface rounded-lg p-5 text-lg font-bold shadow-inner">
         {loading ? "Loading..." : error ? error : result !== null ? `Result: ${String(result)}` : "No result computed yet."}
       </div>
     </section>

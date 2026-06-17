@@ -190,7 +190,7 @@ main {
 }
 
 .brand-type {
-  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   letter-spacing: 0;
 }
 
@@ -335,4 +335,106 @@ input {
 select option {
   color: var(--foreground);
   background: var(--background);
+}
+
+.field-label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 86%, transparent);
+}
+
+.control-surface {
+  width: 100%;
+  min-height: 3rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--secondary);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent),
+    color-mix(in srgb, var(--primary) 86%, black);
+  padding: 0.75rem;
+  font-weight: 800;
+  color: var(--foreground);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.08);
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.control-surface:focus {
+  border-color: color-mix(in srgb, var(--secondary) 72%, white);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--secondary) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.control-surface:hover {
+  transform: translateY(-1px);
+}
+
+.action-primary,
+.action-secondary,
+.icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 950;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.action-primary {
+  min-height: 3rem;
+  background: var(--secondary);
+  color: var(--primary);
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.18);
+}
+
+.action-secondary {
+  min-height: 2.5rem;
+  border: 1px solid var(--secondary);
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.6rem 1rem;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.icon-action {
+  min-width: 2.15rem;
+  min-height: 2.15rem;
+  background: var(--secondary);
+  color: var(--primary);
+  padding: 0.5rem;
+}
+
+.action-primary:hover,
+.action-secondary:hover,
+.icon-action:hover {
+  transform: translateY(-2px);
+}
+
+.action-primary:active,
+.action-secondary:active,
+.icon-action:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.code-surface {
+  border: 1px solid color-mix(in srgb, var(--secondary) 72%, transparent);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent),
+    color-mix(in srgb, var(--primary) 88%, black);
+  color: var(--foreground);
 }

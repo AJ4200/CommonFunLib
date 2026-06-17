@@ -1,18 +1,12 @@
 import "@/styles/globals.css";
 import "@/styles/loader.css";
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Nunito } from "next/font/google";
 
-const inter = Inter({
+const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -34,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${ibmPlexSans.variable} ${jetBrainsMono.variable}`}>
+      <body className={`${nunito.variable} ${jetBrainsMono.variable}`}>
         {children}
       </body>
     </html>

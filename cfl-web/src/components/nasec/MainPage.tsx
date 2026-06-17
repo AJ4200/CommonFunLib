@@ -3,11 +3,8 @@ import { converterTools, generatorTools, hashingTools } from "@/lib/utilityTools
 import {
   FaArrowRight,
   FaBookOpen,
-  FaCheckCircle,
   FaCode,
   FaExchangeAlt,
-  FaHandPointRight,
-  FaLayerGroup,
   FaLock,
   FaMagic,
   FaPlug,
@@ -15,7 +12,6 @@ import {
   FaTerminal,
   FaTools,
 } from "react-icons/fa";
-import { RiPaletteFill } from "react-icons/ri";
 
 const toolStats = [
   { icon: <FaMagic />, label: `${commonTools.length} functions`, detail: "math and string helpers", accent: "Common" },
@@ -25,6 +21,12 @@ const toolStats = [
 ];
 
 const apiRoutes = ["/common/:tool", "/generate/:tool", "/convert/:tool", "/hash/:tool"];
+const healthRoute = "/status";
+const configuredApiBaseUrl = (
+  process.env.API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:3001"
+).replace(/\/+$/, "");
 
 const MainPage = () => (
   <div className="h-full overflow-y-auto p-3 custome-scroll sm:p-6">
@@ -61,8 +63,8 @@ const MainPage = () => (
           <div className="space-y-3 text-sm font-bold">
             {[
               ["Routes", apiRoutes.join("  ")],
+              ["Health", healthRoute],
               ["Runtime", "Next App Router + Express"],
-              ["Mode", "Local API proxy"],
             ].map(([label, value]) => (
               <div key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 p-3">
                 <p className="text-xs uppercase opacity-70">{label}</p>
@@ -94,8 +96,8 @@ const MainPage = () => (
           Local API contract
         </div>
         <p className="font-semibold leading-7 opacity-85">
-          The web app proxies `/common`, `/generate`, `/convert`, and `/hash` to `cfl-api`
-          on port 3001, so playground requests and docs use the same routes.
+          The web app proxies `/common`, `/generate`, `/convert`, and `/hash` to the configured API
+          at <span className="mono-surface">{configuredApiBaseUrl}</span>, so playground requests and docs use the same route contract.
         </p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           {apiRoutes.map((route) => (
@@ -106,17 +108,22 @@ const MainPage = () => (
         </div>
       </div>
       <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-4 flex items-center gap-3 text-xl font-black">
-          <FaLayerGroup className="text-[var(--secondary)]" />
-          What got upgraded
+        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+          <FaServer className="text-[var(--secondary)]" />
+          API health check
         </div>
-        <ul className="space-y-3 text-sm font-bold">
-          {["Sharper cockpit layout", "More expressive themes", "Request preview + payload tools", "Copy-ready API workflows"].map((item) => (
-            <li key={item} className="flex items-center gap-3 rounded-xl border border-[var(--secondary)] bg-black/10 p-3">
-              <FaCheckCircle className="text-[var(--secondary)]" /> {item}
-            </li>
-          ))}
-        </ul>
+        <p className="font-semibold leading-7 opacity-85">
+          The header status tracker calls the Next status bridge, which checks the API health route
+          at <span className="mono-surface">{configuredApiBaseUrl}{healthRoute}</span> and reports latency.
+        </p>
+        <div className="mt-5 grid gap-3">
+          <code className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
+            GET {healthRoute}
+          </code>
+          <code className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
+            {"{ status, uptimeSeconds, timestamp }"}
+          </code>
+        </div>
       </div>
     </section>
 
@@ -124,7 +131,7 @@ const MainPage = () => (
       {[
         { icon: <FaCode />, title: "Payload visibility", text: "Every utility playground exposes the request method, endpoint, and payload shape before you fire it." },
         { icon: <FaBookOpen />, title: "Docs beside tools", text: "API route tabs remain one click away so examples and live execution stay in sync." },
-        { icon: <RiPaletteFill />, title: "Identity-safe themes", text: "New palettes add range while preserving the bold CommonFunLib chrome and grid language." },
+        { icon: <FaServer />, title: "Deployable API origin", text: "The web app reads the configured API base URL so local and deployed environments stay aligned." },
       ].map((card) => (
         <article key={card.title} className="tool-card rounded-2xl border border-[var(--secondary)] p-5">
           <div className="mb-4 w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)]">{card.icon}</div>
@@ -132,15 +139,6 @@ const MainPage = () => (
           <p className="mt-2 text-sm font-semibold leading-6 opacity-80">{card.text}</p>
         </article>
       ))}
-    </section>
-
-    <section className="mx-auto mt-6 max-w-6xl tool-card rounded-2xl border border-[var(--secondary)] p-6 text-center">
-      <p className="text-lg font-bold">Theme matters. Try the expanded palette from the footer.</p>
-      <div className="mt-4 flex items-center justify-center gap-3">
-        <span>Click</span>
-        <FaHandPointRight />
-        <RiPaletteFill className="h-10 w-10 rounded-xl border border-[var(--secondary)] p-2" style={{ color: "var(--foreground)", background: "var(--background)", backgroundImage: "var(--background-image)" }} />
-      </div>
     </section>
   </div>
 );

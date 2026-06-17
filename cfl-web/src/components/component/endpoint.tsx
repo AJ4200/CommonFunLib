@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { BiDownArrow } from "react-icons/bi";
+import { FaCopy } from "react-icons/fa";
 
 interface EndpointProps {
   method?: "GET" | "POST";
@@ -28,6 +29,18 @@ const Endpoint = ({
   responseExample,
 }: EndpointProps) => {
   const [toggled, setToggled] = useState(false);
+  const copyText = async (event: React.MouseEvent, text: string) => {
+    event.stopPropagation();
+    if (typeof navigator !== "undefined") {
+      await navigator.clipboard.writeText(text);
+    }
+  };
+
+  const examples = [
+    { title: "Curl Example", value: curlExample },
+    { title: "JavaScript Example", value: jsExample },
+    { title: "Response Example", value: responseExample },
+  ];
 
   return (
     <div
@@ -79,24 +92,26 @@ const Endpoint = ({
                 ))
               )}
             </div>
-            <div className="w-full space-y-2">
-              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">Curl Example</h3>
-              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
-                <code>{curlExample}</code>
-              </pre>
-            </div>
-            <div className="w-full space-y-2">
-              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">JavaScript Example</h3>
-              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
-                <code>{jsExample}</code>
-              </pre>
-            </div>
-            <div className="w-full space-y-2">
-              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">Response Example</h3>
-              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
-                <code>{responseExample}</code>
-              </pre>
-            </div>
+            {examples.map((example) => (
+              <div key={example.title} className="w-full space-y-2">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">
+                    {example.title}
+                  </h3>
+                  <button
+                    className="icon-action"
+                    onClick={(event) => copyText(event, example.value)}
+                    title={`Copy ${example.title}`}
+                    type="button"
+                  >
+                    <FaCopy />
+                  </button>
+                </div>
+                <pre className="mono-surface code-surface w-full overflow-x-auto rounded-md p-4 text-sm">
+                  <code>{example.value}</code>
+                </pre>
+              </div>
+            ))}
           </div>
         </>
       )}

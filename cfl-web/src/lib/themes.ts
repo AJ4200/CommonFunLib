@@ -1,5 +1,17 @@
 import Theme from "@/models/Theme";
 
+export const themeNames = [
+  "Classic",
+  "Vanilla",
+  "Cherry",
+  "Emerald",
+  "Midnight",
+  "Sunset",
+  "Aurora",
+  "Graphite",
+  "Synthwave",
+] as const;
+
 export const getTheme = (themeName: string): Theme => {
   const themeMap: Record<string, Theme> = {
     Classic: {
@@ -80,3 +92,5 @@ export const getTheme = (themeName: string): Theme => {
 
   return themeMap[themeName] || themeMap.Classic;
 };
+
+export const getThemes = () => themeNames.map((name) => getTheme(name));

@@ -10,7 +10,7 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
   const InfoContentComponent = infoContent as React.FC;
 
   return (
-    <div {...props} >
+    <div className="h-full min-h-0" {...props}>
       <NavSection
         heading={"Common Functions"}
         description={

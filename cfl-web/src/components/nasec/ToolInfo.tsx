@@ -19,6 +19,14 @@ const ToolInfo = ({ tools }: ToolInfoProps) => {
             </span>
           </div>
           <p className="text-sm font-medium opacity-85">{tool.description}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="rounded-md border border-[var(--secondary)] bg-black/10 px-2 py-1 text-xs font-black uppercase">
+              {tool.fields.length === 0 ? "No inputs" : `${tool.fields.length} input${tool.fields.length === 1 ? "" : "s"}`}
+            </span>
+            <span className="mono-surface rounded-md border border-[var(--secondary)] bg-black/10 px-2 py-1 text-xs font-black">
+              {tool.endpoint}
+            </span>
+          </div>
         </article>
       ))}
     </div>
