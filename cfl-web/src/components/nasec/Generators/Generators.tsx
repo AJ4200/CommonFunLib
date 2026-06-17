@@ -7,7 +7,7 @@ import { buildEndpointDocs, generatorTools } from "@/lib/utilityTools";
 const Generators = () => (
   <NavSection
     heading="Generators"
-    description="Generate names, numbers, secrets, UUIDs, colors, PINs, and placeholder text from one fast playground."
+    description="Create realistic sample values, identifiers, colors, passwords, PINs, and placeholder text for testing forms, APIs, and demos."
     infoContent={<ToolInfo tools={generatorTools} />}
     playgroundContent={<ToolPlayground tools={generatorTools} />}
     apiContent={<EndpointList endpoints={buildEndpointDocs(generatorTools)} />}

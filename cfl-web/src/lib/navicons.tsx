@@ -14,7 +14,7 @@ const navIcons: NavIcon[] = [
   },
   {
     icon: <FaCog />,
-    label: 'CommonFunctions',
+    label: 'Functions',
     content:<CommonFunctions/>
   },
   {

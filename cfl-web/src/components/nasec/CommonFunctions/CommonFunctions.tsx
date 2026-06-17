@@ -14,7 +14,7 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
       <NavSection
         heading={"Common Functions"}
         description={
-          "The CommonFunctions section provides a collection of commonly used functions for performing mathematical operations and manipulating variables and strings. The following functions are available:"
+          "Run quick checks and transformations for everyday number and string tasks, then inspect the matching API route when you need to wire one into code."
         }
         infoContent={<InfoContentComponent />}
         playgroundContent={<CommonFunctionsPG/>}

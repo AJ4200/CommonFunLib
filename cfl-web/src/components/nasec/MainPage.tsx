@@ -9,19 +9,17 @@ import {
   FaMagic,
   FaPlug,
   FaServer,
-  FaTerminal,
   FaTools,
 } from "react-icons/fa";
 
 const toolStats = [
-  { icon: <FaMagic />, label: `${commonTools.length} functions`, detail: "math and string helpers", accent: "Common" },
-  { icon: <FaTools />, label: `${generatorTools.length} generators`, detail: "names, secrets, UUIDs", accent: "Generate" },
-  { icon: <FaExchangeAlt />, label: `${converterTools.length} converters`, detail: "units and data sizes", accent: "Convert" },
-  { icon: <FaLock />, label: `${hashingTools.length} hash tools`, detail: "digests, Base64, HMAC", accent: "Hash" },
+  { icon: <FaMagic />, label: `${commonTools.length} functions`, detail: "number checks, string helpers, and small calculations", accent: "Check" },
+  { icon: <FaTools />, label: `${generatorTools.length} generators`, detail: "sample names, UUIDs, colors, PINs, and secrets", accent: "Create" },
+  { icon: <FaExchangeAlt />, label: `${converterTools.length} converters`, detail: "length, weight, temperature, area, data, and speed", accent: "Convert" },
+  { icon: <FaLock />, label: `${hashingTools.length} text tools`, detail: "hashing, Base64, and HMAC signing helpers", accent: "Secure" },
 ];
 
 const apiRoutes = ["/common/:tool", "/generate/:tool", "/convert/:tool", "/hash/:tool"];
-const healthRoute = "/status";
 const configuredApiBaseUrl = (
   process.env.API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -32,23 +30,22 @@ const MainPage = () => (
   <div className="h-full overflow-y-auto p-3 custome-scroll sm:p-6">
     <section className="hero-grid glass-panel relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-[var(--secondary)] shadow-2xl backdrop-blur-xl">
       <div className="absolute right-4 top-4 hidden rounded-full border border-[var(--secondary)] bg-black/15 px-4 py-2 text-xs font-black uppercase tracking-[0.28em] md:block">
-        engineer-grade utility cockpit
+        developer utility library
       </div>
       <div className="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1fr_21rem]">
         <div className="relative z-10">
           <p className="mb-3 inline-flex rounded-full bg-[var(--secondary)] px-4 py-1.5 text-sm font-black text-[var(--primary)] shadow-lg">
-            API-backed utility workbench
+            Test small tasks before they become app code
           </p>
           <h1 className="brand-type max-w-4xl text-5xl font-black leading-none theme-shadow sm:text-7xl">
             CommonFunLib
           </h1>
           <p className="mt-5 max-w-3xl text-sm font-semibold leading-7 opacity-90 sm:text-lg">
-            A focused developer console for validating values, generating test data,
-            converting units, hashing payloads, and inspecting live endpoint contracts without
-            losing the app&apos;s compact identity.
+            A compact place to try common functions, generate test data, convert units,
+            and hash text while seeing the API route behind each result.
           </p>
           <div className="mt-6 grid gap-3 text-xs font-black uppercase sm:grid-cols-2 lg:max-w-3xl lg:grid-cols-4">
-            {["Playground first", "Endpoint docs", "Theme-aware", "Mobile-ready"].map((label) => (
+            {["Try utilities", "View results", "Inspect API", "Copy examples"].map((label) => (
               <span key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-3 text-center shadow-inner">
                 {label}
               </span>
@@ -57,18 +54,18 @@ const MainPage = () => (
         </div>
         <div className="tool-card relative z-10 rounded-2xl border border-[var(--secondary)] p-4">
           <div className="mb-4 flex items-center gap-3 text-lg font-black">
-            <FaTerminal className="text-[var(--secondary)]" />
-            Quick pulse
+            <FaBookOpen className="text-[var(--secondary)]" />
+            Start here
           </div>
           <div className="space-y-3 text-sm font-bold">
             {[
-              ["Routes", apiRoutes.join("  ")],
-              ["Health", healthRoute],
-              ["Runtime", "Next App Router + Express"],
+              ["1", "Choose a utility category from the side navigation."],
+              ["2", "Run a tool in the playground and review the response."],
+              ["3", "Open the API tab when you need routes, parameters, and examples."],
             ].map(([label, value]) => (
               <div key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 p-3">
-                <p className="text-xs uppercase opacity-70">{label}</p>
-                <p className="mono-surface mt-1 break-words text-xs sm:text-sm">{value}</p>
+                <p className="text-xs uppercase opacity-70">Step {label}</p>
+                <p className="mt-1 text-xs leading-5 sm:text-sm">{value}</p>
               </div>
             ))}
           </div>
@@ -93,13 +90,32 @@ const MainPage = () => (
       <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
         <div className="mb-3 flex items-center gap-3 text-xl font-black">
           <FaPlug className="text-[var(--secondary)]" />
-          Local API contract
+          Built for quick checks
         </div>
         <p className="font-semibold leading-7 opacity-85">
-          The web app proxies `/common`, `/generate`, `/convert`, and `/hash` to the configured API
-          at <span className="mono-surface">{configuredApiBaseUrl}</span>, so playground requests and docs use the same route contract.
+          Use the playground when you want a fast answer without writing a scratch script.
+          Each tool keeps the input, result, and matching endpoint close together so you can
+          move from testing to implementation without hunting through docs.
         </p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          {["Validate a value", "Generate sample data", "Convert a measurement", "Hash a payload"].map((task) => (
+            <span key={task} className="rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
+              {task}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
+        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+          <FaServer className="text-[var(--secondary)]" />
+          API-ready by design
+        </div>
+        <p className="font-semibold leading-7 opacity-85">
+          The app is connected to <span className="mono-surface">{configuredApiBaseUrl}</span>.
+          Use the API view in each category to see request formats, curl snippets, JavaScript
+          examples, and response shapes.
+        </p>
+        <div className="mt-5 grid gap-3">
           {apiRoutes.map((route) => (
             <code key={route} className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
               {route}
@@ -107,31 +123,13 @@ const MainPage = () => (
           ))}
         </div>
       </div>
-      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
-        <div className="mb-3 flex items-center gap-3 text-xl font-black">
-          <FaServer className="text-[var(--secondary)]" />
-          API health check
-        </div>
-        <p className="font-semibold leading-7 opacity-85">
-          The header status tracker calls the Next status bridge, which checks the API health route
-          at <span className="mono-surface">{configuredApiBaseUrl}{healthRoute}</span> and reports latency.
-        </p>
-        <div className="mt-5 grid gap-3">
-          <code className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
-            GET {healthRoute}
-          </code>
-          <code className="mono-surface rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2 text-sm font-black">
-            {"{ status, uptimeSeconds, timestamp }"}
-          </code>
-        </div>
-      </div>
     </section>
 
     <section className="mx-auto mt-6 grid max-w-6xl gap-4 md:grid-cols-3">
       {[
-        { icon: <FaCode />, title: "Payload visibility", text: "Every utility playground exposes the request method, endpoint, and payload shape before you fire it." },
-        { icon: <FaBookOpen />, title: "Docs beside tools", text: "API route tabs remain one click away so examples and live execution stay in sync." },
-        { icon: <FaServer />, title: "Deployable API origin", text: "The web app reads the configured API base URL so local and deployed environments stay aligned." },
+        { icon: <FaCode />, title: "Practical inputs", text: "Forms use sensible defaults so you can try a utility immediately and adjust only what matters." },
+        { icon: <FaBookOpen />, title: "Plain descriptions", text: "Each tool explains what it does in normal language before showing request details." },
+        { icon: <FaServer />, title: "Reusable examples", text: "Endpoint cards include the method, parameters, curl command, JavaScript fetch, and sample response." },
       ].map((card) => (
         <article key={card.title} className="tool-card rounded-2xl border border-[var(--secondary)] p-5">
           <div className="mb-4 w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)]">{card.icon}</div>

@@ -7,7 +7,7 @@ import { buildEndpointDocs, hashingTools } from "@/lib/utilityTools";
 const Hashing = () => (
   <NavSection
     heading="Hashing"
-    description="Hash, encode, decode, and sign text with digest and Base64 utilities."
+    description="Hash, encode, decode, and sign text payloads while checking the exact endpoint and response shape behind each utility."
     infoContent={<ToolInfo tools={hashingTools} />}
     playgroundContent={<ToolPlayground tools={hashingTools} />}
     apiContent={<EndpointList endpoints={buildEndpointDocs(hashingTools)} />}

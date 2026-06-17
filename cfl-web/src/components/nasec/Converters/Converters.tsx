@@ -7,7 +7,7 @@ import { buildEndpointDocs, converterTools } from "@/lib/utilityTools";
 const Converters = () => (
   <NavSection
     heading="Converters"
-    description="Convert lengths, weights, temperatures, areas, data sizes, and speeds with API-backed forms."
+    description="Convert common measurements and data sizes with simple inputs, live results, and request examples you can reuse."
     infoContent={<ToolInfo tools={converterTools} />}
     playgroundContent={<ToolPlayground tools={converterTools} />}
     apiContent={<EndpointList endpoints={buildEndpointDocs(converterTools)} />}
