@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
 import { FaServer } from "react-icons/fa";
-import Logo from "@/icons/Logo";
 
 interface NavSectionProps {
   heading: string;
@@ -35,24 +34,23 @@ const NavSection: React.FC<NavSectionProps> = ({
   ];
 
   return (
-    <div className="h-full w-full" {...props}>
-      <div className="absolute scale-[6.5] blur-[1px] pointer-events-none left-[50%] top-[50%]"><Logo/></div>
-      <h2 className="text-2xl m-2 theme-shadow font-bold mb-2 text-center">
-        {heading}
-      </h2>
-      <p className=" mb-4 text-center">{description}</p>
-      <div className="border border-[var(--secondary)] rounded-md p-4 shadow-lg flex m-8 flex-row justify-between backdrop-blur-2xl max-h-96">
-        <div className="w-full">
+    <div className="flex h-full w-full flex-col overflow-hidden" {...props}>
+      <header className="border-b border-[var(--secondary)] bg-black/10 px-3 py-3 sm:px-6 sm:py-4">
+        <h2 className="brand-type text-2xl font-black theme-shadow sm:text-3xl">{heading}</h2>
+        <p className="mt-1 max-w-4xl text-xs font-semibold opacity-85 sm:text-sm">{description}</p>
+      </header>
+      <div className="flex min-h-0 flex-1 flex-col-reverse gap-3 p-3 lg:flex-row lg:gap-4 lg:p-4">
+        <div className="glass-panel min-h-0 flex-1 overflow-y-auto rounded-lg border border-[var(--secondary)] p-3 custome-scroll sm:p-4">
           {activeTab === 0 && infoContent}
           {activeTab === 1 && playgroundContent}
           {activeTab === 2 && apiContent}
-        </div>{" "}
-        <div className="flex space-y-4 flex-col w-[15%]">
+        </div>
+        <div className="flex shrink-0 flex-row gap-2 sm:gap-3 lg:w-44 lg:flex-col">
           {icons.map(({ icon, label, tabIndex }) => (
-            <div
+            <button
               key={tabIndex}
-              className={` w-max cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3 self-end ${
-                activeTab === tabIndex ? "icon-shadow" : "text-[var(--primary)]"
+              className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-[var(--secondary)] p-2 text-xs font-black text-[var(--primary)] shadow-md transition hover:-translate-y-0.5 sm:min-h-12 sm:p-3 sm:text-sm lg:justify-start ${
+                activeTab === tabIndex ? "icon-shadow ring-2 ring-[var(--primary)]" : ""
               } `}
               onClick={() => handleTabClick(tabIndex)}
               onMouseEnter={() => {
@@ -60,23 +58,13 @@ const NavSection: React.FC<NavSectionProps> = ({
                 setHoveredTab(tabIndex);
               }}
               onMouseLeave={() => setShowLabel(false)}
+              title={label}
             >
-              <div className="flex items-center transition-all delay-300 space-x-2 ">
-                {activeTab === tabIndex ? (
-                  <span className="text-sm">{label}</span>
-                ) : (
-                  ""
-                )}
-                {showLabel &&
-                hoveredTab === tabIndex &&
-                activeTab != tabIndex ? (
-                  <span className="text-sm">{label}</span>
-                ) : (
-                  ""
-                )}
-                {icon}
-              </div>
-            </div>
+              <span className="text-lg">{icon}</span>
+              <span className={`${activeTab === tabIndex || (showLabel && hoveredTab === tabIndex) ? "inline" : "hidden lg:inline"}`}>
+                {label}
+              </span>
+            </button>
           ))}
         </div>
       </div>

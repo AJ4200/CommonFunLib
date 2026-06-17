@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { RiPaletteFill } from "react-icons/ri";
-import { getCurrentTheme } from "@/lib/utils";
 import Theme from "@/models/Theme";
 import {
   Card,
@@ -14,13 +13,7 @@ import ThemeButton from "./ThemeButton";
 import { getTheme } from "@/lib/themes";
 import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
 import { BiLoaderCircle } from "react-icons/bi";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
 
@@ -42,7 +35,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
       getTheme("Midnight"),
       getTheme("Sunset"),
     ]);
-    setCurrentTheme(getTheme(getStoredTheme() as string));
+    setCurrentTheme(getTheme(getStoredTheme() ?? "Classic"));
   }, []);
 
   const handleThemeHover = (themePattern: string) => {
@@ -63,15 +56,19 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   };
 
   return (
-    <div {...props} className="">
+    <div {...props}>
       <Drawer
         onClose={() => {
           setThemeApplied(false);
         }}
       >
-        <DrawerTrigger>
+        <DrawerTrigger asChild>
+          <button
+            className="tool-card grid h-11 w-11 place-items-center rounded-lg border border-[var(--secondary)] transition-transform hover:-translate-y-0.5 active:scale-95"
+            title="Open theme picker"
+          >
           <RiPaletteFill
-            className="rounded-xl ml-1 mt-1 p-2 w-12 h-12 transition-transform active:scale-75 border border-[var(--secondary)]"
+            className="h-8 w-8 rounded-md p-1"
             style={{
               color: currentTheme?.foreground,
               backgroundColor: currentTheme?.background,
@@ -80,21 +77,21 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
               backgroundSize: "cover",
             }}
           />
+          </button>
         </DrawerTrigger>
 
-        <DrawerContent className="backdrop-blur-md shadow-2xl border-[var(--secondary)]">
-          <div className="m-2" />
+        <DrawerContent className="chrome-panel left-auto right-0 top-0 bottom-auto inset-x-auto mt-0 h-dvh w-full max-w-md rounded-l-lg rounded-t-none border-l-2 border-[var(--secondary)] backdrop-blur-md">
           <Card
-            className="shadow-inner border-[var(--secondary)] m-4"
+            className="m-4 max-h-[calc(100dvh-2rem)] overflow-y-auto border-[var(--secondary)] shadow-inner app-scroll"
             style={{
-              background: getCurrentTheme()?.background,
+              background: currentTheme?.background,
               backgroundImage: pattern,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
           >
             <CardHeader>
-              <CardTitle>Change Theme</CardTitle>
+              <CardTitle className="brand-type text-xl font-black">Change Theme</CardTitle>
               <CardDescription>
                 Click on desired theme to apply.
               </CardDescription>

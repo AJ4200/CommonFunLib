@@ -13,6 +13,10 @@ class Hashing {
     return crypto.createHash('sha256').update(input).digest('hex');
   }
 
+  static sha384(input) {
+    return crypto.createHash('sha384').update(input).digest('hex');
+  }
+
   static sha512(input) {
     return crypto.createHash('sha512').update(input).digest('hex');
   }

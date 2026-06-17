@@ -36,6 +36,15 @@ class Generator {
 
   generateUuid() { return crypto.randomUUID(); }
 
+  generateToken(bytes = 16) {
+    return crypto.randomBytes(bytes).toString('hex');
+  }
+
+  generatePin(digits = 6) {
+    const length = Math.min(Math.max(Number(digits) || 6, 4), 12);
+    return Array.from({ length }, () => this.generateRandomNumber(0, 9)).join('');
+  }
+
   generateColor() {
     return `#${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
   }

@@ -6,8 +6,8 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children }) => {
   return (
-    <section className="w-full h-full rounded-xl backdrop-blur-md border-[var(--secondary)] border-2 shadow-2xl">
-      <div>{children}</div>
+    <section className="glass-panel h-full min-w-0 flex-1 overflow-hidden rounded-lg border-2 border-[var(--secondary)] backdrop-blur-md">
+      <div className="h-full">{children}</div>
     </section>
   );
 };

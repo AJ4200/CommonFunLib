@@ -4,65 +4,107 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: #a9a9a9;
+    --background-rgb: 169 169 169;
+    --foreground: #111827;
+    --foreground-rgb: 17 24 39;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: rgba(255, 255, 255, 0.12);
+    --card-rgb: 255 255 255;
+    --card-foreground: #111827;
+    --card-foreground-rgb: 17 24 39;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: #a9a9a9;
+    --popover-rgb: 169 169 169;
+    --popover-foreground: #111827;
+    --popover-foreground-rgb: 17 24 39;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: #a9a9a9;
+    --primary-rgb: 169 169 169;
+    --primary-foreground: #111827;
+    --primary-foreground-rgb: 17 24 39;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: #4682b4;
+    --secondary-rgb: 70 130 180;
+    --secondary-foreground: #ffffff;
+    --secondary-foreground-rgb: 255 255 255;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: rgba(255, 255, 255, 0.18);
+    --muted-rgb: 255 255 255;
+    --muted-foreground: rgba(17, 24, 39, 0.72);
+    --muted-foreground-rgb: 17 24 39;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: #4682b4;
+    --accent-rgb: 70 130 180;
+    --accent-foreground: #ffffff;
+    --accent-foreground-rgb: 255 255 255;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: #ef4444;
+    --destructive-rgb: 239 68 68;
+    --destructive-foreground: #ffffff;
+    --destructive-foreground-rgb: 255 255 255;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: rgba(70, 130, 180, 0.75);
+    --border-rgb: 70 130 180;
+    --input: rgba(255, 255, 255, 0.14);
+    --input-rgb: 255 255 255;
+    --ring: #4682b4;
+    --ring-rgb: 70 130 180;
+    --background-image: none;
+    --panel: rgba(10, 14, 20, 0.12);
+    --panel-strong: rgba(255, 255, 255, 0.14);
+    --hairline: rgba(255, 255, 255, 0.24);
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: #020617;
+    --background-rgb: 2 6 23;
+    --foreground: #f8fafc;
+    --foreground-rgb: 248 250 252;
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: rgba(255, 255, 255, 0.1);
+    --card-rgb: 255 255 255;
+    --card-foreground: #f8fafc;
+    --card-foreground-rgb: 248 250 252;
 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: #020617;
+    --popover-rgb: 2 6 23;
+    --popover-foreground: #f8fafc;
+    --popover-foreground-rgb: 248 250 252;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: #111827;
+    --primary-rgb: 17 24 39;
+    --primary-foreground: #f8fafc;
+    --primary-foreground-rgb: 248 250 252;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: #38bdf8;
+    --secondary-rgb: 56 189 248;
+    --secondary-foreground: #020617;
+    --secondary-foreground-rgb: 2 6 23;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: rgba(255, 255, 255, 0.14);
+    --muted-rgb: 255 255 255;
+    --muted-foreground: #cbd5e1;
+    --muted-foreground-rgb: 203 213 225;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: #38bdf8;
+    --accent-rgb: 56 189 248;
+    --accent-foreground: #020617;
+    --accent-foreground-rgb: 2 6 23;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: #ef4444;
+    --destructive-rgb: 239 68 68;
+    --destructive-foreground: #ffffff;
+    --destructive-foreground-rgb: 255 255 255;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: rgba(56, 189, 248, 0.72);
+    --border-rgb: 56 189 248;
+    --input: rgba(17, 24, 39, 0.82);
+    --input-rgb: 17 24 39;
+    --ring: #38bdf8;
+    --ring-rgb: 56 189 248;
   }
 }
 
@@ -74,17 +116,95 @@
     @apply bg-background text-foreground;
     height: 100dvh;
     width: 100dvw;
+    overflow: hidden;
+    font-family: var(--font-sans), system-ui, sans-serif;
   }
 }
 main {
   height: 100dvh;
   width: 100dvw;
 }
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--secondary) 20%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--secondary) 16%, transparent) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 42%, rgba(0, 0, 0, 0.16));
+  background-size: 38px 38px, 38px 38px, 100% 100%;
+  opacity: 0.42;
+}
+
+.app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.055) 0,
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.32;
+}
+
+.chrome-panel {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 88%, black), color-mix(in srgb, var(--primary) 76%, var(--secondary))),
+    var(--primary);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.glass-panel {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055)),
+    var(--panel);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 22px 55px rgba(0, 0, 0, 0.18);
+}
+
+.tool-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
+    var(--panel);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.brand-type {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.mono-surface {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
 .icon-shadow {
   filter: drop-shadow(2px 2px var(--primary));
 }
 .theme-shadow {
-  text-shadow: 4px 3px 1px var(--secondary);
+  text-shadow:
+    0 2px 0 color-mix(in srgb, var(--secondary) 70%, transparent),
+    0 12px 28px rgba(0, 0, 0, 0.22);
 }
 .shadow-inner {
   --tw-shadow: inset 0 4px 8px 0 rgb(0 0 0 / 0.05);
@@ -92,17 +212,90 @@ main {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.app-scroll,
+.custome-scroll {
+  scrollbar-color: var(--secondary) color-mix(in srgb, var(--primary) 72%, transparent);
+  scrollbar-width: thin;
+}
+
+.app-scroll::-webkit-scrollbar,
 .custome-scroll::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
-  margin-left: 2px;
+  width: 14px;
+  height: 14px;
 }
 
+.app-scroll::-webkit-scrollbar-track,
 .custome-scroll::-webkit-scrollbar-track {
-  background: transparent; /* color of the tracking area */
+  background: color-mix(in srgb, var(--primary) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 55%, transparent);
+  border-radius: 999px;
 }
 
+.app-scroll::-webkit-scrollbar-thumb,
 .custome-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--secondary); /* color of the scroll thumb */
-  border-radius: 10px; /* roundness of the scroll thumb */
-  border: 2px solid var(--primary); /* creates padding around scroll thumb */
+  min-height: 44px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
+    var(--secondary);
+  border: 3px solid var(--primary);
+  border-radius: 999px;
+}
+
+.app-scroll::-webkit-scrollbar-thumb:hover,
+.custome-scroll::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 34%),
+    color-mix(in srgb, var(--secondary) 86%, white);
+}
+
+.app-scroll::-webkit-scrollbar-corner,
+.custome-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.app-scroll::-webkit-scrollbar-button:single-button,
+.custome-scroll::-webkit-scrollbar-button:single-button {
+  width: 14px;
+  height: 14px;
+  background-color: var(--primary);
+  border: 1px solid var(--secondary);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 8px 8px;
+}
+
+.app-scroll::-webkit-scrollbar-button:single-button:vertical:decrement,
+.custome-scroll::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-radius: 999px 999px 4px 4px;
+  background-image: linear-gradient(135deg, transparent 50%, var(--secondary) 50%),
+    linear-gradient(225deg, transparent 50%, var(--secondary) 50%);
+  background-position: 3px 5px, 7px 5px;
+  background-size: 4px 4px, 4px 4px;
+}
+
+.app-scroll::-webkit-scrollbar-button:single-button:vertical:increment,
+.custome-scroll::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-radius: 4px 4px 999px 999px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--secondary) 50%),
+    linear-gradient(315deg, transparent 50%, var(--secondary) 50%);
+  background-position: 3px 5px, 7px 5px;
+  background-size: 4px 4px, 4px 4px;
+}
+
+.app-scroll::-webkit-scrollbar-button:single-button:horizontal:decrement,
+.custome-scroll::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  border-radius: 999px 4px 4px 999px;
+  background-image: linear-gradient(225deg, transparent 50%, var(--secondary) 50%),
+    linear-gradient(135deg, transparent 50%, var(--secondary) 50%);
+  background-position: 5px 3px, 5px 7px;
+  background-size: 4px 4px, 4px 4px;
+}
+
+.app-scroll::-webkit-scrollbar-button:single-button:horizontal:increment,
+.custome-scroll::-webkit-scrollbar-button:single-button:horizontal:increment {
+  border-radius: 4px 999px 999px 4px;
+  background-image: linear-gradient(315deg, transparent 50%, var(--secondary) 50%),
+    linear-gradient(45deg, transparent 50%, var(--secondary) 50%);
+  background-position: 5px 3px, 5px 7px;
+  background-size: 4px 4px, 4px 4px;
 }

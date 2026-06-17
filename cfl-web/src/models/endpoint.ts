@@ -1,4 +1,5 @@
 export interface EndpointData {
+  method?: "GET" | "POST";
   endpoint: string;
   description: string;
   parameters: {

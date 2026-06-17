@@ -29,6 +29,24 @@ router.post("/weight", (req, res) => {
   res.json({ convertedWeight });
 });
 
+router.post("/area", (req, res) => {
+  const { area, fromUnit, toUnit } = req.body;
+  const convertedArea = converter.convertArea(area, fromUnit, toUnit);
+  res.json({ convertedArea });
+});
+
+router.post("/dataSize", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  const convertedDataSize = converter.convertDataSize(value, fromUnit, toUnit);
+  res.json({ convertedDataSize });
+});
+
+router.post("/speed", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  const convertedSpeed = converter.convertSpeed(value, fromUnit, toUnit);
+  res.json({ convertedSpeed });
+});
+
 router.post("/temperature", (req, res) => {
   const { temperature, fromUnit, toUnit } = req.body;
   const convertedTemperature = converter.convertTemperature(

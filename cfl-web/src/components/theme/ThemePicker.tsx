@@ -5,7 +5,7 @@ import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
 import { getTheme } from "@/lib/themes";
 import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface ThemeProps {
   initialOpen: boolean;
@@ -45,16 +45,16 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
 
   return (
     <div
-      className={`fixed w-full h-full backdrop-blur-lg flex items-center justify-center flex-col bg-no-repeat bg-cover ${
+      className={`fixed inset-0 flex h-full w-full flex-col items-center justify-center overflow-y-auto bg-cover bg-no-repeat p-4 backdrop-blur-lg app-scroll ${
         open ? "" : "hidden"
       }`}
       style={{
-        background: currentTheme?.background,
+        backgroundColor: currentTheme?.background,
         backgroundImage: pattern,
       }}
     >
       <h1
-        className="text-6xl md:text-8xl font-bold m-5"
+        className="brand-type m-5 text-center text-4xl font-black theme-shadow sm:text-6xl md:text-8xl"
         style={{
           color: currentTheme?.foreground,
         }}
@@ -62,13 +62,13 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
         Customize your Experience
       </h1>
       <div
-        className="backdrop-blur-md rounded-lg p-8 border-[2px] shadow-2xl md:w-1/2"
+        className="w-full max-w-2xl rounded-lg border-[2px] bg-black/10 p-5 shadow-2xl backdrop-blur-md sm:p-8"
         style={{
           borderColor: currentTheme?.secondaryColor,
         }}
       >
         <h2
-          className="text-3xl font-bold mb-4 flex m-4 items-center space-x-2"
+          className="m-2 mb-4 flex items-center gap-2 text-2xl font-black sm:m-4 sm:text-3xl"
           style={{
             color: currentTheme?.foreground,
           }}

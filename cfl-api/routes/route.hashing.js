@@ -20,6 +20,12 @@ router.post("/sha256", (req, res) => {
   res.json({ hashedValue });
 });
 
+router.post("/sha384", (req, res) => {
+  const { input } = req.body;
+  const hashedValue = Hashing.sha384(input);
+  res.json({ hashedValue });
+});
+
 router.post("/sha512", (req, res) => {
   const { input } = req.body;
   const hashedValue = Hashing.sha512(input);

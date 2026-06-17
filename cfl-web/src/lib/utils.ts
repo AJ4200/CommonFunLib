@@ -17,5 +17,5 @@ export const lighten = (color: string, amount: number): string => {
 };
 
 export const getCurrentTheme = () => {
-  return getTheme(getStoredTheme.toString());
+  return getTheme(getStoredTheme() ?? "Classic");
 };

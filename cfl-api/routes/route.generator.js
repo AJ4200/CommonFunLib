@@ -16,6 +16,12 @@ router.get("/randomPassword", (req, res) => {
   res.json({ randomPassword });
 });
 
+router.get("/randomNumber", (req, res) => {
+  const min = req.query.min ? parseInt(req.query.min) : 1;
+  const max = req.query.max ? parseInt(req.query.max) : 100;
+  res.json({ randomNumber: generator.generateRandomNumber(min, max) });
+});
+
 router.get("/firstNames", (req, res) => {
   const firstNames = generator.getFirstNames();
   res.json({ firstNames });
@@ -29,6 +35,16 @@ router.get("/lastNames", (req, res) => {
 
 router.get("/uuid", (req, res) => {
   res.json({ uuid: generator.generateUuid() });
+});
+
+router.get("/token", (req, res) => {
+  const bytes = req.query.bytes ? parseInt(req.query.bytes) : 16;
+  res.json({ token: generator.generateToken(bytes) });
+});
+
+router.get("/pin", (req, res) => {
+  const digits = req.query.digits ? parseInt(req.query.digits) : 6;
+  res.json({ pin: generator.generatePin(digits) });
 });
 
 router.get("/color", (req, res) => {

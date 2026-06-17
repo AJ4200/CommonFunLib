@@ -17,7 +17,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
   return (
     <Button
       onClick={onClick}
-      className="block w-full py-2 px-4 mb-2 text-center border rounded-lg border-gray-400 bg-no-repeat bg-cover"
+      className="mb-2 block min-h-12 w-full rounded-lg border border-[var(--secondary)] bg-cover bg-no-repeat px-4 py-2 text-center font-black shadow-inner transition hover:-translate-y-0.5"
       style={{
         color: theme.foreground,
         backgroundImage: theme.background_pattern,

@@ -77,6 +77,58 @@ class Converter {
     return convertedWeight.toFixed(2);
   }
 
+  convertArea(area, fromUnit, toUnit) {
+    const units = {
+      sqmm: 0.000001,
+      sqcm: 0.0001,
+      sqm: 1,
+      hectare: 10000,
+      sqft: 0.09290304,
+      acre: 4046.8564224,
+      sqkm: 1000000,
+    };
+
+    if (!units.hasOwnProperty(fromUnit) || !units.hasOwnProperty(toUnit)) {
+      console.error('Invalid area unit specified.');
+      return null;
+    }
+
+    return ((area * units[fromUnit]) / units[toUnit]).toFixed(2);
+  }
+
+  convertDataSize(value, fromUnit, toUnit) {
+    const units = {
+      B: 1,
+      KB: 1024,
+      MB: 1024 ** 2,
+      GB: 1024 ** 3,
+      TB: 1024 ** 4,
+    };
+
+    if (!units.hasOwnProperty(fromUnit) || !units.hasOwnProperty(toUnit)) {
+      console.error('Invalid data unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(2);
+  }
+
+  convertSpeed(value, fromUnit, toUnit) {
+    const units = {
+      mps: 1,
+      kph: 0.2777777778,
+      mph: 0.44704,
+      knot: 0.5144444444,
+    };
+
+    if (!units.hasOwnProperty(fromUnit) || !units.hasOwnProperty(toUnit)) {
+      console.error('Invalid speed unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(2);
+  }
+
   convertTemperature(temperature, fromUnit, toUnit) {
     let convertedTemperature;
 
@@ -84,6 +136,16 @@ class Converter {
       convertedTemperature = (temperature * 9/5) + 32;
     } else if (fromUnit === 'F' && toUnit === 'C') {
       convertedTemperature = (temperature - 32) * 5/9;
+    } else if (fromUnit === 'C' && toUnit === 'K') {
+      convertedTemperature = temperature + 273.15;
+    } else if (fromUnit === 'K' && toUnit === 'C') {
+      convertedTemperature = temperature - 273.15;
+    } else if (fromUnit === 'F' && toUnit === 'K') {
+      convertedTemperature = (temperature - 32) * 5/9 + 273.15;
+    } else if (fromUnit === 'K' && toUnit === 'F') {
+      convertedTemperature = (temperature - 273.15) * 9/5 + 32;
+    } else if (fromUnit === toUnit) {
+      convertedTemperature = temperature;
     } else {
       console.error('Invalid temperature unit specified.');
       return null;

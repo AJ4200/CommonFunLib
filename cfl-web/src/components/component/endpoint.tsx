@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BiDownArrow } from "react-icons/bi";
 
 interface EndpointProps {
+  method?: "GET" | "POST";
   endpoint: string;
   description: string;
   parameters: {
@@ -17,6 +18,7 @@ interface EndpointProps {
 }
 
 const Endpoint = ({
+  method = "GET",
   endpoint,
   description,
   parameters,
@@ -29,64 +31,69 @@ const Endpoint = ({
 
   return (
     <div
-      className="flex flex-col justify-center items-center w-full h-full cursor-pointer bg-[var(--secondary)] rounded-lg shadow-md p-3"
+      className="tool-card flex w-full cursor-pointer flex-col rounded-lg border border-[var(--secondary)] p-4 transition hover:-translate-y-0.5"
       onClick={() => {
         setToggled(!toggled);
       }}
     >
-      <div className="flex flex-row justify-between items-center w-full">
+      <div className="flex w-full flex-wrap items-center justify-between gap-3">
         <Badge
-          className="bg-[var(--primary)] font-bold text-[--foreground]"
+          className="bg-[var(--primary)] font-bold text-[var(--foreground)]"
           variant="secondary"
         >
-          GET
+          {method}
         </Badge>
         <a
-          className="text-[var(--primary)] hover:underline font-semibold"
+          className="min-w-0 flex-1 break-all font-semibold text-[var(--primary)] hover:underline"
           href="#"
           target="_blank"
-          onClick={() => {
+          onClick={(event) => {
+            event.preventDefault();
             setToggled(!toggled);
           }}
         >
           {endpoint}
         </a>
-        <BiDownArrow className={`${!toggled ? "rotate-180" : ""}`} />
+        <BiDownArrow className={`shrink-0 transition ${!toggled ? "rotate-180" : ""}`} />
       </div>
-      <p className="text-[var(--foreground)]">{description}</p>
+      <p className="mt-2 text-sm font-medium text-[var(--foreground)]">{description}</p>
       {toggled && (
         <>
-          <div className="w-[90%] my-2 h-[1.5px] bg-[var(--primary)]" />
-          <div className="flex flex-col justify-center items-center w-full">
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold">Parameters</h3>
-              {Object.keys(parameters).map((param, index) => (
-                <div key={index} className="flex items-center space-x-2">
+          <div className="my-4 h-px w-full bg-[var(--primary)]" />
+          <div className="flex w-full flex-col gap-4">
+            <div className="space-y-2 text-[var(--primary)]">
+              <h3 className="text-sm font-black uppercase tracking-wide">Parameters</h3>
+              {Object.keys(parameters).length === 0 ? (
+                <p className="text-sm font-semibold">No parameters required.</p>
+              ) : (
+                Object.keys(parameters).map((param) => (
+                <div key={param} className="flex flex-wrap items-center gap-2">
                   <Badge
-                    className="bg-[var(--primary)] font-bold text-[--foreground]"
+                    className="bg-[var(--primary)] font-bold text-[var(--foreground)]"
                     variant="secondary"
                   >
                     {paramDescriptions[param]}
                   </Badge>
                   <span className="font-medium">{param}</span>
                 </div>
-              ))}
+                ))
+              )}
             </div>
-            <div className="space-y-2 w-full">
-              <h3 className="text-lg font-semibold">Curl Example</h3>
-              <pre className="p-4 bg-[var(--primary)] rounded-md w-full">
+            <div className="w-full space-y-2">
+              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">Curl Example</h3>
+              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
                 <code>{curlExample}</code>
               </pre>
             </div>
-            <div className="space-y-2 w-full">
-              <h3 className="text-lg font-semibold">JavaScript Example</h3>
-              <pre className="p-4 bg-[var(--primary)] rounded-md w-full">
+            <div className="w-full space-y-2">
+              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">JavaScript Example</h3>
+              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
                 <code>{jsExample}</code>
               </pre>
             </div>
-            <div className="space-y-2 w-full">
-              <h3 className="text-lg font-semibold">Response Example</h3>
-              <pre className="p-4 bg-[var(--primary)] rounded-md w-full">
+            <div className="w-full space-y-2">
+              <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">Response Example</h3>
+              <pre className="mono-surface w-full overflow-x-auto rounded-md bg-[var(--primary)] p-4 text-sm">
                 <code>{responseExample}</code>
               </pre>
             </div>
