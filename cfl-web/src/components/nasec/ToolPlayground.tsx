@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { FaBolt, FaCopy, FaFileCode, FaRedo, FaTerminal } from "react-icons/fa";
 import { UtilityTool } from "@/models/Tool";
 import { buildCurlCommand } from "@/lib/utilityTools";
+import OperationLoader from "@/components/ui/OperationLoader";
 
 interface ToolPlaygroundProps {
   tools: UtilityTool[];
@@ -89,9 +90,9 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
   return (
     <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.7fr)]">
       <div className="space-y-4">
-        <div className="grid gap-3 lg:grid-cols-[16rem_1fr_auto]">
+        <div className="grid gap-3 lg:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)_auto]">
           <select
-            className="control-surface"
+            className="control-surface select-surface"
             value={selectedTool.value}
             onChange={(event) => {
               setSelectedValue(event.target.value);
@@ -106,7 +107,7 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
             ))}
           </select>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="input-grid">
             {selectedTool.fields.length === 0 ? (
               <div className="tool-card rounded-lg border border-dashed border-[var(--secondary)] p-3 text-sm font-semibold opacity-80">
                 No input needed
@@ -117,7 +118,7 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
                   <span>{field.label}</span>
                   {field.options ? (
                     <select
-                      className="control-surface"
+                      className="control-surface select-surface"
                       value={values[field.name] ?? field.placeholder}
                       onChange={(event) => updateValue(field.name, event.target.value)}
                     >
@@ -143,9 +144,10 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
 
           <div className="grid gap-2">
             <button
-              className="action-primary"
+              className="action-primary disabled:cursor-wait disabled:opacity-70"
               onClick={runTool}
               disabled={loading}
+              type="button"
             >
               <FaBolt /> {loading ? "Running" : "Run"}
             </button>
@@ -190,9 +192,15 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
         {selectedTool.resultKey === "color" && result ? (
           <div className="mb-3 h-16 rounded-lg border border-[var(--secondary)]" style={{ background: result }} />
         ) : null}
-        <pre className="mono-surface code-surface min-h-28 whitespace-pre-wrap break-words rounded-lg p-4 text-sm font-bold">
-          {error || result || "Run a tool to see output here."}
-        </pre>
+        {loading ? (
+          <div className="code-surface flex min-h-28 items-center justify-center rounded-lg p-4">
+            <OperationLoader label="Running tool" />
+          </div>
+        ) : (
+          <pre className="mono-surface code-surface min-h-28 whitespace-pre-wrap break-words rounded-lg p-4 text-sm font-bold">
+            {error || result || "Run a tool to see output here."}
+          </pre>
+        )}
       </aside>
     </section>
   );

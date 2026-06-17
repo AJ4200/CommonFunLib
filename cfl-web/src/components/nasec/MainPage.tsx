@@ -4,22 +4,30 @@ import {
   FaArrowRight,
   FaBookOpen,
   FaCode,
+  FaCog,
   FaExchangeAlt,
   FaLock,
-  FaMagic,
+  FaNpm,
   FaPlug,
   FaServer,
   FaTools,
 } from "react-icons/fa";
 
 const toolStats = [
-  { icon: <FaMagic />, label: `${commonTools.length} functions`, detail: "number checks, string helpers, and small calculations", accent: "Check" },
+  { icon: <FaCog />, label: `${commonTools.length} functions`, detail: "number checks, string helpers, and small calculations", accent: "Check" },
   { icon: <FaTools />, label: `${generatorTools.length} generators`, detail: "sample names, UUIDs, colors, PINs, and secrets", accent: "Create" },
   { icon: <FaExchangeAlt />, label: `${converterTools.length} converters`, detail: "length, weight, temperature, area, data, and speed", accent: "Convert" },
   { icon: <FaLock />, label: `${hashingTools.length} text tools`, detail: "hashing, Base64, and HMAC signing helpers", accent: "Secure" },
 ];
 
 const apiRoutes = ["/common/:tool", "/generate/:tool", "/convert/:tool", "/hash/:tool"];
+const installCommand = "npm install commonfunlib";
+const importExample = `import { isEven, generatePassword, convertLength, sha256 } from "commonfunlib";
+
+isEven(42);
+generatePassword(16);
+convertLength(12, "m", "foot");
+sha256("CommonFunLib");`;
 const configuredApiBaseUrl = (
   process.env.API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -42,10 +50,10 @@ const MainPage = () => (
           </h1>
           <p className="mt-5 max-w-3xl text-sm font-semibold leading-7 opacity-90 sm:text-lg">
             A compact place to try common functions, generate test data, convert units,
-            and hash text while seeing the API route behind each result.
+            and hash text before using the same tools through the API or npm package.
           </p>
           <div className="mt-6 grid gap-3 text-xs font-black uppercase sm:grid-cols-2 lg:max-w-3xl lg:grid-cols-4">
-            {["Try utilities", "View results", "Inspect API", "Copy examples"].map((label) => (
+            {["Try utilities", "View results", "Inspect API", "Install npm"].map((label) => (
               <span key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-3 text-center shadow-inner">
                 {label}
               </span>
@@ -61,7 +69,7 @@ const MainPage = () => (
             {[
               ["1", "Choose a utility category from the side navigation."],
               ["2", "Run a tool in the playground and review the response."],
-              ["3", "Open the API tab when you need routes, parameters, and examples."],
+              ["3", "Use the API routes or install the npm package in your project."],
             ].map(([label, value]) => (
               <div key={label} className="rounded-xl border border-[var(--secondary)] bg-black/10 p-3">
                 <p className="text-xs uppercase opacity-70">Step {label}</p>
@@ -83,6 +91,31 @@ const MainPage = () => (
             <FaArrowRight className="mt-4 opacity-50 transition group-hover:translate-x-1 group-hover:opacity-100" />
           </div>
         ))}
+      </div>
+    </section>
+
+    <section className="mx-auto mt-6 grid max-w-6xl gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
+        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+          <FaNpm className="text-[var(--secondary)]" />
+          Install as npm
+        </div>
+        <p className="font-semibold leading-7 opacity-85">
+          Skip the API when you just need the utilities inside your own Node or TypeScript
+          project. Install CommonFunLib and import only the helpers you want.
+        </p>
+        <code className="mono-surface code-surface mt-5 block overflow-x-auto rounded-xl border border-[var(--secondary)] px-3 py-3 text-sm font-black">
+          {installCommand}
+        </code>
+      </div>
+      <div className="tool-card rounded-2xl border border-[var(--secondary)] p-6">
+        <div className="mb-3 flex items-center gap-3 text-xl font-black">
+          <FaCode className="text-[var(--secondary)]" />
+          Import what you need
+        </div>
+        <pre className="mono-surface code-surface max-h-72 overflow-auto whitespace-pre-wrap rounded-xl border border-[var(--secondary)] p-4 text-xs font-bold leading-6 sm:text-sm">
+          <code>{importExample}</code>
+        </pre>
       </div>
     </section>
 
@@ -129,7 +162,7 @@ const MainPage = () => (
       {[
         { icon: <FaCode />, title: "Practical inputs", text: "Forms use sensible defaults so you can try a utility immediately and adjust only what matters." },
         { icon: <FaBookOpen />, title: "Plain descriptions", text: "Each tool explains what it does in normal language before showing request details." },
-        { icon: <FaServer />, title: "Reusable examples", text: "Endpoint cards include the method, parameters, curl command, JavaScript fetch, and sample response." },
+        { icon: <FaServer />, title: "Use it your way", text: "Call the hosted API for routes, or install the npm package when you want local imports in your app." },
       ].map((card) => (
         <article key={card.title} className="tool-card rounded-2xl border border-[var(--secondary)] p-5">
           <div className="mb-4 w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)]">{card.icon}</div>

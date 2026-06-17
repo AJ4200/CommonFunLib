@@ -1,11 +1,50 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js",
+    "api": "node server.js"
   },
-  "name": "commonfunlib.api",
+  "name": "commonfunlib",
   "version": "1.0.0",
-  "description": "common functions library",
+  "description": "Common utility functions for generating data, converting values, hashing text, and everyday number/string helpers.",
   "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./server": "./server.js",
+    "./common": "./Lib/CommonFunctions.js",
+    "./converter": "./Lib/Converter.js",
+    "./generator": "./Lib/Generator.js",
+    "./hashing": "./Lib/Hashing.js"
+  },
+  "bin": {
+    "commonfunlib-api": "./server.js"
+  },
+  "files": [
+    "Data",
+    "Lib",
+    "routes",
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "server.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "utilities",
+    "functions",
+    "generator",
+    "converter",
+    "hashing",
+    "commonfunlib"
+  ],
   "repository": "https://github.com/AJ4200/commonfunlib.api.git",
   "author": "Abel Majadibodu <Abeljackson33@gmail.com>",
   "license": "MIT",
@@ -14,7 +53,6 @@
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "fs": "0.0.1-security"
+    "express": "^4.19.2"
   }
 }

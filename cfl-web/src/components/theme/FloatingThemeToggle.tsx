@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RiPaletteFill } from "react-icons/ri";
 import Theme from "@/models/Theme";
 import {
@@ -25,12 +25,19 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
 }) => {
   const [pattern, setPattern] = useState("");
   const [themes] = useState<Theme[]>(availableThemes);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [themeApplied, setThemeApplied] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Theme>();
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setCurrentTheme(getTheme(getStoredTheme() ?? "Classic"));
+
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
   }, []);
 
   const handleThemeHover = (themePattern: string) => {
@@ -38,26 +45,41 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   };
 
   const handleThemeChange = (themeName: string) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+    }
+
     setLoading(true);
     const selectedTheme = getTheme(themeName);
     setCurrentTheme(selectedTheme);
     applyTheme(selectedTheme);
     storeTheme(selectedTheme.name);
 
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
       setLoading(false);
-      setThemeApplied(true);
-    }, 500);
+      setOpen(false);
+      closeTimerRef.current = null;
+    }, 350);
   };
 
   return (
     <div {...props}>
       <Drawer
+        open={open}
+        onOpenChange={(nextOpen) => {
+          setOpen(nextOpen);
+
+          if (!nextOpen) {
+            if (closeTimerRef.current) {
+              clearTimeout(closeTimerRef.current);
+              closeTimerRef.current = null;
+            }
+
+            setLoading(false);
+          }
+        }}
         direction="bottom"
         shouldScaleBackground={false}
-        onClose={() => {
-          setThemeApplied(false);
-        }}
       >
         <DrawerTrigger asChild>
           <button
@@ -119,10 +141,6 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
                     <BiLoaderCircle size={23} />
                     Applying theme...
                   </a>
-                ) : themeApplied ? (
-                  <p className="text-sm font-semibold">
-                    Theme applied.
-                  </p>
                 ) : null}
               </CardFooter>
             </Card>

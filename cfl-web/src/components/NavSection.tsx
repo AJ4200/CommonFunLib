@@ -64,7 +64,7 @@ const NavSection: React.FC<NavSectionProps> = ({
         </div>
 
         <div
-          className="mt-4 grid grid-cols-3 gap-2 rounded-lg border border-[var(--secondary)] bg-black/10 p-1.5 shadow-inner"
+          className="nav-mode-switch mt-4"
           role="tablist"
           aria-label={`${heading} workspace modes`}
         >
@@ -75,18 +75,20 @@ const NavSection: React.FC<NavSectionProps> = ({
               <button
                 key={tabIndex}
                 aria-selected={isActive}
-                className={`group relative flex min-h-14 items-center justify-center gap-2 rounded-md border px-2 py-2 text-left transition sm:justify-start sm:px-3 ${
+                className={`nav-mode-button group flex items-center justify-center gap-2 rounded-md border px-2 py-2 text-left transition sm:justify-start sm:px-3 ${
                   isActive
                     ? "border-[var(--secondary)] bg-[var(--secondary)] text-[var(--primary)] shadow-lg"
-                    : "border-transparent bg-transparent hover:border-[var(--secondary)] hover:bg-white/10"
+                    : "border-transparent bg-black/5 hover:border-[var(--secondary)] hover:bg-white/10"
                 }`}
                 onClick={() => setActiveTab(tabIndex)}
                 role="tab"
                 type="button"
               >
                 <span
-                  className={`grid h-9 w-9 shrink-0 place-items-center rounded-md text-lg ${
-                    isActive ? "bg-[var(--primary)] text-[var(--secondary)]" : "bg-black/10"
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-md border text-lg transition ${
+                    isActive
+                      ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--secondary)]"
+                      : "border-[var(--secondary)] bg-black/10 group-hover:scale-105"
                   }`}
                 >
                   {icon}
@@ -101,9 +103,12 @@ const NavSection: React.FC<NavSectionProps> = ({
                 </span>
                 <FaChevronRight
                   className={`ml-auto hidden text-xs transition sm:block ${
-                    isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-70"
+                    isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-80"
                   }`}
                 />
+                {isActive ? (
+                  <span className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-current opacity-80" />
+                ) : null}
               </button>
             );
           })}
