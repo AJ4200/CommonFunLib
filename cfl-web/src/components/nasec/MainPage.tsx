@@ -1,73 +1,25 @@
-import React from "react";
-import {
-  FaCog,
-  FaExchangeAlt,
-  FaHandPointRight,
-  FaLock,
-  FaTools,
-} from "react-icons/fa";
-import { RiPaletteFill } from "react-icons/ri";
+import { commonTools } from "@/lib/commonTools";
 import { getCurrentTheme } from "@/lib/utils";
+import { FaExchangeAlt, FaHandPointRight, FaLock, FaMagic, FaTools } from "react-icons/fa";
+import { RiPaletteFill } from "react-icons/ri";
 
-interface MainPageProps {}
-
-const MainPage: React.FC<MainPageProps> = ({ ...props }) => {
-  return (
-    <div className="flex items-center justify-center">
-      <div className="max-w-4xl mx-auto p-6">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold">Welcome to CommonFunLib</h1>
-          <p className="text-lg text-gray-600">
-            Commonly used functions in programming.
-          </p>
-        </header>
-        <section className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Featured Tools
-          </h2>
-          <ul className="flex justify-center space-x-4 icon-shadow">
-            <li className="bg-[var(--secondary)] rounded-lg shadow-md p-4 icon-shadow">
-              <FaCog />
-            </li>
-            <li className="bg-[var(--secondary)] rounded-lg shadow-md p-4 icon-shadow">
-              <FaTools />
-            </li>
-            <li className="bg-[var(--secondary)] rounded-lg shadow-md p-4 icon-shadow">
-              <FaExchangeAlt />
-            </li>
-            <li className="bg-[var(--secondary)] rounded-lg shadow-md p-4 icon-shadow">
-              <FaLock />
-            </li>
-          </ul>
-        </section>
-        <footer className="text-center mt-8">
-          <p className="text-gray-900">
-            Click an icon on the sidebar to begin.
-          </p>
-        </footer>
-        <section className="shadow-inner bottom-0 text-center mt-8 p-4 border-2 border-[var(--secondary)] rounded-lg bg-black/10">
-          <p className="text-lg font-bold text-red-600">
-            Need a different theme?{" "}
-            <span className="text-blue-500 cursor-pointer">CHOOSE AGAIN</span>
-          </p>
-          <div className="flex items-center justify-center mt-4">
-            <p className="mr-2">Click this button in the footer</p>
-            <FaHandPointRight className="text-blue-700" />
-            <RiPaletteFill
-              className="rounded-xl ml-1 p-2 w-9 h-9 transition-transform active:scale-75 border border-[var(--secondary)]"
-              style={{
-                color: getCurrentTheme()?.foreground,
-                backgroundColor: getCurrentTheme()?.background,
-                backgroundImage: getCurrentTheme()?.background_pattern,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-              }}
-            />
-          </div>
-        </section>
+const MainPage = () => (
+  <div className="h-full overflow-y-auto p-6 custome-scroll">
+    <section className="mx-auto max-w-6xl rounded-3xl border border-[var(--secondary)] bg-black/10 p-8 shadow-2xl backdrop-blur-xl">
+      <p className="mb-3 inline-flex rounded-full bg-[var(--secondary)] px-4 py-1 text-sm font-bold text-[var(--primary)]">Modern utility playground</p>
+      <h1 className="text-5xl font-black tracking-tight theme-shadow">CommonFunLib</h1>
+      <p className="mt-4 max-w-2xl text-lg">A polished collection of everyday developer functions with live API-backed playgrounds, endpoint docs, generators, converters, hashing helpers, and theme switching.</p>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[{ icon: <FaMagic />, label: `${commonTools.length} functions` }, { icon: <FaTools />, label: "Generators" }, { icon: <FaExchangeAlt />, label: "Converters" }, { icon: <FaLock />, label: "Hashing APIs" }].map((item) => (
+          <div key={item.label} className="rounded-2xl border border-[var(--secondary)] bg-white/10 p-5 text-center font-bold shadow-inner"><span className="mx-auto mb-3 block w-max text-3xl">{item.icon}</span>{item.label}</div>
+        ))}
       </div>
-    </div>
-  );
-};
+    </section>
+    <section className="mx-auto mt-6 max-w-6xl rounded-3xl border border-[var(--secondary)] bg-white/10 p-6 text-center shadow-inner">
+      <p className="text-lg font-bold">Theme matters. Try the expanded palette from the footer.</p>
+      <div className="mt-4 flex items-center justify-center gap-3"><span>Click</span><FaHandPointRight /><RiPaletteFill className="h-10 w-10 rounded-xl border border-[var(--secondary)] p-2" style={{ color: getCurrentTheme()?.foreground, background: getCurrentTheme()?.background, backgroundImage: getCurrentTheme()?.background_pattern }} /></div>
+    </section>
+  </div>
+);
 
 export default MainPage;

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Converter = require("../lib/Converter");
+const Converter = require("../Lib/Converter");
 
 const converter = new Converter();
 
