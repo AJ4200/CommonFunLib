@@ -54,6 +54,7 @@
     --panel: rgba(10, 14, 20, 0.12);
     --panel-strong: rgba(255, 255, 255, 0.14);
     --hairline: rgba(255, 255, 255, 0.24);
+    --font-sans: var(--font-nunito), system-ui, sans-serif;
 
     --radius: 0.5rem;
   }

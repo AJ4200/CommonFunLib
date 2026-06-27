@@ -7,6 +7,7 @@ import Main from "@/layout/Main";
 import IconNav from "@/layout/IconNav";
 import { getTheme } from "@/lib/themes";
 import { applyTheme, getStoredTheme } from "@/components/theme/ThemeManager";
+import { applyFont, getCurrentFont } from "@/components/font/FontManager";
 import MainPage from "@/components/nasec/MainPage";
 
 export default function Homepage() {
@@ -16,6 +17,7 @@ export default function Homepage() {
   useEffect(() => {
     const theme = getTheme(getStoredTheme() ?? "Classic");
     applyTheme(theme);
+    applyFont(getCurrentFont());
   }, []);
 
   return (
