@@ -1,6 +1,7 @@
 import { commonTools } from "@/lib/commonTools";
 import { converterTools, generatorTools, hashingTools } from "@/lib/utilityTools";
 import CopyableSnippet from "@/components/ui/CopyableSnippet";
+import RandomizerShowcase from "@/components/appearance/RandomizerShowcase";
 import {
   FaArrowRight,
   FaBookOpen,
@@ -100,6 +101,8 @@ const MainPage = () => (
         ))}
       </div>
     </section>
+
+    <RandomizerShowcase />
 
     <section className="mx-auto mt-4 grid max-w-6xl min-w-0 gap-4 sm:mt-6 xl:grid-cols-[0.75fr_1fr_1fr]">
       <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">
