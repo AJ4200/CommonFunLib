@@ -66,23 +66,23 @@ const NavSection: React.FC<NavSectionProps> = ({
   ];
   const activeMode = tabs.find((tab) => tab.tabIndex === activeTab) ?? tabs[0];
 
-  const section = (
+  const renderSection = (expanded: boolean) => (
     <div
       className={`relative flex flex-col overflow-hidden ${
-        fullscreen
+        expanded
           ? "chrome-panel fixed inset-1.5 z-[1000] h-auto w-auto rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
           : "h-full w-full"
       }`}
-      {...props}
+      {...(!expanded ? props : {})}
     >
       <button
         className="icon-action absolute right-2 top-2 z-20 sm:right-3 sm:top-3"
         type="button"
-        title={fullscreen ? "Exit full view" : "Open full view"}
-        aria-label={fullscreen ? "Exit full view" : "Open full view"}
+        title={expanded ? "Exit full view" : "Open full view"}
+        aria-label={expanded ? "Exit full view" : "Open full view"}
         onClick={() => setFullscreen((current) => !current)}
       >
-        {fullscreen ? <FaCompress /> : <FaExpand />}
+        {expanded ? <FaCompress /> : <FaExpand />}
       </button>
 
       <header className="border-b border-[var(--secondary)] bg-black/10 px-3 py-3 pr-14 sm:px-6 sm:py-4 sm:pr-16">
@@ -166,10 +166,15 @@ const NavSection: React.FC<NavSectionProps> = ({
   );
 
   if (fullscreen && mounted) {
-    return createPortal(section, document.body);
+    return (
+      <>
+        {renderSection(false)}
+        {createPortal(renderSection(true), document.body)}
+      </>
+    );
   }
 
-  return section;
+  return renderSection(false);
 };
 
 export default NavSection;
