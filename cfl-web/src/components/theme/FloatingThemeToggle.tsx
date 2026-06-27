@@ -18,7 +18,7 @@ import {
   themeChangedEvent,
 } from "./ThemeManager";
 import { BiLoaderCircle } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
+import { FaRandom, FaTimes } from "react-icons/fa";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
@@ -122,6 +122,14 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
     }, 350);
   };
 
+  const handleRandomTheme = () => {
+    const options = themes.filter((theme) => theme.name !== currentThemeRef.current.name);
+    const pool = options.length > 0 ? options : themes;
+    const randomTheme = pool[Math.floor(Math.random() * pool.length)];
+
+    handleThemeChange(randomTheme.name);
+  };
+
   return (
     <div className="relative" {...props}>
       {notice ? (
@@ -183,9 +191,20 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
                     Click on desired theme to apply.
                   </CardDescription>
                 </div>
-                <DrawerClose className="icon-action shrink-0" title="Close theme picker">
-                  <FaTimes />
-                </DrawerClose>
+                <div className="flex shrink-0 items-center gap-2">
+                  <button
+                    type="button"
+                    className="icon-action"
+                    title="Pick a random theme"
+                    onClick={handleRandomTheme}
+                    disabled={loading}
+                  >
+                    <FaRandom />
+                  </button>
+                  <DrawerClose className="icon-action" title="Close theme picker">
+                    <FaTimes />
+                  </DrawerClose>
+                </div>
               </CardHeader>
               <CardContent className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-4 app-scroll sm:px-6">
                 <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3">

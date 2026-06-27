@@ -20,7 +20,7 @@ import {
 } from "../ui/card";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { BiLoaderCircle } from "react-icons/bi";
-import { FaFont, FaTimes } from "react-icons/fa";
+import { FaFont, FaRandom, FaTimes } from "react-icons/fa";
 import FontButton from "./FontButton";
 
 interface FloatingFontToggleProps {}
@@ -138,6 +138,14 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
     }, 350);
   };
 
+  const handleRandomFont = () => {
+    const options = fonts.filter((font) => font.name !== currentFontRef.current.name);
+    const pool = options.length > 0 ? options : fonts;
+    const randomFont = pool[Math.floor(Math.random() * pool.length)];
+
+    handleFontChange(randomFont);
+  };
+
   return (
     <div className="relative" {...props}>
       {notice ? (
@@ -198,9 +206,20 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
                     Pick a goofy font for the whole interface.
                   </CardDescription>
                 </div>
-                <DrawerClose className="icon-action shrink-0" title="Close font picker">
-                  <FaTimes />
-                </DrawerClose>
+                <div className="flex shrink-0 items-center gap-2">
+                  <button
+                    type="button"
+                    className="icon-action"
+                    title="Pick a random font"
+                    onClick={handleRandomFont}
+                    disabled={loading}
+                  >
+                    <FaRandom />
+                  </button>
+                  <DrawerClose className="icon-action" title="Close font picker">
+                    <FaTimes />
+                  </DrawerClose>
+                </div>
               </CardHeader>
               <CardContent className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-4 app-scroll sm:px-6">
                 <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
