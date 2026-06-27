@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
 import { FaChevronRight, FaCompress, FaExpand, FaNpm, FaServer } from "react-icons/fa";
@@ -23,6 +24,11 @@ const NavSection: React.FC<NavSectionProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState(1);
   const [fullscreen, setFullscreen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const tabs = [
     {
@@ -60,12 +66,12 @@ const NavSection: React.FC<NavSectionProps> = ({
   ];
   const activeMode = tabs.find((tab) => tab.tabIndex === activeTab) ?? tabs[0];
 
-  return (
+  const section = (
     <div
-      className={`relative flex h-full w-full flex-col overflow-hidden ${
+      className={`relative flex flex-col overflow-hidden ${
         fullscreen
-          ? "chrome-panel fixed inset-1.5 z-[80] rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
-          : ""
+          ? "chrome-panel fixed inset-1.5 z-[1000] h-auto w-auto rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
+          : "h-full w-full"
       }`}
       {...props}
     >
@@ -158,6 +164,12 @@ const NavSection: React.FC<NavSectionProps> = ({
       </div>
     </div>
   );
+
+  if (fullscreen && mounted) {
+    return createPortal(section, document.body);
+  }
+
+  return section;
 };
 
 export default NavSection;
