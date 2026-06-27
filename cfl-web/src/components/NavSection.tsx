@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
-import { FaChevronRight, FaNpm, FaServer } from "react-icons/fa";
+import { FaChevronRight, FaCompress, FaExpand, FaNpm, FaServer } from "react-icons/fa";
 
 interface NavSectionProps {
   heading: string;
@@ -21,7 +21,8 @@ const NavSection: React.FC<NavSectionProps> = ({
   packageContent,
   ...props
 }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
+  const [fullscreen, setFullscreen] = useState(false);
 
   const tabs = [
     {
@@ -60,7 +61,14 @@ const NavSection: React.FC<NavSectionProps> = ({
   const activeMode = tabs.find((tab) => tab.tabIndex === activeTab) ?? tabs[0];
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden" {...props}>
+    <div
+      className={`flex h-full w-full flex-col overflow-hidden ${
+        fullscreen
+          ? "chrome-panel fixed inset-1.5 z-40 rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
+          : ""
+      }`}
+      {...props}
+    >
       <header className="border-b border-[var(--secondary)] bg-black/10 px-3 py-3 sm:px-6 sm:py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
@@ -71,8 +79,19 @@ const NavSection: React.FC<NavSectionProps> = ({
               {description}
             </p>
           </div>
-          <div className="hidden rounded-lg border border-[var(--secondary)] bg-black/10 px-3 py-2 text-xs font-black uppercase sm:block">
-            {activeMode.eyebrow} / {activeMode.label}
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="hidden rounded-lg border border-[var(--secondary)] bg-black/10 px-3 py-2 text-xs font-black uppercase sm:block">
+              {activeMode.eyebrow} / {activeMode.label}
+            </div>
+            <button
+              className="icon-action"
+              type="button"
+              title={fullscreen ? "Exit full view" : "Open full view"}
+              aria-label={fullscreen ? "Exit full view" : "Open full view"}
+              onClick={() => setFullscreen((current) => !current)}
+            >
+              {fullscreen ? <FaCompress /> : <FaExpand />}
+            </button>
           </div>
         </div>
 

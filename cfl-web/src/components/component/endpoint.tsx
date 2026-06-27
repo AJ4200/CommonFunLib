@@ -1,7 +1,13 @@
-import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { BiDownArrow } from "react-icons/bi";
-import { FaCopy } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaCode,
+  FaCopy,
+  FaCube,
+  FaKeyboard,
+  FaRoute,
+  FaTerminal,
+} from "react-icons/fa";
 
 interface EndpointProps {
   method?: "GET" | "POST";
@@ -18,6 +24,8 @@ interface EndpointProps {
   responseExample: string;
 }
 
+type ExampleKey = "curl" | "js" | "response";
+
 const Endpoint = ({
   method = "GET",
   endpoint,
@@ -28,7 +36,16 @@ const Endpoint = ({
   jsExample,
   responseExample,
 }: EndpointProps) => {
-  const [toggled, setToggled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [exampleKey, setExampleKey] = useState<ExampleKey>("curl");
+  const parameterNames = Object.keys(parameters);
+  const examples: Record<ExampleKey, { icon: React.ReactNode; label: string; value: string }> = {
+    curl: { icon: <FaTerminal />, label: "curl", value: curlExample },
+    js: { icon: <FaCode />, label: "JavaScript", value: jsExample },
+    response: { icon: <FaCube />, label: "Response", value: responseExample },
+  };
+  const activeExample = examples[exampleKey];
+
   const copyText = async (event: React.MouseEvent, text: string) => {
     event.stopPropagation();
     if (typeof navigator !== "undefined") {
@@ -36,86 +53,102 @@ const Endpoint = ({
     }
   };
 
-  const examples = [
-    { title: "Curl Example", value: curlExample },
-    { title: "JavaScript Example", value: jsExample },
-    { title: "Response Example", value: responseExample },
-  ];
-
   return (
-    <div
-      className="tool-card flex w-full cursor-pointer flex-col rounded-lg border border-[var(--secondary)] p-4 transition hover:-translate-y-0.5"
-      onClick={() => {
-        setToggled(!toggled);
-      }}
-    >
-      <div className="flex w-full flex-wrap items-center justify-between gap-3">
-        <Badge
-          className="bg-[var(--primary)] font-bold text-[var(--foreground)]"
-          variant="secondary"
-        >
+    <article className="tool-card min-w-0 overflow-hidden rounded-lg border border-[var(--secondary)] transition hover:-translate-y-0.5">
+      <button
+        className="flex w-full flex-wrap items-center gap-3 p-4 text-left"
+        onClick={() => setOpen((current) => !current)}
+        type="button"
+      >
+        <span className="rounded-lg bg-[var(--secondary)] px-3 py-2 text-xs font-black text-[var(--primary)]">
           {method}
-        </Badge>
-        <a
-          className="min-w-0 flex-1 break-all font-semibold text-[var(--primary)] hover:underline"
-          href="#"
-          target="_blank"
-          onClick={(event) => {
-            event.preventDefault();
-            setToggled(!toggled);
-          }}
-        >
-          {endpoint}
-        </a>
-        <BiDownArrow className={`shrink-0 transition ${!toggled ? "rotate-180" : ""}`} />
-      </div>
-      <p className="mt-2 text-sm font-medium text-[var(--foreground)]">{description}</p>
-      {toggled && (
-        <>
-          <div className="my-4 h-px w-full bg-[var(--primary)]" />
-          <div className="flex w-full flex-col gap-4">
-            <div className="space-y-2 text-[var(--primary)]">
-              <h3 className="text-sm font-black uppercase tracking-wide">Parameters</h3>
-              {Object.keys(parameters).length === 0 ? (
-                <p className="text-sm font-semibold">No parameters required.</p>
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="mono-surface flex min-w-0 items-center gap-2 text-sm font-black">
+            <FaRoute className="shrink-0 text-[var(--secondary)]" />
+            <span className="truncate">{endpoint}</span>
+          </span>
+          <span className="mt-1 block text-sm font-semibold leading-6 opacity-85">
+            {description}
+          </span>
+        </span>
+        <span className="flex items-center gap-2 rounded-md border border-[var(--secondary)] bg-black/10 px-2 py-1 text-xs font-black uppercase">
+          <FaKeyboard className="text-[var(--secondary)]" />
+          {parameterNames.length === 0 ? "No params" : `${parameterNames.length} params`}
+        </span>
+        <FaChevronDown className={`shrink-0 transition ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open ? (
+        <div className="grid gap-4 border-t border-[var(--secondary)] bg-black/10 p-4 xl:grid-cols-[minmax(14rem,0.38fr)_minmax(0,1fr)]">
+          <div className="space-y-3">
+            <div className="rounded-lg border border-[var(--secondary)] bg-black/10 p-3">
+              <h3 className="mb-3 text-xs font-black uppercase opacity-80">Parameters</h3>
+              {parameterNames.length === 0 ? (
+                <p className="text-sm font-semibold opacity-85">This route runs without input.</p>
               ) : (
-                Object.keys(parameters).map((param) => (
-                <div key={param} className="flex flex-wrap items-center gap-2">
-                  <Badge
-                    className="bg-[var(--primary)] font-bold text-[var(--foreground)]"
-                    variant="secondary"
-                  >
-                    {paramDescriptions[param]}
-                  </Badge>
-                  <span className="font-medium">{param}</span>
+                <div className="grid gap-2">
+                  {parameterNames.map((param) => (
+                    <div
+                      key={param}
+                      className="rounded-md border border-[var(--hairline)] bg-black/10 p-2"
+                    >
+                      <div className="mono-surface text-sm font-black">{param}</div>
+                      <div className="mt-1 text-xs font-bold uppercase opacity-75">
+                        {paramDescriptions[param] ?? parameters[param]}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                ))
               )}
             </div>
-            {examples.map((example) => (
-              <div key={example.title} className="w-full space-y-2">
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-sm font-black uppercase tracking-wide text-[var(--primary)]">
-                    {example.title}
-                  </h3>
-                  <button
-                    className="icon-action"
-                    onClick={(event) => copyText(event, example.value)}
-                    title={`Copy ${example.title}`}
-                    type="button"
-                  >
-                    <FaCopy />
-                  </button>
-                </div>
-                <pre className="mono-surface code-surface w-full overflow-x-auto rounded-md p-4 text-sm">
-                  <code>{example.value}</code>
-                </pre>
-              </div>
-            ))}
+            <div className="rounded-lg border border-[var(--secondary)] bg-black/10 p-3">
+              <h3 className="mb-2 text-xs font-black uppercase opacity-80">Response key</h3>
+              <code className="mono-surface block rounded-md border border-[var(--hairline)] bg-black/10 px-2 py-2 text-xs font-black">
+                {responseExample.match(/"([^"]+)"/)?.[1] ?? "result"}
+              </code>
+            </div>
           </div>
-        </>
-      )}
-    </div>
+
+          <div className="min-w-0">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap gap-2">
+                {(Object.keys(examples) as ExampleKey[]).map((key) => {
+                  const active = key === exampleKey;
+
+                  return (
+                    <button
+                      key={key}
+                      className={`flex items-center gap-2 rounded-md border px-3 py-2 text-xs font-black transition hover:-translate-y-0.5 ${
+                        active
+                          ? "border-[var(--secondary)] bg-[var(--secondary)] text-[var(--primary)]"
+                          : "border-[var(--hairline)] bg-black/10"
+                      }`}
+                      onClick={() => setExampleKey(key)}
+                      type="button"
+                    >
+                      {examples[key].icon}
+                      {examples[key].label}
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                className="icon-action"
+                onClick={(event) => copyText(event, activeExample.value)}
+                title={`Copy ${activeExample.label}`}
+                type="button"
+              >
+                <FaCopy />
+              </button>
+            </div>
+            <pre className="mono-surface code-surface min-h-48 w-full overflow-x-auto whitespace-pre-wrap rounded-md p-4 text-sm">
+              <code>{activeExample.value}</code>
+            </pre>
+          </div>
+        </div>
+      ) : null}
+    </article>
   );
 };
 
