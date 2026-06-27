@@ -62,14 +62,24 @@ const NavSection: React.FC<NavSectionProps> = ({
 
   return (
     <div
-      className={`flex h-full w-full flex-col overflow-hidden ${
+      className={`relative flex h-full w-full flex-col overflow-hidden ${
         fullscreen
-          ? "chrome-panel fixed inset-1.5 z-40 rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
+          ? "chrome-panel fixed inset-1.5 z-[80] rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
           : ""
       }`}
       {...props}
     >
-      <header className="border-b border-[var(--secondary)] bg-black/10 px-3 py-3 sm:px-6 sm:py-4">
+      <button
+        className="icon-action absolute right-2 top-2 z-20 sm:right-3 sm:top-3"
+        type="button"
+        title={fullscreen ? "Exit full view" : "Open full view"}
+        aria-label={fullscreen ? "Exit full view" : "Open full view"}
+        onClick={() => setFullscreen((current) => !current)}
+      >
+        {fullscreen ? <FaCompress /> : <FaExpand />}
+      </button>
+
+      <header className="border-b border-[var(--secondary)] bg-black/10 px-3 py-3 pr-14 sm:px-6 sm:py-4 sm:pr-16">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <h2 className="brand-type text-2xl font-black theme-shadow sm:text-3xl">
@@ -83,15 +93,6 @@ const NavSection: React.FC<NavSectionProps> = ({
             <div className="hidden rounded-lg border border-[var(--secondary)] bg-black/10 px-3 py-2 text-xs font-black uppercase sm:block">
               {activeMode.eyebrow} / {activeMode.label}
             </div>
-            <button
-              className="icon-action"
-              type="button"
-              title={fullscreen ? "Exit full view" : "Open full view"}
-              aria-label={fullscreen ? "Exit full view" : "Open full view"}
-              onClick={() => setFullscreen((current) => !current)}
-            >
-              {fullscreen ? <FaCompress /> : <FaExpand />}
-            </button>
           </div>
         </div>
 
