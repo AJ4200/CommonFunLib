@@ -12,9 +12,16 @@ export const applyFont = (font: Font) => {
   }
 
   const fontFamily = toFontFamily(font);
+  const root = document.documentElement;
 
-  document.documentElement.style.setProperty("--font-sans", fontFamily);
-  document.documentElement.dataset.font = font.name;
+  root.style.setProperty("--font-sans", fontFamily);
+  root.dataset.font = font.name;
+
+  if (document.body) {
+    document.body.style.setProperty("--font-sans", fontFamily);
+    document.body.dataset.font = font.name;
+  }
+
   window.dispatchEvent(new CustomEvent(FONT_CHANGED_EVENT, { detail: font }));
 };
 
