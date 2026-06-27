@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Font from "@/models/Font";
+import Theme from "@/models/Theme";
 import { getFonts } from "@/lib/fonts";
+import { getTheme } from "@/lib/themes";
 import {
   applyFont,
+  fontChangedEvent,
   getCurrentFont,
   storeFont,
 } from "./FontManager";
+import { getStoredTheme, themeChangedEvent } from "@/components/theme/ThemeManager";
 import {
   Card,
   CardContent,
@@ -16,7 +20,7 @@ import {
 } from "../ui/card";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { BiLoaderCircle } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
+import { FaFont, FaTimes } from "react-icons/fa";
 import FontButton from "./FontButton";
 
 interface FloatingFontToggleProps {}
@@ -28,10 +32,18 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currentFont, setCurrentFont] = useState<Font>();
+  const [currentTheme, setCurrentTheme] = useState<Theme>(() =>
+    getTheme(getStoredTheme() ?? "Classic")
+  );
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const noticeReadyRef = useRef(false);
+  const currentFontRef = useRef<Font>(getCurrentFont());
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const activeFont = getCurrentFont();
+    currentFontRef.current = activeFont;
     setCurrentFont(activeFont);
     applyFont(activeFont);
 
@@ -39,8 +51,74 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
       if (closeTimerRef.current) {
         clearTimeout(closeTimerRef.current);
       }
+
+      if (noticeTimerRef.current) {
+        clearTimeout(noticeTimerRef.current);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    const handleThemeApplied = (event: Event) => {
+      const nextTheme = (event as CustomEvent<Theme>).detail;
+
+      if (nextTheme) {
+        setCurrentTheme(nextTheme);
+      }
+    };
+
+    window.addEventListener(themeChangedEvent, handleThemeApplied);
+
+    return () => {
+      window.removeEventListener(themeChangedEvent, handleThemeApplied);
+    };
+  }, []);
+
+  useEffect(() => {
+    const readyTimer = setTimeout(() => {
+      noticeReadyRef.current = true;
+    }, 500);
+
+    const handleFontApplied = (event: Event) => {
+      const nextFont = (event as CustomEvent<Font>).detail;
+
+      if (!nextFont) {
+        return;
+      }
+
+      currentFontRef.current = nextFont;
+      setCurrentFont(nextFont);
+      if (!noticeReadyRef.current) {
+        return;
+      }
+
+      setNotice(`Font: ${nextFont.name}`);
+
+      if (noticeTimerRef.current) {
+        clearTimeout(noticeTimerRef.current);
+      }
+
+      noticeTimerRef.current = setTimeout(() => {
+        setNotice(null);
+        noticeTimerRef.current = null;
+      }, 1800);
+    };
+
+    window.addEventListener(fontChangedEvent, handleFontApplied);
+
+    return () => {
+      clearTimeout(readyTimer);
+      window.removeEventListener(fontChangedEvent, handleFontApplied);
+    };
+  }, []);
+
+  const handleFontHover = (font: Font) => {
+    applyFont(font, false);
+  };
+
+  const handleFontHoverEnd = () => {
+    applyFont(currentFontRef.current, false);
+  };
 
   const handleFontChange = (font: Font) => {
     if (closeTimerRef.current) {
@@ -48,6 +126,7 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
     }
 
     setLoading(true);
+    currentFontRef.current = font;
     setCurrentFont(font);
     applyFont(font);
     storeFont(font.name);
@@ -60,7 +139,12 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
   };
 
   return (
-    <div {...props}>
+    <div className="relative" {...props}>
+      {notice ? (
+        <span className="pointer-events-none absolute bottom-[calc(100%+0.35rem)] left-1/2 z-20 max-w-32 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--secondary)] bg-[var(--background)] px-1.5 py-0.5 text-[0.62rem] font-black text-[var(--foreground)] shadow-lg">
+          {notice}
+        </span>
+      ) : null}
       <Drawer
         open={open}
         onOpenChange={(nextOpen) => {
@@ -73,6 +157,7 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
             }
 
             setLoading(false);
+            applyFont(currentFontRef.current, false);
           }
         }}
         direction="bottom"
@@ -80,19 +165,23 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
       >
         <DrawerTrigger asChild>
           <button
-            className="tool-card grid h-8 w-8 place-items-center rounded-md border border-[var(--secondary)] text-xs font-black transition-transform hover:-translate-y-0.5 active:scale-95 sm:h-9 sm:w-9"
+            className="tool-card grid h-9 w-9 place-items-center rounded-lg border border-[var(--secondary)] text-[0.68rem] font-black transition-transform hover:-translate-y-0.5 active:scale-95"
             title="Open font picker"
           >
             <span
-              className="grid h-5 w-5 place-items-center rounded bg-black/10 leading-none sm:h-6 sm:w-6"
+              className="grid h-6 w-6 place-items-center rounded-md bg-cover bg-center leading-none"
               style={{
-                color: "var(--foreground)",
+                color: currentTheme.foreground,
+                backgroundColor: currentTheme.background,
+                backgroundImage: currentTheme.background_pattern,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
                 fontFamily: currentFont
                   ? `var(${currentFont.cssVariable}), ${currentFont.fallback}`
                   : "var(--font-sans), system-ui, sans-serif",
               }}
             >
-              Ff
+              <FaFont className="h-3.5 w-3.5" />
             </span>
           </button>
         </DrawerTrigger>
@@ -121,6 +210,8 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
                       font={font}
                       active={currentFont?.name === font.name}
                       onClick={() => handleFontChange(font)}
+                      onMouseEnter={() => handleFontHover(font)}
+                      onMouseLeave={handleFontHoverEnd}
                     />
                   ))}
                 </div>

@@ -6,7 +6,7 @@ const FONT_CHANGED_EVENT = "commonfunlib:font-change";
 
 const toFontFamily = (font: Font) => `var(${font.cssVariable}), ${font.fallback}`;
 
-export const applyFont = (font: Font) => {
+export const applyFont = (font: Font, notify = true) => {
   if (typeof document === "undefined") {
     return;
   }
@@ -22,7 +22,9 @@ export const applyFont = (font: Font) => {
     document.body.dataset.font = font.name;
   }
 
-  window.dispatchEvent(new CustomEvent(FONT_CHANGED_EVENT, { detail: font }));
+  if (notify) {
+    window.dispatchEvent(new CustomEvent(FONT_CHANGED_EVENT, { detail: font }));
+  }
 };
 
 export const getStoredFont = () => {

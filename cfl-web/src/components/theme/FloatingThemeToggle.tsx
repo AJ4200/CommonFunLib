@@ -11,7 +11,12 @@ import {
 } from "../ui/card";
 import ThemeButton from "./ThemeButton";
 import { getTheme, getThemes } from "@/lib/themes";
-import { applyTheme, getStoredTheme, storeTheme } from "./ThemeManager";
+import {
+  applyTheme,
+  getStoredTheme,
+  storeTheme,
+  themeChangedEvent,
+} from "./ThemeManager";
 import { BiLoaderCircle } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
@@ -29,19 +34,73 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const [loading, setLoading] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Theme>();
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const noticeReadyRef = useRef(false);
+  const currentThemeRef = useRef<Theme>(getTheme(getStoredTheme() ?? "Classic"));
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    setCurrentTheme(getTheme(getStoredTheme() ?? "Classic"));
+    const activeTheme = getTheme(getStoredTheme() ?? "Classic");
+    currentThemeRef.current = activeTheme;
+    setCurrentTheme(activeTheme);
 
     return () => {
       if (closeTimerRef.current) {
         clearTimeout(closeTimerRef.current);
       }
+
+      if (noticeTimerRef.current) {
+        clearTimeout(noticeTimerRef.current);
+      }
     };
   }, []);
 
-  const handleThemeHover = (themePattern: string) => {
-    setPattern(themePattern);
+  useEffect(() => {
+    const readyTimer = setTimeout(() => {
+      noticeReadyRef.current = true;
+    }, 500);
+
+    const handleThemeApplied = (event: Event) => {
+      const nextTheme = (event as CustomEvent<Theme>).detail;
+
+      if (!nextTheme) {
+        return;
+      }
+
+      currentThemeRef.current = nextTheme;
+      setCurrentTheme(nextTheme);
+      if (!noticeReadyRef.current) {
+        return;
+      }
+
+      setNotice(`Theme: ${nextTheme.name}`);
+
+      if (noticeTimerRef.current) {
+        clearTimeout(noticeTimerRef.current);
+      }
+
+      noticeTimerRef.current = setTimeout(() => {
+        setNotice(null);
+        noticeTimerRef.current = null;
+      }, 1800);
+    };
+
+    window.addEventListener(themeChangedEvent, handleThemeApplied);
+
+    return () => {
+      clearTimeout(readyTimer);
+      window.removeEventListener(themeChangedEvent, handleThemeApplied);
+    };
+  }, []);
+
+  const handleThemeHover = (theme: Theme) => {
+    setPattern(theme.background_pattern);
+    applyTheme(theme, false);
+  };
+
+  const handleThemeHoverEnd = () => {
+    setPattern("");
+    applyTheme(currentThemeRef.current, false);
   };
 
   const handleThemeChange = (themeName: string) => {
@@ -51,6 +110,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
 
     setLoading(true);
     const selectedTheme = getTheme(themeName);
+    currentThemeRef.current = selectedTheme;
     setCurrentTheme(selectedTheme);
     applyTheme(selectedTheme);
     storeTheme(selectedTheme.name);
@@ -63,7 +123,12 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   };
 
   return (
-    <div {...props}>
+    <div className="relative" {...props}>
+      {notice ? (
+        <span className="pointer-events-none absolute bottom-[calc(100%+0.35rem)] left-1/2 z-20 max-w-36 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--secondary)] bg-[var(--background)] px-1.5 py-0.5 text-[0.62rem] font-black text-[var(--foreground)] shadow-lg">
+          {notice}
+        </span>
+      ) : null}
       <Drawer
         open={open}
         onOpenChange={(nextOpen) => {
@@ -76,6 +141,8 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
             }
 
             setLoading(false);
+            setPattern("");
+            applyTheme(currentThemeRef.current, false);
           }
         }}
         direction="bottom"
@@ -128,9 +195,8 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
                       theme={theme}
                       active={currentTheme?.name === theme.name}
                       onClick={() => handleThemeChange(theme.name)}
-                      onMouseEnter={() =>
-                        handleThemeHover(theme.background_pattern)
-                      }
+                      onMouseEnter={() => handleThemeHover(theme)}
+                      onMouseLeave={handleThemeHoverEnd}
                     />
                   ))}
                 </div>

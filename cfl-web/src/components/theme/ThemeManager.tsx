@@ -43,7 +43,7 @@ const setThemeProperty = (name: string, value: string) => {
   document.documentElement.style.setProperty(name, value);
 };
 
-export const applyTheme = (theme: Theme) => {
+export const applyTheme = (theme: Theme, notify = true) => {
   if (typeof document === "undefined") {
     return;
   }
@@ -95,7 +95,10 @@ export const applyTheme = (theme: Theme) => {
   setThemeProperty("--panel-strong", "rgba(255, 255, 255, 0.14)");
   setThemeProperty("--hairline", "rgba(255, 255, 255, 0.24)");
   document.documentElement.dataset.theme = theme.name;
-  window.dispatchEvent(new CustomEvent(THEME_CHANGED_EVENT, { detail: theme }));
+
+  if (notify) {
+    window.dispatchEvent(new CustomEvent(THEME_CHANGED_EVENT, { detail: theme }));
+  }
 };
 
 export const getStoredTheme = () => {

@@ -6,6 +6,7 @@ interface ThemeButtonProps {
   theme: Theme;
   onClick: () => void;
   onMouseEnter: () => void;
+  onMouseLeave?: () => void;
   active?: boolean;
 }
 
@@ -13,6 +14,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
   theme,
   onClick,
   onMouseEnter,
+  onMouseLeave,
   active = false,
 }) => {
   return (
@@ -23,6 +25,7 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
         active ? "border-[var(--secondary)] ring-2 ring-[var(--secondary)]" : "border-[var(--hairline)]"
       }`}
       onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <span
         className="h-14 w-16 rounded-md border border-[var(--secondary)] bg-cover bg-center shadow-inner"
