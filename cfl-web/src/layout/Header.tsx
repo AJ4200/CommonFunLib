@@ -7,14 +7,22 @@ import { FaCircle, FaServer } from "react-icons/fa";
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = ({ ...props }) => {
-  const [status, setStatus] = useState<"checking" | "online" | "slow" | "offline">("checking");
+  const [status, setStatus] = useState<"checking" | "online" | "slow" | "setup" | "offline" | "network">("checking");
   const [latency, setLatency] = useState<number | null>(null);
   const [apiLabel, setApiLabel] = useState("API");
+  const [statusMessage, setStatusMessage] = useState("Checking API status");
 
   useEffect(() => {
     let active = true;
 
     const checkApi = async () => {
+      if (!navigator.onLine) {
+        setLatency(null);
+        setStatus("network");
+        setStatusMessage("Your browser is offline.");
+        return;
+      }
+
       const startedAt = performance.now();
       const controller = new AbortController();
       const timeout = window.setTimeout(() => controller.abort(), 3500);
@@ -39,11 +47,21 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
 
         const measuredLatency = typeof data?.latency === "number" ? data.latency : elapsed;
         setLatency(response.ok ? measuredLatency : null);
-        setStatus(response.ok && data?.status === "ok" ? (measuredLatency > 1200 ? "slow" : "online") : "offline");
+        setStatusMessage(data?.message ?? "API status checked.");
+        setStatus(
+          response.ok && data?.status === "ok"
+            ? measuredLatency > 1200
+              ? "slow"
+              : "online"
+            : data?.configured === false
+              ? "setup"
+              : "offline"
+        );
       } catch {
         if (!active) return;
         setLatency(null);
         setStatus("offline");
+        setStatusMessage("API could not be reached.");
       } finally {
         window.clearTimeout(timeout);
       }
@@ -51,10 +69,14 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
 
     checkApi();
     const interval = window.setInterval(checkApi, 30000);
+    window.addEventListener("online", checkApi);
+    window.addEventListener("offline", checkApi);
 
     return () => {
       active = false;
       window.clearInterval(interval);
+      window.removeEventListener("online", checkApi);
+      window.removeEventListener("offline", checkApi);
     };
   }, []);
 
@@ -65,16 +87,24 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
         ? "Online"
         : status === "slow"
           ? "Slow"
-          : "Offline";
+          : status === "setup"
+            ? "Setup"
+            : status === "network"
+              ? "No net"
+              : "Offline";
 
   const statusClass =
     status === "online"
-      ? "text-emerald-300"
-      : status === "slow"
-        ? "text-yellow-300"
-        : status === "offline"
-          ? "text-red-300"
-          : "text-[var(--secondary)]";
+        ? "text-emerald-300"
+        : status === "slow"
+          ? "text-yellow-300"
+          : status === "setup"
+            ? "text-sky-300"
+            : status === "network"
+              ? "text-orange-300"
+              : status === "offline"
+                ? "text-red-300"
+                : "text-[var(--secondary)]";
 
   return (
     <header
@@ -88,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
         </h1>
         <div
           className="ml-auto flex min-w-0 items-center gap-2 rounded-lg border border-[var(--secondary)] bg-black/10 px-2 py-1.5 text-xs font-black sm:px-3 sm:py-2 sm:text-sm"
-          title={`API status: ${statusLabel}`}
+          title={`API status: ${statusLabel}. ${statusMessage}`}
         >
           <FaServer className="shrink-0 text-[var(--secondary)]" />
           <span className="hidden max-w-44 truncate sm:inline">{apiLabel}</span>

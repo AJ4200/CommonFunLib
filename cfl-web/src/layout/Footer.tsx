@@ -1,4 +1,5 @@
 import FloatingFontToggle from "@/components/font/FloatingFontToggle";
+import PwaInstallButton from "@/components/pwa/PwaInstallButton";
 import FloatingThemeToggle from "@/components/theme/FloatingThemeToggle";
 import React from "react";
 import { FaGithub, FaHeart } from "react-icons/fa";
@@ -28,6 +29,7 @@ const Footer: React.FC<FooterProps> = ({ ...props }) => {
         </a>
       </div>
       <div className="flex items-center justify-end gap-2 sm:gap-3">
+        <PwaInstallButton />
         <FloatingFontToggle />
         <FloatingThemeToggle />
       </div>
