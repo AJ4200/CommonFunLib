@@ -22,6 +22,11 @@ export const isPalindrome = cfl.isPalindrome;
 export const slugify = cfl.slugify;
 export const clamp = cfl.clamp;
 export const percentage = cfl.percentage;
+export const fibonacci = cfl.fibonacci;
+export const average = cfl.average;
+export const median = cfl.median;
+export const titleCase = cfl.titleCase;
+export const wordCount = cfl.wordCount;
 
 export const generateRandomNumber = cfl.generateRandomNumber;
 export const generateRandomName = cfl.generateRandomName;
@@ -33,6 +38,11 @@ export const generateToken = cfl.generateToken;
 export const generatePin = cfl.generatePin;
 export const generateColor = cfl.generateColor;
 export const generateLorem = cfl.generateLorem;
+export const generateNanoId = cfl.generateNanoId;
+export const generateApiKey = cfl.generateApiKey;
+export const generateMacAddress = cfl.generateMacAddress;
+export const generateSemver = cfl.generateSemver;
+export const generateTimestamp = cfl.generateTimestamp;
 
 export const fetchExchangeRates = cfl.fetchExchangeRates;
 export const convertCurrency = cfl.convertCurrency;
@@ -43,14 +53,24 @@ export const convertDataSize = cfl.convertDataSize;
 export const convertSpeed = cfl.convertSpeed;
 export const convertTemperature = cfl.convertTemperature;
 export const convertLengthSystem = cfl.convertLengthSystem;
+export const convertNumberBase = cfl.convertNumberBase;
+export const convertDuration = cfl.convertDuration;
+export const convertTimestamp = cfl.convertTimestamp;
+export const convertColor = cfl.convertColor;
 
 export const md5 = cfl.md5;
 export const sha1 = cfl.sha1;
 export const sha256 = cfl.sha256;
 export const sha384 = cfl.sha384;
 export const sha512 = cfl.sha512;
+export const sha3_256 = cfl.sha3_256;
+export const sha3_512 = cfl.sha3_512;
 export const base64Encode = cfl.base64Encode;
 export const base64Decode = cfl.base64Decode;
 export const hmacSha256 = cfl.hmacSha256;
+export const hmacSha512 = cfl.hmacSha512;
+export const base64UrlEncode = cfl.base64UrlEncode;
+export const base64UrlDecode = cfl.base64UrlDecode;
+export const checksum = cfl.checksum;
 
 export default cfl;

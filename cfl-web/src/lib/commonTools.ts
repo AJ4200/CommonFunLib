@@ -18,4 +18,9 @@ export const commonTools: CommonTool[] = [
   { value: "slugify", label: "Slugify", description: "Create a URL-safe slug from text.", inputs: [{ name: "str", label: "Text", placeholder: "My New Tool" }], resultKey: "slug" },
   { value: "clamp", label: "Clamp", description: "Clamp a number between min and max.", inputs: [{ name: "num", label: "Number", placeholder: "120", type: "number" }, { name: "min", label: "Min", placeholder: "0", type: "number" }, { name: "max", label: "Max", placeholder: "100", type: "number" }], resultKey: "clamped" },
   { value: "percentage", label: "Percentage", description: "Calculate what percent part is of total.", inputs: [{ name: "part", label: "Part", placeholder: "25", type: "number" }, { name: "total", label: "Total", placeholder: "200", type: "number" }], resultKey: "percentage" },
+  { value: "fibonacci", label: "Fibonacci", description: "Generate a Fibonacci sequence with a bounded count.", inputs: [{ name: "count", label: "Count", placeholder: "10", type: "number" }], resultKey: "fibonacci" },
+  { value: "average", label: "Average", description: "Average a comma-separated list of numbers.", inputs: [{ name: "numbers", label: "Numbers", placeholder: "4,8,15,16,23,42" }], resultKey: "average" },
+  { value: "median", label: "Median", description: "Find the middle value in a comma-separated number list.", inputs: [{ name: "numbers", label: "Numbers", placeholder: "4,8,15,16,23,42" }], resultKey: "median" },
+  { value: "titleCase", label: "Title Case", description: "Convert text into title case.", inputs: [{ name: "str", label: "Text", placeholder: "common fun lib" }], resultKey: "titleCase" },
+  { value: "wordCount", label: "Word Count", description: "Count words in a text value.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib ships tiny utilities" }], resultKey: "wordCount" },
 ];

@@ -16,17 +16,17 @@ const Converters = () => (
       <PackageExamples
         title="Convert values without HTTP"
         description="Import converter helpers directly when a script, CLI, or server-side app needs unit conversions as plain function calls."
-        helpers={["convertLength", "convertWeight", "convertTemperature", "convert.dataSize", "convert.speed"]}
-        esmExample={`import { convertLength, convertTemperature, convert } from "commonfunlib";
+        helpers={["convertLength", "convertNumberBase", "convertTimestamp", "convert.dataSize", "convert.color"]}
+        esmExample={`import { convertLength, convertNumberBase, convert } from "commonfunlib";
 
 convertLength(12, "m", "foot");
-convertTemperature(22, "C", "F");
-convert.dataSize(2048, "MB", "GB");`}
+convertNumberBase("255", 10, 16);
+convert.timestamp("2026-06-28T12:00:00.000Z", "iso", "seconds");`}
         cjsExample={`const { convert, convertWeight } = require("commonfunlib");
 
 convertWeight(5, "kg", "lb");
-convert.area(2, "acre", "sqm");
-convert.speed(88, "mph", "kph");`}
+convert.duration(3600, "s", "hr");
+convert.color("#4682B4", "hex", "rgb");`}
       />
     }
   />

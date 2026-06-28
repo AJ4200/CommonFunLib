@@ -67,4 +67,24 @@ router.post("/lengthSystem", (req, res) => {
   res.json({ convertedValue });
 });
 
+router.post("/numberBase", (req, res) => {
+  const { value, fromBase, toBase } = req.body;
+  res.json({ convertedNumber: converter.convertNumberBase(value, fromBase, toBase) });
+});
+
+router.post("/duration", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  res.json({ convertedDuration: converter.convertDuration(value, fromUnit, toUnit) });
+});
+
+router.post("/timestamp", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  res.json({ convertedTimestamp: converter.convertTimestamp(value, fromUnit, toUnit) });
+});
+
+router.post("/color", (req, res) => {
+  const { value, fromFormat, toFormat } = req.body;
+  res.json({ convertedColor: converter.convertColor(value, fromFormat, toFormat) });
+});
+
 module.exports = router;

@@ -21,6 +21,14 @@ class Hashing {
     return crypto.createHash('sha512').update(input).digest('hex');
   }
 
+  static sha3_256(input) {
+    return crypto.createHash('sha3-256').update(input).digest('hex');
+  }
+
+  static sha3_512(input) {
+    return crypto.createHash('sha3-512').update(input).digest('hex');
+  }
+
   static base64Encode(input) {
     return Buffer.from(input).toString('base64');
   }
@@ -31,6 +39,29 @@ class Hashing {
 
   static hmacSha256(input, secret) {
     return crypto.createHmac('sha256', secret).update(input).digest('hex');
+  }
+
+  static hmacSha512(input, secret) {
+    return crypto.createHmac('sha512', secret).update(input).digest('hex');
+  }
+
+  static base64UrlEncode(input) {
+    return Buffer.from(input).toString('base64url');
+  }
+
+  static base64UrlDecode(input) {
+    return Buffer.from(input, 'base64url').toString('utf8');
+  }
+
+  static checksum(input) {
+    const value = Buffer.from(String(input));
+    let sum = 0;
+
+    for (const byte of value) {
+      sum = (sum + byte) % 65535;
+    }
+
+    return sum.toString(16).padStart(4, '0');
   }
 }
 

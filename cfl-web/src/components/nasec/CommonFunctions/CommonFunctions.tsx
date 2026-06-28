@@ -24,18 +24,18 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
           <PackageExamples
             title="Use common functions locally"
             description="Install the package when your app needs number checks, string helpers, or small calculations without making HTTP calls."
-            helpers={["isEven", "isPrime", "reverseString", "slugify", "percentage"]}
-            esmExample={`import { isEven, reverseString, percentage, common } from "commonfunlib";
+            helpers={["isEven", "fibonacci", "average", "titleCase", "wordCount"]}
+            esmExample={`import { isEven, fibonacci, average, common } from "commonfunlib";
 
 isEven(42);
-reverseString("hello");
-percentage(25, 200);
-common.slugify("My New Tool");`}
+fibonacci(8);
+average("4,8,15,16,23,42");
+common.titleCase("common fun lib");`}
             cjsExample={`const { common, isPrime } = require("commonfunlib");
 
 isPrime(17);
-common.clamp(120, 0, 100);
-common.isPalindrome("Never odd or even");`}
+common.median("4,8,15,16,23,42");
+common.wordCount("CommonFunLib ships tiny utilities");`}
           />
         }
       />

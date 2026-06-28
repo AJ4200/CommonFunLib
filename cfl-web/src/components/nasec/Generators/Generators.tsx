@@ -16,18 +16,18 @@ const Generators = () => (
       <PackageExamples
         title="Generate values in your project"
         description="Use package imports when tests, seed scripts, demos, or form prototypes need random values without calling the API."
-        helpers={["generateRandomName", "generatePassword", "generateUuid", "generateToken", "generate.color"]}
-        esmExample={`import { generateRandomName, generatePassword, generate } from "commonfunlib";
+        helpers={["generateRandomName", "generatePassword", "generateNanoId", "generateApiKey", "generate.timestamp"]}
+        esmExample={`import { generateRandomName, generatePassword, generateNanoId, generate } from "commonfunlib";
 
 generateRandomName();
 generatePassword(16);
-generate.uuid();
-generate.color();`}
+generateNanoId(21);
+generate.apiKey("cfl", 24);`}
         cjsExample={`const { generate, generatePin } = require("commonfunlib");
 
 generatePin(6);
-generate.token(24);
-generate.lorem(12);`}
+generate.timestamp("iso");
+generate.semver(0);`}
       />
     }
   />

@@ -77,4 +77,26 @@ router.get("/percentage", (req, res) => {
   res.json({ percentage: CommonFunctions.percentage(part, total) });
 });
 
+router.get("/fibonacci", (req, res) => {
+  const count = numberParam(req.query.count);
+  if (!ensureFinite(res, [count])) return;
+  res.json({ fibonacci: CommonFunctions.fibonacci(count) });
+});
+
+router.get("/average", (req, res) => {
+  res.json({ average: CommonFunctions.average(req.query.numbers || "") });
+});
+
+router.get("/median", (req, res) => {
+  res.json({ median: CommonFunctions.median(req.query.numbers || "") });
+});
+
+router.get("/titleCase", (req, res) => {
+  res.json({ titleCase: CommonFunctions.titleCase(req.query.str || "") });
+});
+
+router.get("/wordCount", (req, res) => {
+  res.json({ wordCount: CommonFunctions.wordCount(req.query.str || "") });
+});
+
 module.exports = router;

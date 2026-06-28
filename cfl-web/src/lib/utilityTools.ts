@@ -27,6 +27,10 @@ const temperatureUnits = ["C", "F", "K"];
 const areaUnits = ["sqmm", "sqcm", "sqm", "hectare", "sqft", "acre", "sqkm"];
 const dataUnits = ["B", "KB", "MB", "GB", "TB"];
 const speedUnits = ["mps", "kph", "mph", "knot"];
+const durationUnits = ["ms", "s", "min", "hr", "day"];
+const timestampUnits = ["seconds", "milliseconds", "iso"];
+const colorFormats = ["hex", "rgb"];
+const numberBases = ["2", "8", "10", "16", "36"];
 
 export const generatorTools: UtilityTool[] = [
   {
@@ -103,6 +107,54 @@ export const generatorTools: UtilityTool[] = [
     endpoint: "/generate/lorem",
     fields: [{ name: "words", label: "Words", placeholder: "24", type: "number" }],
     resultKey: "lorem",
+  },
+  {
+    value: "nanoid",
+    label: "Nano ID",
+    description: "Generate a compact URL-safe identifier.",
+    method: "GET",
+    endpoint: "/generate/nanoid",
+    fields: [{ name: "length", label: "Length", placeholder: "21", type: "number" }],
+    resultKey: "nanoid",
+  },
+  {
+    value: "apiKey",
+    label: "API Key",
+    description: "Generate a prefixed URL-safe API key.",
+    method: "GET",
+    endpoint: "/generate/apiKey",
+    fields: [
+      { name: "prefix", label: "Prefix", placeholder: "cfl" },
+      { name: "bytes", label: "Bytes", placeholder: "24", type: "number" },
+    ],
+    resultKey: "apiKey",
+  },
+  {
+    value: "macAddress",
+    label: "MAC Address",
+    description: "Generate a random MAC-address shaped value.",
+    method: "GET",
+    endpoint: "/generate/macAddress",
+    fields: [],
+    resultKey: "macAddress",
+  },
+  {
+    value: "semver",
+    label: "Semver",
+    description: "Generate a random semantic version string.",
+    method: "GET",
+    endpoint: "/generate/semver",
+    fields: [{ name: "major", label: "Major", placeholder: "0", type: "number" }],
+    resultKey: "semver",
+  },
+  {
+    value: "timestamp",
+    label: "Timestamp",
+    description: "Generate the current time as ISO, seconds, or milliseconds.",
+    method: "GET",
+    endpoint: "/generate/timestamp",
+    fields: [{ name: "format", label: "Format", placeholder: "iso", options: timestampUnits }],
+    resultKey: "timestamp",
   },
 ];
 
@@ -185,6 +237,58 @@ export const converterTools: UtilityTool[] = [
     ],
     resultKey: "convertedSpeed",
   },
+  {
+    value: "numberBase",
+    label: "Number Base",
+    description: "Convert binary, octal, decimal, hex, and base36 values.",
+    method: "POST",
+    endpoint: "/convert/numberBase",
+    fields: [
+      { name: "value", label: "Value", placeholder: "255" },
+      { name: "fromBase", label: "From base", placeholder: "10", options: numberBases },
+      { name: "toBase", label: "To base", placeholder: "16", options: numberBases },
+    ],
+    resultKey: "convertedNumber",
+  },
+  {
+    value: "duration",
+    label: "Duration",
+    description: "Convert milliseconds, seconds, minutes, hours, and days.",
+    method: "POST",
+    endpoint: "/convert/duration",
+    fields: [
+      { name: "value", label: "Value", placeholder: "3600", type: "number" },
+      { name: "fromUnit", label: "From", placeholder: "s", options: durationUnits },
+      { name: "toUnit", label: "To", placeholder: "hr", options: durationUnits },
+    ],
+    resultKey: "convertedDuration",
+  },
+  {
+    value: "timestamp",
+    label: "Timestamp",
+    description: "Convert ISO timestamps, Unix seconds, and Unix milliseconds.",
+    method: "POST",
+    endpoint: "/convert/timestamp",
+    fields: [
+      { name: "value", label: "Value", placeholder: "2026-06-28T12:00:00.000Z" },
+      { name: "fromUnit", label: "From", placeholder: "iso", options: timestampUnits },
+      { name: "toUnit", label: "To", placeholder: "seconds", options: timestampUnits },
+    ],
+    resultKey: "convertedTimestamp",
+  },
+  {
+    value: "color",
+    label: "Color",
+    description: "Convert between hex and rgb color formats.",
+    method: "POST",
+    endpoint: "/convert/color",
+    fields: [
+      { name: "value", label: "Value", placeholder: "#4682B4" },
+      { name: "fromFormat", label: "From", placeholder: "hex", options: colorFormats },
+      { name: "toFormat", label: "To", placeholder: "rgb", options: colorFormats },
+    ],
+    resultKey: "convertedColor",
+  },
 ];
 
 export const hashingTools: UtilityTool[] = [
@@ -193,6 +297,8 @@ export const hashingTools: UtilityTool[] = [
   "sha256",
   "sha384",
   "sha512",
+  "sha3-256",
+  "sha3-512",
 ].map((algorithm) => ({
   value: algorithm,
   label: algorithm.toUpperCase(),
@@ -233,6 +339,45 @@ hashingTools.push(
       { name: "secret", label: "Secret", placeholder: "keyboard-cat" },
     ],
     resultKey: "hashedValue",
+  },
+  {
+    value: "hmacSha512",
+    label: "HMAC SHA512",
+    description: "Sign text with a secret using HMAC SHA512.",
+    method: "POST",
+    endpoint: "/hash/hmacSha512",
+    fields: [
+      { name: "input", label: "Input", placeholder: "payload" },
+      { name: "secret", label: "Secret", placeholder: "keyboard-cat" },
+    ],
+    resultKey: "hashedValue",
+  },
+  {
+    value: "base64UrlEncode",
+    label: "Base64URL Encode",
+    description: "Encode text as URL-safe Base64.",
+    method: "POST",
+    endpoint: "/hash/base64UrlEncode",
+    fields: [{ name: "input", label: "Input", placeholder: "CommonFunLib" }],
+    resultKey: "encodedValue",
+  },
+  {
+    value: "base64UrlDecode",
+    label: "Base64URL Decode",
+    description: "Decode URL-safe Base64 back into readable text.",
+    method: "POST",
+    endpoint: "/hash/base64UrlDecode",
+    fields: [{ name: "input", label: "Input", placeholder: "Q29tbW9uRnVuTGli" }],
+    resultKey: "decodedValue",
+  },
+  {
+    value: "checksum",
+    label: "Checksum",
+    description: "Create a lightweight hex checksum for quick comparisons.",
+    method: "POST",
+    endpoint: "/hash/checksum",
+    fields: [{ name: "input", label: "Input", placeholder: "CommonFunLib" }],
+    resultKey: "checksum",
   }
 );
 

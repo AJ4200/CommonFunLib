@@ -4,7 +4,7 @@
     "api": "node server.js"
   },
   "name": "commonfunlib",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Common utility functions for generating data, converting values, hashing text, and everyday number/string helpers.",
   "main": "index.js",
   "types": "index.d.ts",

@@ -56,4 +56,27 @@ router.get("/lorem", (req, res) => {
   res.json({ lorem: generator.generateLorem(words) });
 });
 
+router.get("/nanoid", (req, res) => {
+  const length = req.query.length ? parseInt(req.query.length) : 21;
+  res.json({ nanoid: generator.generateNanoId(length) });
+});
+
+router.get("/apiKey", (req, res) => {
+  const bytes = req.query.bytes ? parseInt(req.query.bytes) : 24;
+  res.json({ apiKey: generator.generateApiKey(req.query.prefix || "cfl", bytes) });
+});
+
+router.get("/macAddress", (req, res) => {
+  res.json({ macAddress: generator.generateMacAddress() });
+});
+
+router.get("/semver", (req, res) => {
+  const major = req.query.major ? parseInt(req.query.major) : 0;
+  res.json({ semver: generator.generateSemver(major) });
+});
+
+router.get("/timestamp", (req, res) => {
+  res.json({ timestamp: generator.generateTimestamp(req.query.format || "iso") });
+});
+
 module.exports = router;

@@ -178,6 +178,122 @@ class Converter {
 
     return convertedValue;
   }
+
+  convertNumberBase(value, fromBase, toBase) {
+    const sourceBase = Number(fromBase);
+    const targetBase = Number(toBase);
+
+    if (!Number.isInteger(sourceBase) || !Number.isInteger(targetBase) || sourceBase < 2 || sourceBase > 36 || targetBase < 2 || targetBase > 36) {
+      console.error('Invalid number base specified.');
+      return null;
+    }
+
+    const parsed = parseInt(String(value), sourceBase);
+
+    if (Number.isNaN(parsed)) {
+      console.error('Invalid value for source base.');
+      return null;
+    }
+
+    return parsed.toString(targetBase).toUpperCase();
+  }
+
+  convertDuration(value, fromUnit, toUnit) {
+    const units = {
+      ms: 1,
+      s: 1000,
+      min: 60000,
+      hr: 3600000,
+      day: 86400000,
+    };
+
+    if (!units.hasOwnProperty(fromUnit) || !units.hasOwnProperty(toUnit)) {
+      console.error('Invalid duration unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(4);
+  }
+
+  convertTimestamp(value, fromUnit, toUnit) {
+    const date =
+      fromUnit === 'seconds'
+        ? new Date(Number(value) * 1000)
+        : fromUnit === 'milliseconds'
+          ? new Date(Number(value))
+          : fromUnit === 'iso'
+            ? new Date(String(value))
+            : null;
+
+    if (!date || Number.isNaN(date.getTime())) {
+      console.error('Invalid timestamp specified.');
+      return null;
+    }
+
+    if (toUnit === 'seconds') {
+      return Math.floor(date.getTime() / 1000);
+    }
+
+    if (toUnit === 'milliseconds') {
+      return date.getTime();
+    }
+
+    if (toUnit === 'iso') {
+      return date.toISOString();
+    }
+
+    console.error('Invalid timestamp unit specified.');
+    return null;
+  }
+
+  convertColor(value, fromFormat, toFormat) {
+    const rgb = this.parseColor(value, fromFormat);
+
+    if (!rgb) {
+      return null;
+    }
+
+    if (toFormat === 'hex') {
+      return `#${rgb.map((channel) => channel.toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+    }
+
+    if (toFormat === 'rgb') {
+      return `rgb(${rgb.join(', ')})`;
+    }
+
+    console.error('Invalid color format specified.');
+    return null;
+  }
+
+  parseColor(value, format) {
+    if (format === 'hex') {
+      const hex = String(value).replace('#', '').trim();
+
+      if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+        console.error('Invalid hex color specified.');
+        return null;
+      }
+
+      return [0, 2, 4].map((start) => parseInt(hex.slice(start, start + 2), 16));
+    }
+
+    if (format === 'rgb') {
+      const channels = String(value)
+        .replace(/[^\d,]/g, '')
+        .split(',')
+        .map((channel) => Number(channel.trim()));
+
+      if (channels.length !== 3 || channels.some((channel) => !Number.isInteger(channel) || channel < 0 || channel > 255)) {
+        console.error('Invalid rgb color specified.');
+        return null;
+      }
+
+      return channels;
+    }
+
+    console.error('Invalid color format specified.');
+    return null;
+  }
 }
 
 module.exports = Converter;

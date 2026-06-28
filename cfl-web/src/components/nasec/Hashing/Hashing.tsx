@@ -16,17 +16,17 @@ const Hashing = () => (
       <PackageExamples
         title="Hash and encode locally"
         description="Use package imports for server-side hashing, fixture generation, signing demos, or quick encoding tasks."
-        helpers={["sha256", "sha512", "base64Encode", "base64Decode", "hmacSha256"]}
-        esmExample={`import { sha256, base64Encode, hmacSha256 } from "commonfunlib";
+        helpers={["sha256", "sha3_256", "base64UrlEncode", "checksum", "hmacSha512"]}
+        esmExample={`import { sha256, sha3_256, base64UrlEncode } from "commonfunlib";
 
 sha256("CommonFunLib");
-base64Encode("hello");
-hmacSha256("payload", "secret");`}
+sha3_256("CommonFunLib");
+base64UrlEncode("hello world");`}
         cjsExample={`const { hash, sha512 } = require("commonfunlib");
 
 sha512("CommonFunLib");
-hash.base64Decode("aGVsbG8=");
-hash.hmacSha256("payload", "secret");`}
+hash.checksum("payload");
+hash.hmacSha512("payload", "secret");`}
       />
     }
   />

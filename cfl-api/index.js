@@ -19,6 +19,11 @@ const common = {
   slugify: CommonFunctions.slugify,
   clamp: CommonFunctions.clamp,
   percentage: CommonFunctions.percentage,
+  fibonacci: CommonFunctions.fibonacci,
+  average: CommonFunctions.average,
+  median: CommonFunctions.median,
+  titleCase: CommonFunctions.titleCase,
+  wordCount: CommonFunctions.wordCount,
 };
 
 const generate = {
@@ -32,6 +37,11 @@ const generate = {
   pin: (digits = 6) => generator.generatePin(digits),
   color: () => generator.generateColor(),
   lorem: (words = 24) => generator.generateLorem(words),
+  nanoid: (length = 21) => generator.generateNanoId(length),
+  apiKey: (prefix = "cfl", bytes = 24) => generator.generateApiKey(prefix, bytes),
+  macAddress: () => generator.generateMacAddress(),
+  semver: (major = 0) => generator.generateSemver(major),
+  timestamp: (format = "iso") => generator.generateTimestamp(format),
 };
 
 const convert = {
@@ -47,6 +57,12 @@ const convert = {
     converter.convertTemperature(temperature, fromUnit, toUnit),
   lengthSystem: (value, fromSystem, toSystem) =>
     converter.convertLengthSystem(value, fromSystem, toSystem),
+  numberBase: (value, fromBase, toBase) =>
+    converter.convertNumberBase(value, fromBase, toBase),
+  duration: (value, fromUnit, toUnit) => converter.convertDuration(value, fromUnit, toUnit),
+  timestamp: (value, fromUnit, toUnit) =>
+    converter.convertTimestamp(value, fromUnit, toUnit),
+  color: (value, fromFormat, toFormat) => converter.convertColor(value, fromFormat, toFormat),
 };
 
 const hash = {
@@ -55,9 +71,15 @@ const hash = {
   sha256: Hashing.sha256,
   sha384: Hashing.sha384,
   sha512: Hashing.sha512,
+  sha3_256: Hashing.sha3_256,
+  sha3_512: Hashing.sha3_512,
   base64Encode: Hashing.base64Encode,
   base64Decode: Hashing.base64Decode,
   hmacSha256: Hashing.hmacSha256,
+  hmacSha512: Hashing.hmacSha512,
+  base64UrlEncode: Hashing.base64UrlEncode,
+  base64UrlDecode: Hashing.base64UrlDecode,
+  checksum: Hashing.checksum,
 };
 
 const api = {
@@ -81,6 +103,11 @@ const api = {
   slugify: common.slugify,
   clamp: common.clamp,
   percentage: common.percentage,
+  fibonacci: common.fibonacci,
+  average: common.average,
+  median: common.median,
+  titleCase: common.titleCase,
+  wordCount: common.wordCount,
   generateRandomNumber: generate.randomNumber,
   generateRandomName: generate.randomName,
   getFirstNames: generate.firstNames,
@@ -91,6 +118,11 @@ const api = {
   generatePin: generate.pin,
   generateColor: generate.color,
   generateLorem: generate.lorem,
+  generateNanoId: generate.nanoid,
+  generateApiKey: generate.apiKey,
+  generateMacAddress: generate.macAddress,
+  generateSemver: generate.semver,
+  generateTimestamp: generate.timestamp,
   fetchExchangeRates: convert.fetchExchangeRates,
   convertCurrency: convert.currency,
   convertLength: convert.length,
@@ -100,14 +132,24 @@ const api = {
   convertSpeed: convert.speed,
   convertTemperature: convert.temperature,
   convertLengthSystem: convert.lengthSystem,
+  convertNumberBase: convert.numberBase,
+  convertDuration: convert.duration,
+  convertTimestamp: convert.timestamp,
+  convertColor: convert.color,
   md5: hash.md5,
   sha1: hash.sha1,
   sha256: hash.sha256,
   sha384: hash.sha384,
   sha512: hash.sha512,
+  sha3_256: hash.sha3_256,
+  sha3_512: hash.sha3_512,
   base64Encode: hash.base64Encode,
   base64Decode: hash.base64Decode,
   hmacSha256: hash.hmacSha256,
+  hmacSha512: hash.hmacSha512,
+  base64UrlEncode: hash.base64UrlEncode,
+  base64UrlDecode: hash.base64UrlDecode,
+  checksum: hash.checksum,
 };
 
 module.exports = api;

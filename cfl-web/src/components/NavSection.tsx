@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { BsInfoCircle } from "react-icons/bs";
@@ -70,7 +72,7 @@ const NavSection: React.FC<NavSectionProps> = ({
     <div
       className={`relative flex flex-col overflow-hidden ${
         expanded
-          ? "chrome-panel fixed inset-1.5 z-[1000] h-auto w-auto rounded-lg border-2 border-[var(--secondary)] shadow-2xl sm:inset-2"
+          ? "chrome-panel h-full w-full rounded-lg border-2 border-[var(--secondary)] shadow-2xl"
           : "h-full w-full"
       }`}
       {...(!expanded ? props : {})}
@@ -169,7 +171,15 @@ const NavSection: React.FC<NavSectionProps> = ({
     return (
       <>
         {renderSection(false)}
-        {createPortal(renderSection(true), document.body)}
+        {createPortal(
+          <div
+            className="p-1.5 sm:p-2"
+            style={{ inset: 0, position: "fixed", zIndex: 1000 }}
+          >
+            {renderSection(true)}
+          </div>,
+          document.body
+        )}
       </>
     );
   }
