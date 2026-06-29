@@ -6,7 +6,7 @@ HMAC signing.
 
 It can also run the same utilities as an Express API.
 
-## Version 0.0.2
+## Version 1.0.1
 
 This release expands the computing toolkit with Fibonacci, average, median,
 title case, word count, Nano IDs, API keys, MAC addresses, semver strings,
