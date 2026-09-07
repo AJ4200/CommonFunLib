@@ -4,10 +4,13 @@ import PackageExamples from "@/components/nasec/PackageExamples";
 import ToolInfo from "@/components/nasec/ToolInfo";
 import ToolPlayground from "@/components/nasec/ToolPlayground";
 import { buildEndpointDocs, generatorTools } from "@/lib/utilityTools";
+import { FaTools } from "react-icons/fa";
 
 const Generators = () => (
   <NavSection
     heading="Generators"
+    splashIcon={<FaTools />}
+    catalog={generatorTools.map((tool) => tool.label)}
     description="Create realistic sample values, identifiers, colors, passwords, PINs, and placeholder text for testing forms, APIs, and demos."
     infoContent={<ToolInfo tools={generatorTools} />}
     playgroundContent={<ToolPlayground tools={generatorTools} />}

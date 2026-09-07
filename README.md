@@ -62,11 +62,12 @@ hash.base64Encode("hello");
 
 ## What It Includes
 
-- Common functions: even/odd checks, factorial, GCD, LCM, prime checks, string reversal, palindrome checks, slugify, clamp, and percentage.
-- Generators: random names, numbers, passwords, UUIDs, tokens, PINs, colors, placeholder text, and QR code data URLs.
+- Common functions: even/odd checks, factorial, GCD, LCM, prime checks, string reversal, palindrome checks, slugify, email validation, truncation, clamp, and percentage.
+- Generators: random names, usernames, numbers, passwords, UUIDs, tokens, PINs, colors, placeholder text, and QR code data URLs.
 - Link helpers: URL-safe text slugs and URL path slugs.
-- Converters: length, weight, temperature, area, data size, speed, and optional currency conversion.
-- Hashing: MD5, SHA variants, Base64 encode/decode, and HMAC SHA256.
+- Converters: length, weight, temperature, area, data size, speed, pressure, and optional currency conversion.
+- Hashing: MD5, SHA variants, Base64 encode/decode, URL encode/decode, and HMAC SHA256.
+- Release 1.0.3: email validation, text truncation, username generation, pressure conversion, URL encoding helpers, QR codes, and 5 MB SteganoPass file keys.
 
 ## API Examples
 
@@ -74,8 +75,13 @@ hash.base64Encode("hello");
 - `GET /generate/uuid`
 - `GET /generate/qrCode?value=https%3A%2F%2Fexample.com`
 - `GET /common/slugifyLink?link=https%3A%2F%2Fexample.com%2Fdocs%2FMy%20Page`
+- `GET /common/isValidEmail?email=dev%40example.com`
+- `GET /common/truncate?str=CommonFunLib%20release%20notes&maxLength=16`
 - `POST /convert/length`
+- `POST /convert/pressure`
 - `POST /hash/sha256`
+- `POST /hash/urlEncode`
+- `POST /generate/steganopass` with a multipart `file` field, limited to 5 MB.
 - `GET /status`
 
 ## Project Layout

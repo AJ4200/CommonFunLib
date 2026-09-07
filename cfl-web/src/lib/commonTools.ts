@@ -24,4 +24,6 @@ export const commonTools: CommonTool[] = [
   { value: "median", label: "Median", description: "Find the middle value in a comma-separated number list.", inputs: [{ name: "numbers", label: "Numbers", placeholder: "4,8,15,16,23,42" }], resultKey: "median" },
   { value: "titleCase", label: "Title Case", description: "Convert text into title case.", inputs: [{ name: "str", label: "Text", placeholder: "common fun lib" }], resultKey: "titleCase" },
   { value: "wordCount", label: "Word Count", description: "Count words in a text value.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib ships tiny utilities" }], resultKey: "wordCount" },
+  { value: "isValidEmail", label: "Email Validator", description: "Check whether text looks like a valid email address.", inputs: [{ name: "email", label: "Email", placeholder: "dev@example.com" }], resultKey: "isValidEmail" },
+  { value: "truncate", label: "Truncate", description: "Shorten text to a predictable maximum length.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib release notes" }, { name: "maxLength", label: "Max length", placeholder: "16", type: "number" }, { name: "suffix", label: "Suffix", placeholder: "..." }], resultKey: "truncated" },
 ];

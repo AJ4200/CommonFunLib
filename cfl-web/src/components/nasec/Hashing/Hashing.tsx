@@ -4,10 +4,13 @@ import PackageExamples from "@/components/nasec/PackageExamples";
 import ToolInfo from "@/components/nasec/ToolInfo";
 import ToolPlayground from "@/components/nasec/ToolPlayground";
 import { buildEndpointDocs, hashingTools } from "@/lib/utilityTools";
+import { FaLock } from "react-icons/fa";
 
 const Hashing = () => (
   <NavSection
     heading="Hashing"
+    splashIcon={<FaLock />}
+    catalog={hashingTools.map((tool) => tool.label)}
     description="Hash, encode, decode, and sign text payloads while checking the exact endpoint and response shape behind each utility."
     infoContent={<ToolInfo tools={hashingTools} />}
     playgroundContent={<ToolPlayground tools={hashingTools} />}

@@ -6,7 +6,7 @@ HMAC signing.
 
 It can also run the same utilities as an Express API.
 
-## Version 1.0.1
+## Version 1.0.3
 
 This release expands the computing toolkit with Fibonacci, average, median,
 title case, word count, Nano IDs, API keys, MAC addresses, semver strings,
@@ -14,6 +14,11 @@ timestamps, number-base conversion, duration conversion, timestamp conversion,
 color conversion, SHA3 hashing, Base64URL helpers, HMAC SHA512, and checksums.
 
 It also includes QR code data URL generation and URL path slugification.
+
+Version 1.0.3 adds email validation, bounded text truncation, readable username
+generation, pressure conversion, and URL encode/decode helpers. SteganoPass is
+also available for turning files up to 5 MB into deterministic seeds, keys,
+passwords, and IDs.
 
 ## Install
 
@@ -29,6 +34,8 @@ import {
   fibonacci,
   slugify,
   slugifyLink,
+  isValidEmail,
+  truncate,
   generateApiKey,
   convertNumberBase,
   sha3_256,
@@ -41,6 +48,8 @@ console.log(slugifyLink("https://example.com/docs/My Page"));
 console.log(generateApiKey("cfl", 24));
 console.log(convertNumberBase("255", 10, 16));
 console.log(sha3_256("CommonFunLib"));
+console.log(isValidEmail("dev@example.com"));
+console.log(truncate("A long release note", 10));
 ```
 
 Grouped helpers are also available:
@@ -64,6 +73,7 @@ const generator = new Generator();
 
 converter.convertWeight(5, "kg", "lb");
 generator.generateApiKey("cfl", 24);
+generator.generateUsername();
 await generator.generateQrCode("https://example.com");
 Hashing.hmacSha512("payload", "secret");
 CommonFunctions.average("4,8,15,16,23,42");

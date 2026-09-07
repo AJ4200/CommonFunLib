@@ -157,6 +157,15 @@ export const generatorTools: UtilityTool[] = [
     resultKey: "timestamp",
   },
   {
+    value: "username",
+    label: "Username",
+    description: "Generate a readable username from the bundled name banks.",
+    method: "GET",
+    endpoint: "/generate/username",
+    fields: [],
+    resultKey: "username",
+  },
+  {
     value: "qrCode",
     label: "QR Code",
     description: "Generate a QR code data URL from text or a link.",
@@ -258,6 +267,19 @@ export const converterTools: UtilityTool[] = [
       { name: "toUnit", label: "To", placeholder: "kph", options: speedUnits },
     ],
     resultKey: "convertedSpeed",
+  },
+  {
+    value: "pressure",
+    label: "Pressure",
+    description: "Convert pascals, kilopascals, bar, PSI, and atmospheres.",
+    method: "POST",
+    endpoint: "/convert/pressure",
+    fields: [
+      { name: "value", label: "Value", placeholder: "1", type: "number" },
+      { name: "fromUnit", label: "From", placeholder: "bar", options: ["pa", "kpa", "bar", "psi", "atm"] },
+      { name: "toUnit", label: "To", placeholder: "psi", options: ["pa", "kpa", "bar", "psi", "atm"] },
+    ],
+    resultKey: "convertedPressure",
   },
   {
     value: "numberBase",
@@ -400,6 +422,24 @@ hashingTools.push(
     endpoint: "/hash/checksum",
     fields: [{ name: "input", label: "Input", placeholder: "CommonFunLib" }],
     resultKey: "checksum",
+  },
+  {
+    value: "urlEncode",
+    label: "URL Encode",
+    description: "Encode text safely for use inside a URL.",
+    method: "POST",
+    endpoint: "/hash/urlEncode",
+    fields: [{ name: "input", label: "Input", placeholder: "hello world?" }],
+    resultKey: "encodedValue",
+  },
+  {
+    value: "urlDecode",
+    label: "URL Decode",
+    description: "Decode percent-encoded URL text back into readable text.",
+    method: "POST",
+    endpoint: "/hash/urlDecode",
+    fields: [{ name: "input", label: "Encoded input", placeholder: "hello%20world%3F" }],
+    resultKey: "decodedValue",
   }
 );
 

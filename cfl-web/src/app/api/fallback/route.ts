@@ -29,12 +29,15 @@ const runFallback = async (
       median: cfl.median(values.numbers ?? ""),
       titleCase: cfl.titleCase(values.str ?? ""),
       wordCount: cfl.wordCount(values.str ?? ""),
+      isValidEmail: cfl.isValidEmail(values.email ?? ""),
+      truncate: cfl.truncate(values.str ?? "", numberValue(values.maxLength), values.suffix),
     };
     const resultKeys: Record<string, string> = {
       even: "isEven", odd: "isOdd", factorial: "factorial", gcd: "gcd", lcm: "lcm",
       prime: "isPrime", reverse: "reversedString", palindrome: "isPalindrome", slugify: "slug",
       slugifyLink: "slug", clamp: "clamped", percentage: "percentage", fibonacci: "fibonacci",
       average: "average", median: "median", titleCase: "titleCase", wordCount: "wordCount",
+      isValidEmail: "isValidEmail", truncate: "truncated",
     };
     return { [resultKeys[tool]]: commonResults[tool] };
   }
@@ -54,6 +57,7 @@ const runFallback = async (
       macAddress: cfl.generateMacAddress(),
       semver: cfl.generateSemver(numberValue(values.major)),
       timestamp: cfl.generateTimestamp(values.format as "iso" | "seconds" | "milliseconds"),
+      username: cfl.generateUsername(),
       qrCode: await cfl.generateQrCode(values.value, {
         width: numberValue(values.width),
         margin: numberValue(values.margin),
@@ -76,12 +80,14 @@ const runFallback = async (
       hmacSha512: cfl.hmacSha512(values.input ?? "", values.secret ?? ""),
       base64UrlEncode: cfl.base64UrlEncode(values.input ?? ""),
       base64UrlDecode: cfl.base64UrlDecode(values.input ?? ""), checksum: cfl.checksum(values.input ?? ""),
+      urlEncode: cfl.urlEncode(values.input ?? ""),
+      urlDecode: cfl.urlDecode(values.input ?? ""),
     };
     const resultKey = ["base64Encode", "base64UrlEncode"].includes(tool)
       ? "encodedValue"
       : ["base64Decode", "base64UrlDecode"].includes(tool)
         ? "decodedValue"
-        : tool === "checksum" ? "checksum" : "hashedValue";
+        : tool === "checksum" ? "checksum" : tool === "urlDecode" ? "decodedValue" : "hashedValue";
     return { [resultKey]: hashResults[tool] };
   }
 
@@ -93,6 +99,7 @@ const runFallback = async (
       area: cfl.convertArea(numberValue(values.area), values.fromUnit, values.toUnit),
       dataSize: cfl.convertDataSize(numberValue(values.value), values.fromUnit, values.toUnit),
       speed: cfl.convertSpeed(numberValue(values.value), values.fromUnit, values.toUnit),
+      pressure: cfl.convertPressure(numberValue(values.value), values.fromUnit, values.toUnit),
       numberBase: cfl.convertNumberBase(values.value, numberValue(values.fromBase), numberValue(values.toBase)),
       duration: cfl.convertDuration(numberValue(values.value), values.fromUnit, values.toUnit),
       timestamp: cfl.convertTimestamp(values.value, values.fromUnit, values.toUnit),
@@ -102,7 +109,7 @@ const runFallback = async (
       length: "convertedLength", weight: "convertedWeight", temperature: "convertedTemperature",
       area: "convertedArea", dataSize: "convertedDataSize", speed: "convertedSpeed",
       numberBase: "convertedNumber", duration: "convertedDuration", timestamp: "convertedTimestamp",
-      color: "convertedColor",
+      color: "convertedColor", pressure: "convertedPressure",
     };
     return { [resultKeys[tool]]: converters[tool] };
   }

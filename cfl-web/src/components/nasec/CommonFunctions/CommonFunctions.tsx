@@ -4,6 +4,8 @@ import infoContent from "./infoContent";
 import CommonFunctionsPG from "./CommonFunctionsPG";
 import EndpointList from "./Endpoints";
 import PackageExamples from "@/components/nasec/PackageExamples";
+import { commonTools } from "@/lib/commonTools";
+import { FaCog } from "react-icons/fa";
 
 interface CommonFunctionsProps {}
 
@@ -14,6 +16,8 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
     <div className="h-full min-h-0" {...props}>
       <NavSection
         heading={"Common Functions"}
+        splashIcon={<FaCog />}
+        catalog={commonTools.map((tool) => tool.label)}
         description={
           "Run quick checks and transformations for everyday number and string tasks, then inspect the matching API route when you need to wire one into code."
         }

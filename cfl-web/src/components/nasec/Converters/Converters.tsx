@@ -4,10 +4,13 @@ import PackageExamples from "@/components/nasec/PackageExamples";
 import ToolInfo from "@/components/nasec/ToolInfo";
 import ToolPlayground from "@/components/nasec/ToolPlayground";
 import { buildEndpointDocs, converterTools } from "@/lib/utilityTools";
+import { FaExchangeAlt } from "react-icons/fa";
 
 const Converters = () => (
   <NavSection
     heading="Converters"
+    splashIcon={<FaExchangeAlt />}
+    catalog={converterTools.map((tool) => tool.label)}
     description="Convert common measurements and data sizes with simple inputs, live results, and request examples you can reuse."
     infoContent={<ToolInfo tools={converterTools} />}
     playgroundContent={<ToolPlayground tools={converterTools} />}

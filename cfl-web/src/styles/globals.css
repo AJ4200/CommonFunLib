@@ -356,6 +356,71 @@ main {
   animation: splash-progress 1.5s ease-in-out infinite;
 }
 
+.category-splash {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  color: var(--foreground);
+  background-color: var(--background);
+  background-image: var(--background-image);
+  animation: category-splash-in 220ms ease both;
+}
+
+.category-splash__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image: linear-gradient(color-mix(in srgb, var(--secondary) 35%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--secondary) 35%, transparent) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+}
+
+.category-splash__content {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.category-splash__icon {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border: 1px solid var(--secondary);
+  border-radius: 1rem;
+  color: var(--primary);
+  background: var(--secondary);
+  box-shadow: 7px 7px 0 color-mix(in srgb, var(--secondary) 28%, transparent);
+  font-size: 1.8rem;
+}
+
+.category-splash__tools {
+  display: flex;
+  max-width: 55rem;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+}
+
+.category-splash__tools span {
+  border: 1px solid color-mix(in srgb, var(--secondary) 58%, transparent);
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 900;
+  background: color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+@keyframes category-splash-in {
+  from { opacity: 0; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 @keyframes splash-rise {
   from { opacity: 0; transform: translateY(1rem); }
   to { opacity: 1; transform: translateY(0); }

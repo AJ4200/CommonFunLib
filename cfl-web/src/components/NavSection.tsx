@@ -9,6 +9,8 @@ import { FaChevronRight, FaCompress, FaExpand, FaNpm, FaServer } from "react-ico
 interface NavSectionProps {
   heading: string;
   description: string;
+  splashIcon?: React.ReactNode;
+  catalog?: string[];
   infoContent: React.ReactNode;
   playgroundContent: React.ReactNode;
   apiContent: React.ReactNode;
@@ -18,6 +20,8 @@ interface NavSectionProps {
 const NavSection: React.FC<NavSectionProps> = ({
   heading,
   description,
+  splashIcon,
+  catalog = [],
   infoContent,
   playgroundContent,
   apiContent,
@@ -27,9 +31,13 @@ const NavSection: React.FC<NavSectionProps> = ({
   const [activeTab, setActiveTab] = useState(1);
   const [fullscreen, setFullscreen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     setMounted(true);
+    const timer = window.setTimeout(() => setShowSplash(false), 1100);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const tabs = [
@@ -164,6 +172,24 @@ const NavSection: React.FC<NavSectionProps> = ({
           {activeMode.content}
         </div>
       </div>
+      {showSplash ? (
+        <div className="category-splash" role="status" aria-live="polite">
+          <div className="category-splash__grid" />
+          <div className="category-splash__content">
+            <span className="category-splash__icon">{splashIcon}</span>
+            <p className="mt-5 text-xs font-black uppercase tracking-[0.28em] opacity-70">CommonFunLib / catalog loaded</p>
+            <h3 className="brand-type mt-2 text-4xl font-black theme-shadow sm:text-6xl">{heading}</h3>
+            <p className="mt-3 max-w-xl text-sm font-bold leading-6 opacity-80">{description}</p>
+            <div className="category-splash__tools">
+              {catalog.map((tool) => <span key={tool}>{tool}</span>)}
+            </div>
+            <div className="mt-6 flex items-center gap-3 text-xs font-black uppercase tracking-[0.22em] opacity-65">
+              <span className="splash-progress" />
+              Opening workspace
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 
