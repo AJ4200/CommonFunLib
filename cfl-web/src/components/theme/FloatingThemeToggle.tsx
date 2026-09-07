@@ -17,8 +17,8 @@ import {
   storeTheme,
   themeChangedEvent,
 } from "./ThemeManager";
-import { BiLoaderCircle } from "react-icons/bi";
 import { FaRandom, FaTimes } from "react-icons/fa";
+import UniversalLoader from "@/components/ui/UniversalLoader";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
@@ -223,8 +223,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
               <CardFooter className="min-h-14 border-t-2 border-[var(--secondary)] bg-black/10">
                 {loading ? (
                   <a className="flex items-center space-x-2 font-semibold">
-                    <BiLoaderCircle size={23} />
-                    Applying theme...
+                    <UniversalLoader label="Applying theme" size="sm" />
                   </a>
                 ) : null}
               </CardFooter>

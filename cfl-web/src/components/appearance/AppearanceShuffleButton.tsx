@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BiLoaderCircle } from "react-icons/bi";
 import { FaRandom } from "react-icons/fa";
+import UniversalLoader from "@/components/ui/UniversalLoader";
 import Font from "@/models/Font";
 import Theme from "@/models/Theme";
 import { getFonts } from "@/lib/fonts";
@@ -99,7 +99,7 @@ const AppearanceShuffleButton: React.FC = () => {
         }}
       >
         {loading ? (
-          <BiLoaderCircle className="h-3.5 w-3.5 animate-spin" />
+          <UniversalLoader label="" size="sm" />
         ) : (
           <FaRandom className="h-3 w-3" />
         )}

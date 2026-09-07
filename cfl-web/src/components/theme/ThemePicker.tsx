@@ -13,8 +13,8 @@ import { getTheme, getThemes } from "@/lib/themes";
 import Font from "@/models/Font";
 import Theme from "@/models/Theme";
 import { RiPaletteFill } from "react-icons/ri";
-import { BiLoaderCircle } from "react-icons/bi";
 import { FaFont, FaRandom } from "react-icons/fa";
+import UniversalLoader from "@/components/ui/UniversalLoader";
 import { useRouter } from "next/navigation";
 
 interface ThemeProps {
@@ -236,7 +236,7 @@ const ThemePicker: React.FC<ThemeProps> = ({ initialOpen }) => {
             disabled={choosing}
           >
             {choosing ? (
-              <BiLoaderCircle className="h-4 w-4 animate-spin" />
+              <UniversalLoader label="" size="sm" />
             ) : (
               <FaRandom className="h-4 w-4" />
             )}

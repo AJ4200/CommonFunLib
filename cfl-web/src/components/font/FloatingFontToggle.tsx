@@ -19,8 +19,8 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
-import { BiLoaderCircle } from "react-icons/bi";
 import { FaFont, FaRandom, FaTimes } from "react-icons/fa";
+import UniversalLoader from "@/components/ui/UniversalLoader";
 import FontButton from "./FontButton";
 
 interface FloatingFontToggleProps {}
@@ -238,8 +238,7 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
               <CardFooter className="min-h-14 border-t-2 border-[var(--secondary)] bg-black/10">
                 {loading ? (
                   <span className="flex items-center space-x-2 font-semibold">
-                    <BiLoaderCircle size={23} />
-                    <span>Applying font...</span>
+                    <UniversalLoader label="Applying font" size="sm" />
                   </span>
                 ) : null}
               </CardFooter>

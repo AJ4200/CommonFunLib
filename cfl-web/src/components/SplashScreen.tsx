@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaCog, FaCompass, FaExchangeAlt, FaLock, FaTools } from "react-icons/fa";
 import { commonTools } from "@/lib/commonTools";
 import { converterTools, generatorTools, hashingTools } from "@/lib/utilityTools";
+import UniversalLoader from "@/components/ui/UniversalLoader";
 
 type SplashCategory = {
   icon: React.ReactNode;
@@ -66,10 +67,7 @@ const SplashScreen = ({ onDone }: { onDone: () => void }) => {
           ))}
         </div>
 
-        <div className="mt-7 flex items-center gap-3 text-xs font-black uppercase tracking-[0.22em] opacity-70">
-          <span className="splash-progress" />
-          Loading the whole catalog
-        </div>
+        <UniversalLoader label="Loading tool" size="md" className="mt-7 justify-start" />
       </div>
     </div>
   );

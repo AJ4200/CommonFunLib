@@ -1,25 +1,11 @@
 import React from "react";
+import UniversalLoader from "./UniversalLoader";
 
-interface LoaderProps {}
+interface LoaderProps {
+  label?: string;
+}
 
-const Loader: React.FC<LoaderProps> = ({ ...props }) => {
-  return (
-    <div {...props} className="fixed object-center">
-      <div className="loader-container">
-        <div className="loader">
-          <span></span>
-        </div>
-        <div className="loader">
-          <span></span>
-        </div>
-        <div className="loader">
-          <i></i>
-        </div>
-        <div className="loader">
-          <i></i>
-        </div>
-      </div>
-    </div>
-  );
-};
+const Loader: React.FC<LoaderProps> = ({ label = "Loading" }) => (
+  <UniversalLoader label={label} size="lg" overlay />
+);
 export default Loader;
