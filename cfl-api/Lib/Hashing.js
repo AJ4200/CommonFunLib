@@ -25,6 +25,10 @@ class Hashing {
     return crypto.createHash('sha3-256').update(input).digest('hex');
   }
 
+  static sha3_384(input) {
+    return crypto.createHash('sha3-384').update(input).digest('hex');
+  }
+
   static sha3_512(input) {
     return crypto.createHash('sha3-512').update(input).digest('hex');
   }

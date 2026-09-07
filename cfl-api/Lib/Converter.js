@@ -113,6 +113,27 @@ class Converter {
     return ((value * units[fromUnit]) / units[toUnit]).toFixed(2);
   }
 
+  convertVolume(value, fromUnit, toUnit) {
+    const units = {
+      ml: 1,
+      l: 1000,
+      tsp: 4.92892,
+      tbsp: 14.7868,
+      cup: 236.588,
+      pint: 473.176,
+      quart: 946.353,
+      gallon: 3785.41,
+      cubicMeter: 1000000,
+    };
+
+    if (!Object.prototype.hasOwnProperty.call(units, fromUnit) || !Object.prototype.hasOwnProperty.call(units, toUnit)) {
+      console.error('Invalid volume unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(4);
+  }
+
   convertSpeed(value, fromUnit, toUnit) {
     const units = {
       mps: 1,

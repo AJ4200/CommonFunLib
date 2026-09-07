@@ -41,6 +41,11 @@ router.post("/dataSize", (req, res) => {
   res.json({ convertedDataSize });
 });
 
+router.post("/volume", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  res.json({ convertedVolume: converter.convertVolume(value, fromUnit, toUnit) });
+});
+
 router.post("/speed", (req, res) => {
   const { value, fromUnit, toUnit } = req.body;
   const convertedSpeed = converter.convertSpeed(value, fromUnit, toUnit);

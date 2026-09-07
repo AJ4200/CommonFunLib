@@ -93,6 +93,19 @@ class Generator {
     return now.toISOString();
   }
 
+  generateRandomDate(start = '2000-01-01T00:00:00.000Z', end = new Date().toISOString()) {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+      throw new Error('Start and end must be valid dates.');
+    }
+
+    const min = Math.min(startDate.getTime(), endDate.getTime());
+    const max = Math.max(startDate.getTime(), endDate.getTime());
+    return new Date(crypto.randomInt(min, max + 1)).toISOString();
+  }
+
   generateUsername() {
     const firstName = this.firstNames[this.generateRandomNumber(0, this.firstNames.length - 1)] || 'common';
     const lastName = this.lastNames[this.generateRandomNumber(0, this.lastNames.length - 1)] || 'user';

@@ -37,6 +37,11 @@ router.post("/sha3-256", (req, res) => {
   res.json({ hashedValue: Hashing.sha3_256(input) });
 });
 
+router.post("/sha3-384", (req, res) => {
+  const { input } = req.body;
+  res.json({ hashedValue: Hashing.sha3_384(input) });
+});
+
 router.post("/sha3-512", (req, res) => {
   const { input } = req.body;
   res.json({ hashedValue: Hashing.sha3_512(input) });

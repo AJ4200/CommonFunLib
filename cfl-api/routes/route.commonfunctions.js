@@ -50,6 +50,12 @@ router.get("/prime", (req, res) => {
   res.json({ isPrime: CommonFunctions.isPrime(num) });
 });
 
+router.get("/isLeapYear", (req, res) => {
+  const year = numberParam(req.query.year);
+  if (!ensureFinite(res, [year])) return;
+  res.json({ isLeapYear: CommonFunctions.isLeapYear(year) });
+});
+
 router.get("/reverse", (req, res) => {
   res.json({ reversedString: CommonFunctions.reverseString(req.query.str || "") });
 });

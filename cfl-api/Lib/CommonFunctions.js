@@ -38,6 +38,11 @@ class CommonFunctions {
     return true;
   }
 
+  static isLeapYear(year) {
+    const value = Number(year);
+    return Number.isInteger(value) && (value % 400 === 0 || (value % 4 === 0 && value % 100 !== 0));
+  }
+
   static swapVariableValue(arr, i, j) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }

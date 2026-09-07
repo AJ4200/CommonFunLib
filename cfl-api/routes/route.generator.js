@@ -84,6 +84,14 @@ router.get("/timestamp", (req, res) => {
   res.json({ timestamp: generator.generateTimestamp(req.query.format || "iso") });
 });
 
+router.get("/randomDate", (req, res) => {
+  try {
+    res.json({ randomDate: generator.generateRandomDate(req.query.start, req.query.end) });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 router.get("/username", (req, res) => {
   res.json({ username: generator.generateUsername() });
 });
