@@ -7,9 +7,15 @@ interface PackageExamplesProps {
   esmExample: string;
   cjsExample: string;
   helpers: string[];
+  imports: string[];
 }
 
-const installCommand = "npm install commonfunlib";
+const installCommands = [
+  { label: "npm", value: "npm install commonfunlib" },
+  { label: "pnpm", value: "pnpm add commonfunlib" },
+  { label: "Yarn", value: "yarn add commonfunlib" },
+  { label: "Bun", value: "bun add commonfunlib" },
+];
 
 const PackageExamples = ({
   title,
@@ -17,6 +23,7 @@ const PackageExamples = ({
   esmExample,
   cjsExample,
   helpers,
+  imports,
 }: PackageExamplesProps) => (
   <section className="grid gap-4 xl:grid-cols-[0.85fr_1.15fr]">
     <div className="space-y-4">
@@ -38,12 +45,32 @@ const PackageExamples = ({
         </div>
       </article>
 
+      <details className="tool-card rounded-lg border border-[var(--secondary)] p-5">
+        <summary className="cursor-pointer text-sm font-black">All direct package imports ({imports.length})</summary>
+        <div className="mt-4 grid gap-3">
+          <CopyableSnippet
+            compact
+            label="all ESM imports"
+            value={`import {\n  ${imports.join(",\n  ")}\n} from "commonfunlib";`}
+          />
+          <CopyableSnippet
+            compact
+            label="all CommonJS imports"
+            value={`const {\n  ${imports.join(",\n  ")}\n} = require("commonfunlib");`}
+          />
+        </div>
+      </details>
+
       <article className="tool-card rounded-lg border border-[var(--secondary)] p-5">
         <div className="mb-3 flex items-center gap-3 text-lg font-black">
           <FaNpm className="text-[var(--secondary)]" />
-          Install once
+          Install from npm
         </div>
-        <CopyableSnippet compact label="install" value={installCommand} />
+        <div className="grid gap-2">
+          {installCommands.map((command) => (
+            <CopyableSnippet key={command.label} compact label={command.label} value={command.value} />
+          ))}
+        </div>
       </article>
     </div>
 

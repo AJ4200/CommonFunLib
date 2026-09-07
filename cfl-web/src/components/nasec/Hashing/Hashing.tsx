@@ -41,6 +41,11 @@ const Hashing = () => (
           "hexEncode",
           "hexDecode",
         ]}
+        imports={[
+          "md5", "sha1", "sha256", "sha384", "sha512", "sha3_256", "sha3_384", "sha3_512",
+          "base64Encode", "base64Decode", "hmacSha256", "hmacSha512", "base64UrlEncode",
+          "base64UrlDecode", "checksum", "urlEncode", "urlDecode", "hexEncode", "hexDecode",
+        ]}
         esmExample={`import { sha256, sha3_256, base64UrlEncode } from "commonfunlib";
 
 sha256("CommonFunLib");

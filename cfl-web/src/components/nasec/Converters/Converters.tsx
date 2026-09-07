@@ -38,6 +38,11 @@ const Converters = () => (
           "convertPressure",
           "convertAngle",
         ]}
+        imports={[
+          "fetchExchangeRates", "convertCurrency", "convertLength", "convertWeight", "convertArea",
+          "convertDataSize", "convertVolume", "convertSpeed", "convertTemperature", "convertLengthSystem",
+          "convertNumberBase", "convertDuration", "convertTimestamp", "convertColor", "convertPressure", "convertAngle",
+        ]}
         esmExample={`import { convertLength, convertNumberBase, convert } from "commonfunlib";
 
 convertLength(12, "m", "foot");

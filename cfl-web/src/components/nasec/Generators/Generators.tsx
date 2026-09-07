@@ -42,6 +42,13 @@ const Generators = () => (
           "generateQrCode",
           "generateSteganoPass",
         ]}
+        imports={[
+          "generateRandomNumber", "generateRandomName", "getFirstNames", "getLastNames",
+          "generatePassword", "generateUuid", "generateToken", "generatePin", "generateColor",
+          "generateLorem", "generateNanoId", "generateApiKey", "generateMacAddress", "generateSemver",
+          "generateTimestamp", "generateRandomDate", "generateUsername", "generateBoolean",
+          "generateQrCode", "generateSteganoPass",
+        ]}
         esmExample={`import { generateRandomName, generatePassword, generateNanoId, generate } from "commonfunlib";
 
 generateRandomName();
