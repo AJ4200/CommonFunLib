@@ -225,7 +225,7 @@ const CommonFunctionsPG = () => {
               ))}
             </div>
             <button
-              className="action-primary mt-4 w-full disabled:cursor-wait disabled:opacity-70"
+              className="action-primary run-action mt-4 w-full disabled:cursor-wait disabled:opacity-70"
               onClick={compute}
               disabled={loading}
               type="button"
