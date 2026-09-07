@@ -46,15 +46,11 @@ const Hashing = () => (
           "base64Encode", "base64Decode", "hmacSha256", "hmacSha512", "base64UrlEncode",
           "base64UrlDecode", "checksum", "urlEncode", "urlDecode", "hexEncode", "hexDecode",
         ]}
-        esmExample={`import { sha256, sha3_256, base64UrlEncode } from "commonfunlib";
-
-sha256("CommonFunLib");
+        esmExample={`sha256("CommonFunLib");
 sha3_384("CommonFunLib");
 sha3_256("CommonFunLib");
 base64UrlEncode("hello world");`}
-        cjsExample={`const { hash, sha512 } = require("commonfunlib");
-
-sha512("CommonFunLib");
+        cjsExample={`sha512("CommonFunLib");
 hash.checksum("payload");
 hash.hmacSha512("payload", "secret");`}
       />

@@ -43,15 +43,11 @@ const Converters = () => (
           "convertDataSize", "convertVolume", "convertSpeed", "convertTemperature", "convertLengthSystem",
           "convertNumberBase", "convertDuration", "convertTimestamp", "convertColor", "convertPressure", "convertAngle",
         ]}
-        esmExample={`import { convertLength, convertNumberBase, convert } from "commonfunlib";
-
-convertLength(12, "m", "foot");
+        esmExample={`convertLength(12, "m", "foot");
 convertNumberBase("255", 10, 16);
 convertVolume(1, "l", "cup");
 convert.timestamp("2026-06-28T12:00:00.000Z", "iso", "seconds");`}
-        cjsExample={`const { convert, convertWeight } = require("commonfunlib");
-
-convertWeight(5, "kg", "lb");
+        cjsExample={`convertWeight(5, "kg", "lb");
 convert.duration(3600, "s", "hr");
 convert.color("#4682B4", "hex", "rgb");`}
       />

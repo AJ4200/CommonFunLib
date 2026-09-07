@@ -1,5 +1,6 @@
 import CopyableSnippet from "@/components/ui/CopyableSnippet";
 import { FaBoxOpen, FaCode, FaNpm } from "react-icons/fa";
+import { SiBun, SiPnpm, SiYarn } from "react-icons/si";
 
 interface PackageExamplesProps {
   title: string;
@@ -11,10 +12,10 @@ interface PackageExamplesProps {
 }
 
 const installCommands = [
-  { label: "npm", value: "npm install commonfunlib" },
-  { label: "pnpm", value: "pnpm add commonfunlib" },
-  { label: "Yarn", value: "yarn add commonfunlib" },
-  { label: "Bun", value: "bun add commonfunlib" },
+  { label: "npm", value: "npm install commonfunlib", icon: <FaNpm /> },
+  { label: "pnpm", value: "pnpm add commonfunlib", icon: <SiPnpm /> },
+  { label: "Yarn", value: "yarn add commonfunlib", icon: <SiYarn /> },
+  { label: "Bun", value: "bun add commonfunlib", icon: <SiBun /> },
 ];
 
 const PackageExamples = ({
@@ -45,30 +46,21 @@ const PackageExamples = ({
         </div>
       </article>
 
-      <details className="tool-card rounded-lg border border-[var(--secondary)] p-5">
-        <summary className="cursor-pointer text-sm font-black">All direct package imports ({imports.length})</summary>
-        <div className="mt-4 grid gap-3">
-          <CopyableSnippet
-            compact
-            label="all ESM imports"
-            value={`import {\n  ${imports.join(",\n  ")}\n} from "commonfunlib";`}
-          />
-          <CopyableSnippet
-            compact
-            label="all CommonJS imports"
-            value={`const {\n  ${imports.join(",\n  ")}\n} = require("commonfunlib");`}
-          />
-        </div>
-      </details>
-
       <article className="tool-card rounded-lg border border-[var(--secondary)] p-5">
         <div className="mb-3 flex items-center gap-3 text-lg font-black">
           <FaNpm className="text-[var(--secondary)]" />
-          Install from npm
+          Install with your package manager
         </div>
         <div className="grid gap-2">
           {installCommands.map((command) => (
-            <CopyableSnippet key={command.label} compact label={command.label} value={command.value} />
+            <div key={command.label} className="flex items-center gap-2">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[var(--secondary)] bg-black/10 text-[var(--secondary)]" title={`${command.label} installer`}>
+                {command.icon}
+              </span>
+              <div className="min-w-0 flex-1">
+                <CopyableSnippet compact label={command.label} value={command.value} />
+              </div>
+            </div>
           ))}
         </div>
       </article>
@@ -80,7 +72,10 @@ const PackageExamples = ({
           <FaCode className="text-[var(--secondary)]" />
           ESM import
         </div>
-        <CopyableSnippet label="import" value={esmExample} />
+        <CopyableSnippet
+          label={`ESM imports + example (${imports.length} exports)`}
+          value={`import {\n  ${imports.join(",\n  ")}\n} from "commonfunlib";\n\n${esmExample}`}
+        />
       </article>
 
       <article className="tool-card rounded-lg border border-[var(--secondary)] p-5">
@@ -88,7 +83,10 @@ const PackageExamples = ({
           <FaCode className="text-[var(--secondary)]" />
           CommonJS require
         </div>
-        <CopyableSnippet label="require" value={cjsExample} />
+        <CopyableSnippet
+          label={`CommonJS imports + example (${imports.length} exports)`}
+          value={`const {\n  ${imports.join(",\n  ")}\n} = require("commonfunlib");\n\n${cjsExample}`}
+        />
       </article>
     </div>
   </section>

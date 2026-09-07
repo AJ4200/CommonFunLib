@@ -49,16 +49,12 @@ const Generators = () => (
           "generateTimestamp", "generateRandomDate", "generateUsername", "generateBoolean",
           "generateQrCode", "generateSteganoPass",
         ]}
-        esmExample={`import { generateRandomName, generatePassword, generateNanoId, generate } from "commonfunlib";
-
-generateRandomName();
+        esmExample={`generateRandomName();
 generatePassword(16);
 generateNanoId(21);
 generate.apiKey("cfl", 24);`}
         
-        cjsExample={`const { generate, generatePin } = require("commonfunlib");
-
-generatePin(6);
+        cjsExample={`generatePin(6);
 generate.timestamp("iso");
 generate.semver(0);`}
       />

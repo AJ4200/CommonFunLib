@@ -36,16 +36,12 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
               "clamp", "percentage", "fibonacci", "average", "median", "titleCase", "wordCount",
               "isValidEmail", "truncate", "isValidUrl", "characterCount",
             ]}
-            esmExample={`import { isEven, fibonacci, average, isLeapYear, common } from "commonfunlib";
-
-isEven(42);
+            esmExample={`isEven(42);
 fibonacci(8);
 average("4,8,15,16,23,42");
 isLeapYear(2024);
 common.titleCase("common fun lib");`}
-            cjsExample={`const { common, isPrime } = require("commonfunlib");
-
-isPrime(17);
+            cjsExample={`isPrime(17);
 common.median("4,8,15,16,23,42");
 common.wordCount("CommonFunLib ships tiny utilities");`}
           />
