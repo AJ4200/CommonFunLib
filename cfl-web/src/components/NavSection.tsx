@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdGames } from "react-icons/md";
-import { FaChevronRight, FaCompress, FaExpand, FaNpm, FaServer } from "react-icons/fa";
+import { FaChevronRight, FaCompress, FaExpand, FaNpm, FaServer, FaTags } from "react-icons/fa";
+import UniversalTooltip from "@/components/ui/UniversalTooltip";
 
 interface NavSectionProps {
   heading: string;
@@ -48,6 +49,7 @@ const NavSection: React.FC<NavSectionProps> = ({
       tabIndex: 0,
       label: "Docs",
       eyebrow: "Reference",
+      description: "Browse explanations, examples, and the complete tool catalog.",
       content: infoContent,
     },
     {
@@ -55,6 +57,7 @@ const NavSection: React.FC<NavSectionProps> = ({
       tabIndex: 1,
       label: "Playground",
       eyebrow: "Run",
+      description: "Try a tool interactively with sample inputs and live results.",
       content: playgroundContent,
     },
     {
@@ -62,6 +65,7 @@ const NavSection: React.FC<NavSectionProps> = ({
       tabIndex: 2,
       label: "API",
       eyebrow: "Routes",
+      description: "Inspect the HTTP routes and request shapes for this section.",
       content: apiContent,
     },
     ...(packageContent
@@ -71,6 +75,7 @@ const NavSection: React.FC<NavSectionProps> = ({
             tabIndex: 3,
             label: "Package",
             eyebrow: "npm",
+            description: "See the local package helpers for using these tools in code.",
             content: packageContent,
           },
         ]
@@ -120,48 +125,75 @@ const NavSection: React.FC<NavSectionProps> = ({
           role="tablist"
           aria-label={`${heading} workspace modes`}
         >
-          {tabs.map(({ icon, label, eyebrow, tabIndex }) => {
+          {tabs.map(({ icon, label, eyebrow, description: tabDescription, tabIndex }) => {
             const isActive = activeTab === tabIndex;
 
             return (
-              <button
+              <UniversalTooltip
                 key={tabIndex}
-                aria-selected={isActive}
-                className={`nav-mode-button group flex items-center justify-center gap-2 rounded-md border px-2 py-2 text-left transition sm:justify-start sm:px-3 ${
-                  isActive
-                    ? "border-[var(--secondary)] bg-[var(--secondary)] text-[var(--primary)] shadow-lg"
-                    : "border-transparent bg-black/5 hover:border-[var(--secondary)] hover:bg-white/10"
-                }`}
-                onClick={() => setActiveTab(tabIndex)}
-                role="tab"
-                type="button"
+                tooltipContent={
+                  <div>
+                    <p className="text-[0.62rem] font-black uppercase tracking-[0.18em] opacity-65">
+                      {heading} / {eyebrow}
+                    </p>
+                    <p className="mt-1 text-sm font-bold leading-5">{tabDescription}</p>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {catalog.slice(0, 6).map((tool) => (
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full border border-current/30 px-2 py-1 text-[0.62rem] font-black"
+                          key={tool}
+                        >
+                          <FaTags className="text-[0.55rem]" />
+                          {tool}
+                        </span>
+                      ))}
+                      {catalog.length > 6 ? (
+                        <span className="rounded-full border border-current/30 px-2 py-1 text-[0.62rem] font-black">
+                          +{catalog.length - 6} more
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+                }
               >
-                <span
-                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-md border text-lg transition ${
+                <button
+                  aria-selected={isActive}
+                  className={`nav-mode-button group flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2 text-left transition sm:justify-start sm:px-3 ${
                     isActive
-                      ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--secondary)]"
-                      : "border-[var(--secondary)] bg-black/10 group-hover:scale-105"
+                      ? "border-[var(--secondary)] bg-[var(--secondary)] text-[var(--primary)] shadow-lg"
+                      : "border-transparent bg-black/5 hover:border-[var(--secondary)] hover:bg-white/10"
                   }`}
+                  onClick={() => setActiveTab(tabIndex)}
+                  role="tab"
+                  type="button"
                 >
-                  {icon}
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate text-xs font-black uppercase opacity-70">
-                    {eyebrow}
+                  <span
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-md border text-lg transition ${
+                      isActive
+                        ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--secondary)]"
+                        : "border-[var(--secondary)] bg-black/10 group-hover:scale-105"
+                    }`}
+                  >
+                    {icon}
                   </span>
-                  <span className="brand-type block truncate text-sm font-black sm:text-base">
-                    {label}
+                  <span className="min-w-0">
+                    <span className="block truncate text-xs font-black uppercase opacity-70">
+                      {eyebrow}
+                    </span>
+                    <span className="brand-type block truncate text-sm font-black sm:text-base">
+                      {label}
+                    </span>
                   </span>
-                </span>
-                <FaChevronRight
-                  className={`ml-auto hidden text-xs transition sm:block ${
-                    isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-80"
-                  }`}
-                />
-                {isActive ? (
-                  <span className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-current opacity-80" />
-                ) : null}
-              </button>
+                  <FaChevronRight
+                    className={`ml-auto hidden text-xs transition sm:block ${
+                      isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-80"
+                    }`}
+                  />
+                  {isActive ? (
+                    <span className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-current opacity-80" />
+                  ) : null}
+                </button>
+              </UniversalTooltip>
             );
           })}
         </div>

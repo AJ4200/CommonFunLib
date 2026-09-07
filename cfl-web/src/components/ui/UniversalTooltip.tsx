@@ -4,12 +4,14 @@ import { FaRandom } from "react-icons/fa";
 interface UniversalTooltipProps {
   actionLabel?: string;
   onAction?: () => void;
+  tooltipContent?: React.ReactNode;
   children: React.ReactNode;
 }
 
 const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
   actionLabel,
   onAction,
+  tooltipContent,
   children,
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -47,6 +49,14 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
       onMouseLeave={handleLeave}
     >
       {children}
+      {hovered && tooltipContent ? (
+        <div
+          className="pointer-events-none absolute bottom-[calc(100%+0.55rem)] left-1/2 z-40 w-64 -translate-x-1/2 rounded-lg border border-[var(--secondary)] bg-[var(--background)] p-3 text-left text-[var(--foreground)] shadow-2xl"
+          role="tooltip"
+        >
+          {tooltipContent}
+        </div>
+      ) : null}
       {hovered && actionLabel && onAction ? (
         <button
           aria-label={actionLabel}
