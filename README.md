@@ -68,6 +68,7 @@ hash.base64Encode("hello");
 - Converters: length, weight, temperature, area, data size, speed, pressure, and optional currency conversion.
 - Hashing: MD5, SHA variants, Base64 encode/decode, URL encode/decode, and HMAC SHA256.
 - Release 1.0.3: email validation, text truncation, username generation, pressure conversion, URL encoding helpers, QR codes, and 5 MB SteganoPass file keys.
+- Release 1.0.4: unique icon-led splash screens for every web tool category, with theme and font-aware presentation.
 
 ## API Examples
 

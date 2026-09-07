@@ -11,6 +11,7 @@ interface NavSectionProps {
   description: string;
   splashIcon?: React.ReactNode;
   catalog?: string[];
+  splashVariant?: "functions" | "generators" | "converters" | "hashing";
   infoContent: React.ReactNode;
   playgroundContent: React.ReactNode;
   apiContent: React.ReactNode;
@@ -22,6 +23,7 @@ const NavSection: React.FC<NavSectionProps> = ({
   description,
   splashIcon,
   catalog = [],
+  splashVariant = "functions",
   infoContent,
   playgroundContent,
   apiContent,
@@ -173,10 +175,11 @@ const NavSection: React.FC<NavSectionProps> = ({
         </div>
       </div>
       {showSplash ? (
-        <div className="category-splash" role="status" aria-live="polite">
+        <div className={`category-splash category-splash--${splashVariant}`} role="status" aria-live="polite">
           <div className="category-splash__grid" />
           <div className="category-splash__content">
-            <span className="category-splash__icon">{splashIcon}</span>
+            <span className="category-splash__icon" aria-hidden="true">{splashIcon}</span>
+            <span className="category-splash__stamp">{String(splashVariant).toUpperCase()} // 01</span>
             <p className="mt-5 text-xs font-black uppercase tracking-[0.28em] opacity-70">CommonFunLib / catalog loaded</p>
             <h3 className="brand-type mt-2 text-4xl font-black theme-shadow sm:text-6xl">{heading}</h3>
             <p className="mt-3 max-w-xl text-sm font-bold leading-6 opacity-80">{description}</p>

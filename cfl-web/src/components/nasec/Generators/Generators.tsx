@@ -11,6 +11,7 @@ const Generators = () => (
     heading="Generators"
     splashIcon={<FaTools />}
     catalog={generatorTools.map((tool) => tool.label)}
+    splashVariant="generators"
     description="Create realistic sample values, identifiers, colors, passwords, PINs, and placeholder text for testing forms, APIs, and demos."
     infoContent={<ToolInfo tools={generatorTools} />}
     playgroundContent={<ToolPlayground tools={generatorTools} />}

@@ -2,6 +2,15 @@
 
 All notable changes to CommonFunLib are documented here.
 
+## [1.0.4] - 2026-09-07
+
+### Changed
+
+- Redesigned every tool-category splash screen around its category icon.
+- Added distinct visual treatments for Functions, Generators, Converters, and Hashing while preserving theme and font selection.
+- Made category splash catalogs more expressive with oversized icon marks, stamps, animated treatments, and reduced-motion support.
+- Bumped the npm package to `1.0.4` for the next release iteration.
+
 ## [1.0.3] - 2026-09-07
 
 ### Added
@@ -24,5 +33,6 @@ All notable changes to CommonFunLib are documented here.
 
 - Added the current converter, generator, hashing, and utility expansion before the 1.0.3 release bundle.
 
+[1.0.4]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.4
 [1.0.3]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.3
 [1.0.1]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.1

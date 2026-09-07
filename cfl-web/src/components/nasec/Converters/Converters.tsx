@@ -11,6 +11,7 @@ const Converters = () => (
     heading="Converters"
     splashIcon={<FaExchangeAlt />}
     catalog={converterTools.map((tool) => tool.label)}
+    splashVariant="converters"
     description="Convert common measurements and data sizes with simple inputs, live results, and request examples you can reuse."
     infoContent={<ToolInfo tools={converterTools} />}
     playgroundContent={<ToolPlayground tools={converterTools} />}

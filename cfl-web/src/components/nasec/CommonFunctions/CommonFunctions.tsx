@@ -18,6 +18,7 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
         heading={"Common Functions"}
         splashIcon={<FaCog />}
         catalog={commonTools.map((tool) => tool.label)}
+        splashVariant="functions"
         description={
           "Run quick checks and transformations for everyday number and string tasks, then inspect the matching API route when you need to wire one into code."
         }

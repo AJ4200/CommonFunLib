@@ -6,7 +6,7 @@ HMAC signing.
 
 It can also run the same utilities as an Express API.
 
-## Version 1.0.3
+## Version 1.0.4
 
 This release expands the computing toolkit with Fibonacci, average, median,
 title case, word count, Nano IDs, API keys, MAC addresses, semver strings,
@@ -19,6 +19,9 @@ Version 1.0.3 adds email validation, bounded text truncation, readable username
 generation, pressure conversion, and URL encode/decode helpers. SteganoPass is
 also available for turning files up to 5 MB into deterministic seeds, keys,
 passwords, and IDs.
+
+Version 1.0.4 refreshes the web category splash experience with unique icon-led
+visual treatments for every tool family.
 
 ## Install
 

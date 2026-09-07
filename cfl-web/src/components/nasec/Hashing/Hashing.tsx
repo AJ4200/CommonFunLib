@@ -11,6 +11,7 @@ const Hashing = () => (
     heading="Hashing"
     splashIcon={<FaLock />}
     catalog={hashingTools.map((tool) => tool.label)}
+    splashVariant="hashing"
     description="Hash, encode, decode, and sign text payloads while checking the exact endpoint and response shape behind each utility."
     infoContent={<ToolInfo tools={hashingTools} />}
     playgroundContent={<ToolPlayground tools={hashingTools} />}
