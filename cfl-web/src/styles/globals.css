@@ -793,6 +793,18 @@ select option {
 
 @keyframes universal-loader-spin { to { transform: rotate(360deg); } }
 
+.action-primary,
+.action-secondary,
+.icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 950;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
 .action-primary {
   min-height: 3.25rem;
   border: 1px solid var(--secondary);
@@ -804,6 +816,50 @@ select option {
   font-size: 0.82rem;
   font-weight: 950;
   box-shadow: 0 10px 20px color-mix(in srgb, var(--secondary) 18%, transparent);
+}
+
+.action-secondary {
+  min-height: 2.5rem;
+  border: 1px solid var(--secondary);
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--foreground);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.78rem;
+}
+
+.action-secondary:hover,
+.action-secondary:focus-visible,
+.icon-action:hover,
+.icon-action:focus-visible {
+  border-color: var(--secondary);
+  background: color-mix(in srgb, var(--secondary) 16%, transparent);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--secondary) 18%, transparent);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.icon-action {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--secondary);
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--foreground);
+  padding: 0.5rem;
+}
+
+.icon-action:active,
+.action-secondary:active,
+.action-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.action-primary:disabled,
+.action-secondary:disabled,
+.icon-action:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
 }
 
 .action-primary:hover,
