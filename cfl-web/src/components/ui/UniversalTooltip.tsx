@@ -5,6 +5,7 @@ interface UniversalTooltipProps {
   actionLabel?: string;
   onAction?: () => void;
   tooltipContent?: React.ReactNode;
+  placement?: "top" | "right";
   children: React.ReactNode;
 }
 
@@ -12,6 +13,7 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
   actionLabel,
   onAction,
   tooltipContent,
+  placement = "top",
   children,
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -51,7 +53,11 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
       {children}
       {hovered && tooltipContent ? (
         <div
-          className="pointer-events-none absolute bottom-[calc(100%+0.55rem)] left-1/2 z-40 w-64 -translate-x-1/2 rounded-lg border border-[var(--secondary)] bg-[var(--background)] p-3 text-left text-[var(--foreground)] shadow-2xl"
+          className={`pointer-events-none absolute z-40 w-64 rounded-lg border border-[var(--secondary)] bg-[var(--background)] p-3 text-left text-[var(--foreground)] shadow-2xl ${
+            placement === "right"
+              ? "left-[calc(100%+0.65rem)] top-1/2 -translate-y-1/2"
+              : "bottom-[calc(100%+0.55rem)] left-1/2 -translate-x-1/2"
+          }`}
           role="tooltip"
         >
           {tooltipContent}
