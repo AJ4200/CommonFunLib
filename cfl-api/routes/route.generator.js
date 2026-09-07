@@ -96,7 +96,14 @@ router.get("/qrCode", async (req, res) => {
   }
 });
 
-router.post("/steganopass", upload.single("file"), (req, res) => {
+router.post("/steganopass", (req, res, next) => {
+  upload.single("file")(req, res, (error) => {
+    if (error) {
+      return res.status(413).json({ error: "SteganoPass only accepts files up to 5 MB." });
+    }
+    next();
+  });
+}, (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "A file is required." });

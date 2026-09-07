@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UtilityTool } from "@/models/Tool";
+import { API_BASE_URL } from "@/lib/apiConfig";
 
 type ToolRequest = Pick<UtilityTool, "endpoint" | "method">;
 export type ToolValues = Record<string, string | File>;
@@ -19,10 +20,11 @@ export const requestTool = async (
     : values;
 
   try {
+    const apiEndpoint = `${API_BASE_URL}${tool.endpoint}`;
     const response =
       tool.method === "GET"
-        ? await axios.get(tool.endpoint, { params: requestValues })
-        : await axios.post(tool.endpoint, requestValues);
+        ? await axios.get(apiEndpoint, { params: requestValues })
+        : await axios.post(apiEndpoint, requestValues);
 
     return { data: response.data, fallback: false };
   } catch {

@@ -126,7 +126,7 @@ class Generator {
     idBytes[6] = (idBytes[6] & 0x0f) | 0x40;
     idBytes[8] = (idBytes[8] & 0x3f) | 0x80;
     const idHex = idBytes.toString('hex');
-    const id = `${idHex.slice(0, 8)}-${idHex.slice(8, 12)}-${idHex.slice(12, 16)}-${idHex.slice(16, 20)}-${idHex.slice(20)}`;
+    const id = `${idHex.slice(0, 8)}-${idHex.slice(8, 12)}-${idHex.slice(12, 16)}-${idHex.slice(16, 20)}-${idHex.slice(20, 32)}`;
 
     return { fileName, fileSize: fileBuffer.length, algorithm: 'SHA-256', seed, key, password, id };
   }
