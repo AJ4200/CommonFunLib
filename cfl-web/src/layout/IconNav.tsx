@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavIcon from "@/models/NavIcon";
 import navIcons from "@/lib/navicons";
 
@@ -13,6 +13,20 @@ const IconNav: React.FC<IconNavProps> = ({ setActiveIconContent }) => {
     setActiveIcon(label);
     setActiveIconContent(content);
   };
+
+  useEffect(() => {
+    const handleCategoryNavigation = (event: Event) => {
+      const target = (event as CustomEvent<string>).detail;
+      const destination = navIcons.find((icon) => icon.label === target);
+
+      if (destination) {
+        handleClick(destination.label, destination.content);
+      }
+    };
+
+    window.addEventListener("commonfunlib:navigate-category", handleCategoryNavigation);
+    return () => window.removeEventListener("commonfunlib:navigate-category", handleCategoryNavigation);
+  }, []);
 
   return (
     <nav className="glass-panel relative flex h-full w-20 shrink-0 flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-[var(--secondary)] p-1.5 backdrop-blur-lg sm:w-24 sm:gap-3 sm:p-2">

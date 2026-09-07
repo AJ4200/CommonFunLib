@@ -16,17 +16,17 @@ import {
 } from "react-icons/fa";
 
 const toolStats = [
-  { icon: <FaCog />, label: `${commonTools.length} functions`, detail: "number checks, string helpers, and small calculations", accent: "Check" },
-  { icon: <FaTools />, label: `${generatorTools.length} generators`, detail: "sample names, UUIDs, colors, PINs, and secrets", accent: "Create" },
-  { icon: <FaExchangeAlt />, label: `${converterTools.length} converters`, detail: "length, weight, temperature, area, data, and speed", accent: "Convert" },
-  { icon: <FaLock />, label: `${hashingTools.length} text tools`, detail: "hashing, Base64, and HMAC signing helpers", accent: "Secure" },
+  { icon: <FaCog />, label: `${commonTools.length} functions`, detail: "number checks, string helpers, and small calculations", accent: "Check", target: "Functions" },
+  { icon: <FaTools />, label: `${generatorTools.length} generators`, detail: "sample names, UUIDs, colors, PINs, and secrets", accent: "Create", target: "Generators" },
+  { icon: <FaExchangeAlt />, label: `${converterTools.length} converters`, detail: "length, weight, temperature, area, data, and speed", accent: "Convert", target: "Converters" },
+  { icon: <FaLock />, label: `${hashingTools.length} text tools`, detail: "hashing, Base64, and HMAC signing helpers", accent: "Secure", target: "Hashing" },
 ];
 
 const catalogSections = [
-  { label: "Functions", tools: commonTools.map((tool) => tool.label) },
-  { label: "Generators", tools: generatorTools.map((tool) => tool.label) },
-  { label: "Converters", tools: converterTools.map((tool) => tool.label) },
-  { label: "Hashing", tools: hashingTools.map((tool) => tool.label) },
+  { label: "Functions", target: "Functions", tools: commonTools.map((tool) => tool.label) },
+  { label: "Generators", target: "Generators", tools: generatorTools.map((tool) => tool.label) },
+  { label: "Converters", target: "Converters", tools: converterTools.map((tool) => tool.label) },
+  { label: "Hashing", target: "Hashing", tools: hashingTools.map((tool) => tool.label) },
 ];
 
 const apiRoutes = ["/common/:tool", "/generate/:tool", "/convert/:tool", "/hash/:tool"];
@@ -48,6 +48,10 @@ const configuredApiBaseUrl = (
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   "http://localhost:3001"
 ).replace(/\/+$/, "");
+
+const navigateToCategory = (target: string) => {
+  window.dispatchEvent(new CustomEvent("commonfunlib:navigate-category", { detail: target }));
+};
 
 const MainPage = () => (
   <div className="h-full overflow-y-auto p-2 custome-scroll sm:p-6">
@@ -96,7 +100,7 @@ const MainPage = () => (
       </div>
       <div className="grid min-w-0 gap-3 p-4 pt-0 sm:grid-cols-2 sm:gap-4 sm:p-8 sm:pt-0 lg:grid-cols-4">
         {toolStats.map((item) => (
-          <div key={item.label} className="tool-card group min-w-0 rounded-2xl border border-[var(--secondary)] p-4 font-bold transition hover:-translate-y-1 sm:p-5">
+          <button key={item.label} type="button" onClick={() => navigateToCategory(item.target)} className="tool-card group min-w-0 rounded-2xl border border-[var(--secondary)] p-4 text-left font-bold transition hover:-translate-y-1 hover:border-[var(--secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--secondary)] sm:p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="block w-max rounded-xl bg-[var(--secondary)] p-3 text-xl text-[var(--primary)] sm:text-2xl">{item.icon}</span>
               <span className="rounded-full border border-[var(--secondary)] px-2 py-1 text-[0.65rem] uppercase opacity-75">{item.accent}</span>
@@ -104,7 +108,7 @@ const MainPage = () => (
             <p className="brand-type text-lg font-black sm:text-xl">{item.label}</p>
             <p className="mt-1 text-sm opacity-80">{item.detail}</p>
             <FaArrowRight className="mt-4 opacity-50 transition group-hover:translate-x-1 group-hover:opacity-100" />
-          </div>
+          </button>
         ))}
       </div>
     </section>
@@ -121,12 +125,12 @@ const MainPage = () => (
       </div>
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {catalogSections.map((section) => (
-          <div key={section.label} className="tool-card min-w-0 rounded-xl border border-[var(--secondary)] p-3">
+          <button key={section.label} type="button" onClick={() => navigateToCategory(section.target)} className="tool-card min-w-0 rounded-xl border border-[var(--secondary)] p-3 text-left transition hover:-translate-y-0.5 hover:border-[var(--secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--secondary)]">
             <h3 className="mb-3 text-sm font-black uppercase">{section.label}</h3>
             <div className="flex max-h-40 flex-wrap content-start gap-1.5 overflow-y-auto app-scroll">
               {section.tools.map((tool) => <span key={tool} className="splash-chip">{tool}</span>)}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </section>
