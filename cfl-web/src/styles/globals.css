@@ -794,43 +794,23 @@ select option {
 @keyframes universal-loader-spin { to { transform: rotate(360deg); } }
 
 .action-primary {
-  position: relative;
   min-height: 3.25rem;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--secondary) 88%, white 12%);
+  border: 1px solid var(--secondary);
   border-radius: 0.65rem;
-  background:
-    linear-gradient(110deg, color-mix(in srgb, var(--secondary) 78%, white 22%), var(--secondary) 48%, color-mix(in srgb, var(--secondary) 72%, black 28%));
+  background: var(--secondary);
   color: var(--primary);
   padding: 0.8rem 1.2rem;
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.82rem;
   font-weight: 950;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  box-shadow: 0 12px 24px color-mix(in srgb, var(--secondary) 24%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.42);
-  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-}
-
-.action-primary::before {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.3) 48%, transparent 72%);
-  transform: translateX(-120%);
-  transition: transform 500ms ease;
-}
-
-.action-primary:hover::before,
-.action-primary:focus-visible::before {
-  transform: translateX(120%);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--secondary) 18%, transparent);
 }
 
 .action-primary:hover,
 .action-primary:focus-visible {
-  box-shadow: 0 16px 32px color-mix(in srgb, var(--secondary) 34%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  outline: none;
   transform: translateY(-2px);
+  box-shadow: 0 14px 24px color-mix(in srgb, var(--secondary) 26%, transparent);
+  outline: none;
 }
 
 .action-primary:active {
@@ -839,27 +819,6 @@ select option {
 
 .run-action {
   justify-content: space-between;
-}
-
-.run-action svg {
-  position: relative;
-  z-index: 1;
-  font-size: 1rem;
-  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--primary) 60%, transparent));
-}
-
-.run-action:not(:disabled) svg {
-  animation: run-bolt 1.8s ease-in-out infinite;
-}
-
-.run-action:disabled {
-  filter: saturate(0.6);
-}
-
-@keyframes run-bolt {
-  0%, 72%, 100% { transform: translateX(0) rotate(0); }
-  78% { transform: translateX(2px) rotate(-8deg); }
-  84% { transform: translateX(-1px) rotate(6deg); }
 }
 
 .code-surface {
