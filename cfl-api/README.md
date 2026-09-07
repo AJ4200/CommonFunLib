@@ -13,6 +13,8 @@ title case, word count, Nano IDs, API keys, MAC addresses, semver strings,
 timestamps, number-base conversion, duration conversion, timestamp conversion,
 color conversion, SHA3 hashing, Base64URL helpers, HMAC SHA512, and checksums.
 
+It also includes QR code data URL generation and URL path slugification.
+
 ## Install
 
 ```sh
@@ -26,6 +28,7 @@ import {
   isEven,
   fibonacci,
   slugify,
+  slugifyLink,
   generateApiKey,
   convertNumberBase,
   sha3_256,
@@ -34,6 +37,7 @@ import {
 console.log(isEven(42));
 console.log(fibonacci(8));
 console.log(slugify("My New Tool"));
+console.log(slugifyLink("https://example.com/docs/My Page"));
 console.log(generateApiKey("cfl", 24));
 console.log(convertNumberBase("255", 10, 16));
 console.log(sha3_256("CommonFunLib"));
@@ -60,6 +64,7 @@ const generator = new Generator();
 
 converter.convertWeight(5, "kg", "lb");
 generator.generateApiKey("cfl", 24);
+await generator.generateQrCode("https://example.com");
 Hashing.hmacSha512("payload", "secret");
 CommonFunctions.average("4,8,15,16,23,42");
 ```

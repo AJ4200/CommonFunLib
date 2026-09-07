@@ -59,6 +59,28 @@ class CommonFunctions {
       .replace(/^-+|-+$/g, "");
   }
 
+  static slugifyLink(link) {
+    const value = String(link ?? "").trim();
+
+    if (!value) {
+      return "";
+    }
+
+    try {
+      const url = new URL(value);
+      const pathSlug = url.pathname
+        .split("/")
+        .filter(Boolean)
+        .map((segment) => CommonFunctions.slugify(decodeURIComponent(segment)))
+        .filter(Boolean)
+        .join("/");
+
+      return pathSlug || CommonFunctions.slugify(url.hostname);
+    } catch {
+      return CommonFunctions.slugify(value);
+    }
+  }
+
   static clamp(num, min, max) {
     return Math.min(Math.max(num, min), max);
   }

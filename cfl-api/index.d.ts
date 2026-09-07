@@ -9,6 +9,7 @@ export class CommonFunctions {
   static reverseString(str: unknown): string;
   static isPalindrome(str: unknown): boolean;
   static slugify(str: unknown): string;
+  static slugifyLink(link: unknown): string;
   static clamp(num: number, min: number, max: number): number;
   static percentage(part: number, total: number): number | null;
   static fibonacci(count: number): number[];
@@ -36,6 +37,7 @@ export class Generator {
   generateMacAddress(): string;
   generateSemver(major?: number): string;
   generateTimestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
+  generateQrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
 }
 
 export class Converter {
@@ -84,6 +86,7 @@ export const common: {
   reverseString: typeof CommonFunctions.reverseString;
   isPalindrome: typeof CommonFunctions.isPalindrome;
   slugify: typeof CommonFunctions.slugify;
+  slugifyLink: typeof CommonFunctions.slugifyLink;
   clamp: typeof CommonFunctions.clamp;
   percentage: typeof CommonFunctions.percentage;
   fibonacci: typeof CommonFunctions.fibonacci;
@@ -109,6 +112,7 @@ export const generate: {
   macAddress(): string;
   semver(major?: number): string;
   timestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
+  qrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
 };
 
 export const convert: {
@@ -154,6 +158,7 @@ export const swapVariableValue: typeof CommonFunctions.swapVariableValue;
 export const reverseString: typeof CommonFunctions.reverseString;
 export const isPalindrome: typeof CommonFunctions.isPalindrome;
 export const slugify: typeof CommonFunctions.slugify;
+export const slugifyLink: typeof CommonFunctions.slugifyLink;
 export const clamp: typeof CommonFunctions.clamp;
 export const percentage: typeof CommonFunctions.percentage;
 export const fibonacci: typeof CommonFunctions.fibonacci;
@@ -177,6 +182,7 @@ export const generateApiKey: typeof generate.apiKey;
 export const generateMacAddress: typeof generate.macAddress;
 export const generateSemver: typeof generate.semver;
 export const generateTimestamp: typeof generate.timestamp;
+export const generateQrCode: typeof generate.qrCode;
 
 export const fetchExchangeRates: typeof convert.fetchExchangeRates;
 export const convertCurrency: typeof convert.currency;

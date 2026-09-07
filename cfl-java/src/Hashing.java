@@ -4,7 +4,9 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * A class that implements several common hashing functions.
+ * @deprecated The Java implementation is frozen. Use the cfl-api package instead.
  */
+@Deprecated
 public class Hashing{
   
   /**

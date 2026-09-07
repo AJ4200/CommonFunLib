@@ -79,4 +79,16 @@ router.get("/timestamp", (req, res) => {
   res.json({ timestamp: generator.generateTimestamp(req.query.format || "iso") });
 });
 
+router.get("/qrCode", async (req, res) => {
+  try {
+    const qrCode = await generator.generateQrCode(req.query.value, {
+      margin: req.query.margin,
+      width: req.query.width,
+    });
+    res.json({ qrCode });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;

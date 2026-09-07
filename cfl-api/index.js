@@ -17,6 +17,7 @@ const common = {
   reverseString: CommonFunctions.reverseString,
   isPalindrome: CommonFunctions.isPalindrome,
   slugify: CommonFunctions.slugify,
+  slugifyLink: CommonFunctions.slugifyLink,
   clamp: CommonFunctions.clamp,
   percentage: CommonFunctions.percentage,
   fibonacci: CommonFunctions.fibonacci,
@@ -42,6 +43,7 @@ const generate = {
   macAddress: () => generator.generateMacAddress(),
   semver: (major = 0) => generator.generateSemver(major),
   timestamp: (format = "iso") => generator.generateTimestamp(format),
+  qrCode: (value, options = {}) => generator.generateQrCode(value, options),
 };
 
 const convert = {
@@ -101,6 +103,7 @@ const api = {
   reverseString: common.reverseString,
   isPalindrome: common.isPalindrome,
   slugify: common.slugify,
+  slugifyLink: common.slugifyLink,
   clamp: common.clamp,
   percentage: common.percentage,
   fibonacci: common.fibonacci,
@@ -123,6 +126,7 @@ const api = {
   generateMacAddress: generate.macAddress,
   generateSemver: generate.semver,
   generateTimestamp: generate.timestamp,
+  generateQrCode: generate.qrCode,
   fetchExchangeRates: convert.fetchExchangeRates,
   convertCurrency: convert.currency,
   convertLength: convert.length,

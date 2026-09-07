@@ -8,9 +8,11 @@ import java.util.Random;
  * The CommonFunctions class provides a collection of commonly used functions.
  * @see generateRandomNumber
  * @see generateRandomName
+ * @deprecated The Java implementation is frozen. Use the cfl-api package instead.
  * 
  * @author AJ4200 at GitHub
  */
+@Deprecated
 public class Generator {
     /** A list of first names */
   private ArrayList<String> firstNames;

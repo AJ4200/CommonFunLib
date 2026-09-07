@@ -63,7 +63,8 @@ hash.base64Encode("hello");
 ## What It Includes
 
 - Common functions: even/odd checks, factorial, GCD, LCM, prime checks, string reversal, palindrome checks, slugify, clamp, and percentage.
-- Generators: random names, numbers, passwords, UUIDs, tokens, PINs, colors, and placeholder text.
+- Generators: random names, numbers, passwords, UUIDs, tokens, PINs, colors, placeholder text, and QR code data URLs.
+- Link helpers: URL-safe text slugs and URL path slugs.
 - Converters: length, weight, temperature, area, data size, speed, and optional currency conversion.
 - Hashing: MD5, SHA variants, Base64 encode/decode, and HMAC SHA256.
 
@@ -71,6 +72,8 @@ hash.base64Encode("hello");
 
 - `GET /common/even?num=42`
 - `GET /generate/uuid`
+- `GET /generate/qrCode?value=https%3A%2F%2Fexample.com`
+- `GET /common/slugifyLink?link=https%3A%2F%2Fexample.com%2Fdocs%2FMy%20Page`
 - `POST /convert/length`
 - `POST /hash/sha256`
 - `GET /status`
@@ -89,3 +92,5 @@ data/      Deprecated Java name data files
 The Java source in `src`, name data in `data`, and `CommonFunLib.jar` are no longer the active implementation.
 
 New work should use the npm package, API server, or web playground.
+
+The Java classes are annotated with `@Deprecated` so Java builds and IDEs surface the migration warning directly.

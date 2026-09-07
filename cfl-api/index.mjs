@@ -20,6 +20,7 @@ export const swapVariableValue = cfl.swapVariableValue;
 export const reverseString = cfl.reverseString;
 export const isPalindrome = cfl.isPalindrome;
 export const slugify = cfl.slugify;
+export const slugifyLink = cfl.slugifyLink;
 export const clamp = cfl.clamp;
 export const percentage = cfl.percentage;
 export const fibonacci = cfl.fibonacci;
@@ -43,6 +44,7 @@ export const generateApiKey = cfl.generateApiKey;
 export const generateMacAddress = cfl.generateMacAddress;
 export const generateSemver = cfl.generateSemver;
 export const generateTimestamp = cfl.generateTimestamp;
+export const generateQrCode = cfl.generateQrCode;
 
 export const fetchExchangeRates = cfl.fetchExchangeRates;
 export const convertCurrency = cfl.convertCurrency;

@@ -156,6 +156,19 @@ export const generatorTools: UtilityTool[] = [
     fields: [{ name: "format", label: "Format", placeholder: "iso", options: timestampUnits }],
     resultKey: "timestamp",
   },
+  {
+    value: "qrCode",
+    label: "QR Code",
+    description: "Generate a QR code data URL from text or a link.",
+    method: "GET",
+    endpoint: "/generate/qrCode",
+    fields: [
+      { name: "value", label: "Text or link", placeholder: "https://example.com" },
+      { name: "width", label: "Width", placeholder: "256", type: "number" },
+      { name: "margin", label: "Margin", placeholder: "4", type: "number" },
+    ],
+    resultKey: "qrCode",
+  },
 ];
 
 export const converterTools: UtilityTool[] = [

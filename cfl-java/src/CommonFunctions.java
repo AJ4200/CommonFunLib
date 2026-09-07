@@ -8,9 +8,11 @@
  * @see isPrime
  * @see swapVariableValue
  * @see reverseString
+ * @deprecated The Java implementation is frozen. Use the cfl-api package instead.
  * 
  * @author AJ4200 at GitHub
  */
+@Deprecated
 public class CommonFunctions {
   /**
    * Check if a number is even.

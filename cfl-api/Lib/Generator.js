@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const QRCode = require('qrcode');
 
 class Generator {
   constructor() {
@@ -90,6 +91,21 @@ class Generator {
     }
 
     return now.toISOString();
+  }
+
+  async generateQrCode(value, options = {}) {
+    const text = String(value ?? '').trim();
+
+    if (!text) {
+      throw new Error('A value is required to generate a QR code.');
+    }
+
+    const widthValue = Number(options.width);
+    const marginValue = Number(options.margin);
+    const width = Math.min(Math.max(Number.isFinite(widthValue) ? widthValue : 256, 128), 1024);
+    const margin = Math.min(Math.max(Number.isFinite(marginValue) ? marginValue : 4, 0), 16);
+
+    return QRCode.toDataURL(text, { width, margin });
   }
 }
 

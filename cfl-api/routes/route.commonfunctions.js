@@ -62,6 +62,10 @@ router.get("/slugify", (req, res) => {
   res.json({ slug: CommonFunctions.slugify(req.query.str || "") });
 });
 
+router.get("/slugifyLink", (req, res) => {
+  res.json({ slug: CommonFunctions.slugifyLink(req.query.link || "") });
+});
+
 router.get("/clamp", (req, res) => {
   const num = numberParam(req.query.num);
   const min = numberParam(req.query.min);

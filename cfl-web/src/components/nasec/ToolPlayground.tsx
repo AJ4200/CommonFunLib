@@ -287,6 +287,11 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
             {selectedTool.resultKey === "color" && result ? (
               <div className="mb-3 h-20 rounded-lg border border-[var(--secondary)] shadow-inner" style={{ background: result }} />
             ) : null}
+            {selectedTool.resultKey === "qrCode" && result ? (
+              <div className="mb-3 flex justify-center rounded-lg border border-[var(--secondary)] bg-white p-4">
+                <img src={result} alt="Generated QR code" className="h-56 w-56" />
+              </div>
+            ) : null}
             {loading ? (
               <div className="code-surface flex min-h-44 items-center justify-center rounded-lg p-4">
                 <OperationLoader label="Running tool" />
