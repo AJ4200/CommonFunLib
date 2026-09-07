@@ -20,7 +20,27 @@ const Generators = () => (
       <PackageExamples
         title="Generate values in your project"
         description="Use package imports when tests, seed scripts, demos, or form prototypes need random values without calling the API."
-        helpers={["generateRandomName", "generatePassword", "generateNanoId", "generateApiKey", "generate.timestamp"]}
+        helpers={[
+          "generateRandomNumber",
+          "generateRandomName",
+          "generate.firstNames",
+          "generate.lastNames",
+          "generatePassword",
+          "generateUuid",
+          "generateToken",
+          "generatePin",
+          "generateColor",
+          "generateLorem",
+          "generateNanoId",
+          "generateApiKey",
+          "generateMacAddress",
+          "generateSemver",
+          "generate.timestamp",
+          "generateUsername",
+          "generateBoolean",
+          "generateQrCode",
+          "generateSteganoPass",
+        ]}
         esmExample={`import { generateRandomName, generatePassword, generateNanoId, generate } from "commonfunlib";
 
 generateRandomName();

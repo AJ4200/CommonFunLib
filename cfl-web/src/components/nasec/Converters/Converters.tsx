@@ -20,7 +20,23 @@ const Converters = () => (
       <PackageExamples
         title="Convert values without HTTP"
         description="Import converter helpers directly when a script, CLI, or server-side app needs unit conversions as plain function calls."
-        helpers={["convertLength", "convertNumberBase", "convertTimestamp", "convert.dataSize", "convert.color"]}
+        helpers={[
+          "convert.fetchExchangeRates",
+          "convert.currency",
+          "convertLength",
+          "convertWeight",
+          "convertArea",
+          "convertDataSize",
+          "convertSpeed",
+          "convertTemperature",
+          "convertLengthSystem",
+          "convertNumberBase",
+          "convertDuration",
+          "convertTimestamp",
+          "convertColor",
+          "convertPressure",
+          "convertAngle",
+        ]}
         esmExample={`import { convertLength, convertNumberBase, convert } from "commonfunlib";
 
 convertLength(12, "m", "foot");

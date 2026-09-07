@@ -20,7 +20,26 @@ const Hashing = () => (
       <PackageExamples
         title="Hash and encode locally"
         description="Use package imports for server-side hashing, fixture generation, signing demos, or quick encoding tasks."
-        helpers={["sha256", "sha3_256", "base64UrlEncode", "checksum", "hmacSha512"]}
+        helpers={[
+          "md5",
+          "sha1",
+          "sha256",
+          "sha384",
+          "sha512",
+          "sha3_256",
+          "sha3_512",
+          "base64Encode",
+          "base64Decode",
+          "hmacSha256",
+          "hmacSha512",
+          "base64UrlEncode",
+          "base64UrlDecode",
+          "checksum",
+          "urlEncode",
+          "urlDecode",
+          "hexEncode",
+          "hexDecode",
+        ]}
         esmExample={`import { sha256, sha3_256, base64UrlEncode } from "commonfunlib";
 
 sha256("CommonFunLib");
