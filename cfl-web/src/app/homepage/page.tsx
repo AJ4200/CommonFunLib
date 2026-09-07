@@ -10,10 +10,12 @@ import { applyTheme, getStoredTheme } from "@/components/theme/ThemeManager";
 import { applyFont, getCurrentFont } from "@/components/font/FontManager";
 import MainPage from "@/components/nasec/MainPage";
 import SplashScreen from "@/components/SplashScreen";
+import ApiStatusView from "@/components/ApiStatusView";
 
 export default function Homepage() {
   const [activeIconContent, setActiveIconContent] =
     useState<React.ReactNode | null>(null);
+  const [showApiStatus, setShowApiStatus] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -32,10 +34,15 @@ export default function Homepage() {
       }}
       className="app-shell grid h-dvh w-dvw grid-rows-[3.75rem_minmax(0,1fr)_3.25rem] gap-1.5 overflow-hidden p-1.5 sm:grid-rows-[4.5rem_minmax(0,1fr)_3.75rem] sm:gap-2 sm:p-2"
     >
-      <Header />
+      <Header onOpenApiStatus={() => setShowApiStatus(true)} />
       <div className="flex min-h-0 w-full gap-2 overflow-hidden">
-        <IconNav setActiveIconContent={setActiveIconContent} />
-        <Main>{activeIconContent ? activeIconContent : <MainPage />}</Main>
+        <IconNav
+          setActiveIconContent={(content) => {
+            setShowApiStatus(false);
+            setActiveIconContent(content);
+          }}
+        />
+        <Main>{showApiStatus ? <ApiStatusView onBack={() => setShowApiStatus(false)} /> : activeIconContent ? activeIconContent : <MainPage />}</Main>
       </div>
       <Footer />
       </main>

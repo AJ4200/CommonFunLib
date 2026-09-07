@@ -4,9 +4,11 @@ import Logo from "@/icons/Logo";
 import React, { useEffect, useState } from "react";
 import { FaCircle, FaServer } from "react-icons/fa";
 
-interface HeaderProps {}
+interface HeaderProps {
+  onOpenApiStatus?: () => void;
+}
 
-const Header: React.FC<HeaderProps> = ({ ...props }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenApiStatus, ...props }) => {
   const [status, setStatus] = useState<"checking" | "online" | "slow" | "setup" | "offline" | "network">("checking");
   const [latency, setLatency] = useState<number | null>(null);
   const [apiLabel, setApiLabel] = useState("API");
@@ -112,25 +114,25 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
       {...props}
     >
       <div className="flex h-full items-center justify-between gap-3 px-3 sm:px-4">
-        <h1 className="brand-type flex min-w-0 items-center text-xl font-black theme-shadow sm:text-3xl">
+        <button
+          className="brand-type flex min-w-0 items-center text-left text-xl font-black theme-shadow transition hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--secondary)] sm:text-3xl"
+          onClick={() => window.location.assign("/")}
+          title="Return to CommonFunLib overview"
+          type="button"
+        >
           <Logo className="h-11 w-11 shrink-0 sm:h-16 sm:w-16" />
           <span className="truncate">CommonFunLib</span>
-        </h1>
+        </button>
         <div
-          className="ml-auto flex min-w-0 items-center gap-2 rounded-lg border border-[var(--secondary)] bg-black/10 px-2 py-1.5 text-xs font-black sm:px-3 sm:py-2 sm:text-sm"
+          className="ml-auto flex min-w-0 items-center gap-2"
           title={`API status: ${statusLabel}. ${statusMessage}`}
         >
-          <FaServer className="shrink-0 text-[var(--secondary)]" />
-          <span className="hidden max-w-44 truncate sm:inline">{apiLabel}</span>
-          <span className="flex items-center gap-1.5">
-            <FaCircle className={`text-[0.55rem] ${statusClass}`} />
-            {statusLabel}
-          </span>
-          {latency !== null ? (
-            <span className="mono-surface hidden rounded-md bg-black/15 px-2 py-0.5 text-[0.7rem] sm:inline">
-              {latency}ms
-            </span>
-          ) : null}
+          <button className="api-status-button" onClick={onOpenApiStatus} type="button" aria-label="Open API status dashboard">
+            <FaServer className="shrink-0 text-[var(--secondary)]" />
+            <span className="hidden max-w-44 truncate sm:inline">{apiLabel}</span>
+            <span className="flex items-center gap-1.5"><FaCircle className={`text-[0.55rem] ${statusClass}`} />{statusLabel}</span>
+            {latency !== null ? <span className="mono-surface hidden rounded-md bg-black/15 px-2 py-0.5 text-[0.7rem] sm:inline">{latency}ms</span> : null}
+          </button>
         </div>
       </div>
     </header>

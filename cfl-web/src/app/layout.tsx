@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import "@/styles/loader.css";
+import "@/styles/api-status.css";
 import AppChromeManager from "@/components/pwa/AppChromeManager";
 import type { Metadata, Viewport } from "next";
 import {
