@@ -1,4 +1,5 @@
 import AppearanceShuffleButton from "@/components/appearance/AppearanceShuffleButton";
+import AppearanceNotice from "@/components/appearance/AppearanceNotice";
 import FloatingFontToggle from "@/components/font/FloatingFontToggle";
 import PwaInstallButton from "@/components/pwa/PwaInstallButton";
 import FloatingThemeToggle from "@/components/theme/FloatingThemeToggle";
@@ -9,10 +10,12 @@ interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = ({ ...props }) => {
   return (
-    <footer
-      className="chrome-panel grid h-full w-full grid-cols-[1fr_auto_1fr] items-center gap-2 rounded-lg border-2 border-[var(--secondary)] px-2 sm:gap-3 sm:px-4"
-      {...props}
-    >
+    <>
+      <AppearanceNotice />
+      <footer
+        className="chrome-panel grid h-full w-full grid-cols-[1fr_auto_1fr] items-center gap-2 rounded-lg border-2 border-[var(--secondary)] px-2 sm:gap-3 sm:px-4"
+        {...props}
+      >
       <div className="flex items-center justify-start">
         <PwaInstallButton />
       </div>
@@ -36,7 +39,8 @@ const Footer: React.FC<FooterProps> = ({ ...props }) => {
         <FloatingFontToggle />
         <FloatingThemeToggle />
       </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 export default Footer;

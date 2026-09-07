@@ -5,7 +5,6 @@ import { getFonts } from "@/lib/fonts";
 import { getTheme } from "@/lib/themes";
 import {
   applyFont,
-  fontChangedEvent,
   getCurrentFont,
   storeFont,
 } from "./FontManager";
@@ -37,10 +36,7 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
     getTheme(getStoredTheme() ?? "Classic")
   );
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const noticeReadyRef = useRef(false);
   const currentFontRef = useRef<Font>(getCurrentFont());
-  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const activeFont = getCurrentFont();
@@ -53,9 +49,6 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
         clearTimeout(closeTimerRef.current);
       }
 
-      if (noticeTimerRef.current) {
-        clearTimeout(noticeTimerRef.current);
-      }
     };
   }, []);
 
@@ -72,44 +65,6 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
 
     return () => {
       window.removeEventListener(themeChangedEvent, handleThemeApplied);
-    };
-  }, []);
-
-  useEffect(() => {
-    const readyTimer = setTimeout(() => {
-      noticeReadyRef.current = true;
-    }, 500);
-
-    const handleFontApplied = (event: Event) => {
-      const nextFont = (event as CustomEvent<Font>).detail;
-
-      if (!nextFont) {
-        return;
-      }
-
-      currentFontRef.current = nextFont;
-      setCurrentFont(nextFont);
-      if (!noticeReadyRef.current) {
-        return;
-      }
-
-      setNotice(`Font: ${nextFont.name}`);
-
-      if (noticeTimerRef.current) {
-        clearTimeout(noticeTimerRef.current);
-      }
-
-      noticeTimerRef.current = setTimeout(() => {
-        setNotice(null);
-        noticeTimerRef.current = null;
-      }, 1800);
-    };
-
-    window.addEventListener(fontChangedEvent, handleFontApplied);
-
-    return () => {
-      clearTimeout(readyTimer);
-      window.removeEventListener(fontChangedEvent, handleFontApplied);
     };
   }, []);
 
@@ -150,7 +105,6 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
   return (
     <div className="relative" {...props}>
       <UniversalTooltip
-        notice={notice}
         actionLabel="Shuffle"
         onAction={handleRandomFont}
       >

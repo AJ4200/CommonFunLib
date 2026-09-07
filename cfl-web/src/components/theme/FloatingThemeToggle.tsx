@@ -35,10 +35,7 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   const [loading, setLoading] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Theme>();
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const noticeReadyRef = useRef(false);
   const currentThemeRef = useRef<Theme>(getTheme(getStoredTheme() ?? "Classic"));
-  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const activeTheme = getTheme(getStoredTheme() ?? "Classic");
@@ -50,17 +47,10 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
         clearTimeout(closeTimerRef.current);
       }
 
-      if (noticeTimerRef.current) {
-        clearTimeout(noticeTimerRef.current);
-      }
     };
   }, []);
 
   useEffect(() => {
-    const readyTimer = setTimeout(() => {
-      noticeReadyRef.current = true;
-    }, 500);
-
     const handleThemeApplied = (event: Event) => {
       const nextTheme = (event as CustomEvent<Theme>).detail;
 
@@ -70,26 +60,11 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
 
       currentThemeRef.current = nextTheme;
       setCurrentTheme(nextTheme);
-      if (!noticeReadyRef.current) {
-        return;
-      }
-
-      setNotice(`Theme: ${nextTheme.name}`);
-
-      if (noticeTimerRef.current) {
-        clearTimeout(noticeTimerRef.current);
-      }
-
-      noticeTimerRef.current = setTimeout(() => {
-        setNotice(null);
-        noticeTimerRef.current = null;
-      }, 1800);
     };
 
     window.addEventListener(themeChangedEvent, handleThemeApplied);
 
     return () => {
-      clearTimeout(readyTimer);
       window.removeEventListener(themeChangedEvent, handleThemeApplied);
     };
   }, []);
@@ -134,7 +109,6 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   return (
     <div className="relative" {...props}>
       <UniversalTooltip
-        notice={notice}
         actionLabel="Shuffle"
         onAction={handleRandomTheme}
       >
