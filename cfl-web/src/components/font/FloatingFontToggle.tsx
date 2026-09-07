@@ -150,7 +150,6 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
   return (
     <div className="relative" {...props}>
       <UniversalTooltip
-        message={`Font: ${currentFont?.name ?? "Loading"}`}
         notice={notice}
         actionLabel="Shuffle"
         onAction={handleRandomFont}

@@ -134,7 +134,6 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
   return (
     <div className="relative" {...props}>
       <UniversalTooltip
-        message={`Theme: ${currentTheme?.name ?? "Loading"}`}
         notice={notice}
         actionLabel="Shuffle"
         onAction={handleRandomTheme}

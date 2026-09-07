@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FaRandom } from "react-icons/fa";
 
 interface UniversalTooltipProps {
-  message: string;
   notice?: string | null;
   actionLabel?: string;
   onAction?: () => void;
@@ -9,7 +9,6 @@ interface UniversalTooltipProps {
 }
 
 const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
-  message,
   notice,
   actionLabel,
   onAction,
@@ -54,14 +53,16 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
       {children}
       {visible ? (
         <div className="pointer-events-none absolute bottom-[calc(100%+0.45rem)] left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-lg border border-[var(--secondary)] bg-[var(--background)] px-2 py-1.5 text-[0.65rem] font-black text-[var(--foreground)] shadow-lg">
-          <span>{notice ?? message}</span>
+          {notice ? <span>{notice}</span> : null}
           {hovered && actionLabel && onAction ? (
             <button
-              className="pointer-events-auto rounded-md border border-[var(--secondary)] px-1.5 py-0.5 text-[0.6rem] uppercase transition hover:bg-[var(--secondary)] hover:text-[var(--secondary-foreground)]"
+              aria-label={actionLabel}
+              className="pointer-events-auto grid h-7 w-7 place-items-center rounded-md border border-[var(--secondary)] text-[0.7rem] transition hover:bg-[var(--secondary)] hover:text-[var(--secondary-foreground)]"
               onClick={onAction}
+              title={actionLabel}
               type="button"
             >
-              {actionLabel}
+              <FaRandom />
             </button>
           ) : null}
         </div>
