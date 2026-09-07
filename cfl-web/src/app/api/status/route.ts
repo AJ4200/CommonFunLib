@@ -23,6 +23,7 @@ export async function GET() {
     return NextResponse.json(
       {
         status: response.ok && body?.status === "ok" ? "ok" : "error",
+        apiVersion: typeof body?.version === "string" ? body.version : null,
         latency,
         apiBaseUrl: API_BASE_URL,
         configured: !isLocalFallback || process.env.NODE_ENV !== "production",
@@ -38,6 +39,7 @@ export async function GET() {
     return NextResponse.json(
       {
         status: "error",
+        apiVersion: null,
         latency: null,
         apiBaseUrl: API_BASE_URL,
         configured: !isLocalFallback || process.env.NODE_ENV !== "production",

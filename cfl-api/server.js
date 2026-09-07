@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const { version } = require("./package.json");
 
 const converterRoutes = require("./routes/route.converter");
 const generatorRoutes = require("./routes/route.generator");
@@ -44,6 +45,7 @@ app.get("/status", (req, res) => {
   res.json({
     status: "ok",
     service: "commonfunlib-api",
+    version,
     uptimeSeconds: Math.floor((Date.now() - startedAt) / 1000),
     timestamp: new Date().toISOString(),
   });

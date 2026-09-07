@@ -12,6 +12,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenApiStatus, ...props }) => {
   const [status, setStatus] = useState<"checking" | "online" | "slow" | "setup" | "offline" | "network">("checking");
   const [latency, setLatency] = useState<number | null>(null);
   const [apiLabel, setApiLabel] = useState("API");
+  const [apiVersion, setApiVersion] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState("Checking API status");
 
   useEffect(() => {
@@ -38,6 +39,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenApiStatus, ...props }) => {
         const elapsed = Math.round(performance.now() - startedAt);
 
         if (!active) return;
+
+        setApiVersion(typeof data?.apiVersion === "string" ? data.apiVersion : null);
 
         if (data?.apiBaseUrl) {
           try {
@@ -120,7 +123,12 @@ const Header: React.FC<HeaderProps> = ({ onOpenApiStatus, ...props }) => {
           title="Return to CommonFunLib overview"
           type="button"
         >
-          <Logo className="h-11 w-11 shrink-0 sm:h-16 sm:w-16" />
+          <span className="flex shrink-0 flex-col items-center">
+            <Logo className="h-11 w-11 sm:h-16 sm:w-16" />
+            <span className="mt-0.5 text-[0.55rem] font-black uppercase tracking-[0.08em] opacity-75 sm:text-[0.65rem]">
+              API v{apiVersion ?? "--"}
+            </span>
+          </span>
           <span className="truncate">CommonFunLib</span>
         </button>
         <div
