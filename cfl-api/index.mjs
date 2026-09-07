@@ -28,6 +28,8 @@ export const average = cfl.average;
 export const median = cfl.median;
 export const titleCase = cfl.titleCase;
 export const wordCount = cfl.wordCount;
+export const isValidEmail = cfl.isValidEmail;
+export const truncate = cfl.truncate;
 
 export const generateRandomNumber = cfl.generateRandomNumber;
 export const generateRandomName = cfl.generateRandomName;
@@ -44,6 +46,7 @@ export const generateApiKey = cfl.generateApiKey;
 export const generateMacAddress = cfl.generateMacAddress;
 export const generateSemver = cfl.generateSemver;
 export const generateTimestamp = cfl.generateTimestamp;
+export const generateUsername = cfl.generateUsername;
 export const generateQrCode = cfl.generateQrCode;
 export const generateSteganoPass = cfl.generateSteganoPass;
 
@@ -60,6 +63,7 @@ export const convertNumberBase = cfl.convertNumberBase;
 export const convertDuration = cfl.convertDuration;
 export const convertTimestamp = cfl.convertTimestamp;
 export const convertColor = cfl.convertColor;
+export const convertPressure = cfl.convertPressure;
 
 export const md5 = cfl.md5;
 export const sha1 = cfl.sha1;
@@ -75,5 +79,7 @@ export const hmacSha512 = cfl.hmacSha512;
 export const base64UrlEncode = cfl.base64UrlEncode;
 export const base64UrlDecode = cfl.base64UrlDecode;
 export const checksum = cfl.checksum;
+export const urlEncode = cfl.urlEncode;
+export const urlDecode = cfl.urlDecode;
 
 export default cfl;

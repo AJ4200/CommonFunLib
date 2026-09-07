@@ -129,6 +129,23 @@ class Converter {
     return ((value * units[fromUnit]) / units[toUnit]).toFixed(2);
   }
 
+  convertPressure(value, fromUnit, toUnit) {
+    const units = {
+      pa: 1,
+      kpa: 1000,
+      bar: 100000,
+      psi: 6894.757293168,
+      atm: 101325,
+    };
+
+    if (!Object.prototype.hasOwnProperty.call(units, fromUnit) || !Object.prototype.hasOwnProperty.call(units, toUnit)) {
+      console.error('Invalid pressure unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(4);
+  }
+
   convertTemperature(temperature, fromUnit, toUnit) {
     let convertedTemperature;
 

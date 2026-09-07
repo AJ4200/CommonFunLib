@@ -25,6 +25,8 @@ const common = {
   median: CommonFunctions.median,
   titleCase: CommonFunctions.titleCase,
   wordCount: CommonFunctions.wordCount,
+  isValidEmail: CommonFunctions.isValidEmail,
+  truncate: CommonFunctions.truncate,
 };
 
 const generate = {
@@ -43,6 +45,7 @@ const generate = {
   macAddress: () => generator.generateMacAddress(),
   semver: (major = 0) => generator.generateSemver(major),
   timestamp: (format = "iso") => generator.generateTimestamp(format),
+  username: () => generator.generateUsername(),
   qrCode: (value, options = {}) => generator.generateQrCode(value, options),
   steganopass: (fileBuffer, fileName = "file") => generator.generateSteganoPass(fileBuffer, fileName),
 };
@@ -66,6 +69,7 @@ const convert = {
   timestamp: (value, fromUnit, toUnit) =>
     converter.convertTimestamp(value, fromUnit, toUnit),
   color: (value, fromFormat, toFormat) => converter.convertColor(value, fromFormat, toFormat),
+  pressure: (value, fromUnit, toUnit) => converter.convertPressure(value, fromUnit, toUnit),
 };
 
 const hash = {
@@ -83,6 +87,8 @@ const hash = {
   base64UrlEncode: Hashing.base64UrlEncode,
   base64UrlDecode: Hashing.base64UrlDecode,
   checksum: Hashing.checksum,
+  urlEncode: Hashing.urlEncode,
+  urlDecode: Hashing.urlDecode,
 };
 
 const api = {
@@ -112,6 +118,8 @@ const api = {
   median: common.median,
   titleCase: common.titleCase,
   wordCount: common.wordCount,
+  isValidEmail: common.isValidEmail,
+  truncate: common.truncate,
   generateRandomNumber: generate.randomNumber,
   generateRandomName: generate.randomName,
   getFirstNames: generate.firstNames,
@@ -127,6 +135,7 @@ const api = {
   generateMacAddress: generate.macAddress,
   generateSemver: generate.semver,
   generateTimestamp: generate.timestamp,
+  generateUsername: generate.username,
   generateQrCode: generate.qrCode,
   generateSteganoPass: generate.steganopass,
   fetchExchangeRates: convert.fetchExchangeRates,
@@ -142,6 +151,7 @@ const api = {
   convertDuration: convert.duration,
   convertTimestamp: convert.timestamp,
   convertColor: convert.color,
+  convertPressure: convert.pressure,
   md5: hash.md5,
   sha1: hash.sha1,
   sha256: hash.sha256,
@@ -156,6 +166,8 @@ const api = {
   base64UrlEncode: hash.base64UrlEncode,
   base64UrlDecode: hash.base64UrlDecode,
   checksum: hash.checksum,
+  urlEncode: hash.urlEncode,
+  urlDecode: hash.urlDecode,
 };
 
 module.exports = api;

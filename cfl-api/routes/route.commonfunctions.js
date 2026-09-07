@@ -103,4 +103,12 @@ router.get("/wordCount", (req, res) => {
   res.json({ wordCount: CommonFunctions.wordCount(req.query.str || "") });
 });
 
+router.get("/isValidEmail", (req, res) => {
+  res.json({ isValidEmail: CommonFunctions.isValidEmail(req.query.email || "") });
+});
+
+router.get("/truncate", (req, res) => {
+  res.json({ truncated: CommonFunctions.truncate(req.query.str || "", req.query.maxLength, req.query.suffix) });
+});
+
 module.exports = router;

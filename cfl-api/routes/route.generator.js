@@ -84,6 +84,10 @@ router.get("/timestamp", (req, res) => {
   res.json({ timestamp: generator.generateTimestamp(req.query.format || "iso") });
 });
 
+router.get("/username", (req, res) => {
+  res.json({ username: generator.generateUsername() });
+});
+
 router.get("/qrCode", async (req, res) => {
   try {
     const qrCode = await generator.generateQrCode(req.query.value, {

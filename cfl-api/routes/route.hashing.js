@@ -78,4 +78,16 @@ router.post("/checksum", (req, res) => {
   res.json({ checksum: Hashing.checksum(input) });
 });
 
+router.post("/urlEncode", (req, res) => {
+  res.json({ encodedValue: Hashing.urlEncode(req.body.input) });
+});
+
+router.post("/urlDecode", (req, res) => {
+  try {
+    res.json({ decodedValue: Hashing.urlDecode(req.body.input) });
+  } catch {
+    res.status(400).json({ error: "Input is not valid URL encoding." });
+  }
+});
+
 module.exports = router;

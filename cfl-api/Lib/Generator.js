@@ -93,6 +93,14 @@ class Generator {
     return now.toISOString();
   }
 
+  generateUsername() {
+    const firstName = this.firstNames[this.generateRandomNumber(0, this.firstNames.length - 1)] || 'common';
+    const lastName = this.lastNames[this.generateRandomNumber(0, this.lastNames.length - 1)] || 'user';
+    const number = this.generateRandomNumber(10, 9999);
+
+    return `${firstName}${lastName}${number}`.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
   async generateQrCode(value, options = {}) {
     const text = String(value ?? '').trim();
 

@@ -142,6 +142,26 @@ class CommonFunctions {
     return words ? words.length : 0;
   }
 
+  static isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
+  }
+
+  static truncate(str, maxLength = 40, suffix = "...") {
+    const value = String(str);
+    const length = Math.max(1, Math.floor(Number(maxLength) || 40));
+    const ending = String(suffix);
+
+    if (value.length <= length) {
+      return value;
+    }
+
+    if (ending.length >= length) {
+      return ending.slice(0, length);
+    }
+
+    return `${value.slice(0, length - ending.length)}${ending}`;
+  }
+
   static toNumberList(input) {
     const values = Array.isArray(input) ? input : String(input).split(",");
 

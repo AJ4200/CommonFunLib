@@ -63,6 +63,14 @@ class Hashing {
 
     return sum.toString(16).padStart(4, '0');
   }
+
+  static urlEncode(input) {
+    return encodeURIComponent(String(input));
+  }
+
+  static urlDecode(input) {
+    return decodeURIComponent(String(input));
+  }
 }
 
 module.exports = Hashing;
