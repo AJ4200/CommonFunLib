@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useMemo, useState } from "react";
 import {
   FaBolt,
@@ -14,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { UtilityTool } from "@/models/Tool";
 import { buildCurlCommand } from "@/lib/utilityTools";
+import { requestTool, ToolValues } from "@/lib/toolRequest";
 import OperationLoader from "@/components/ui/OperationLoader";
 
 interface ToolPlaygroundProps {
@@ -34,7 +34,7 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
     () => tools.find((tool) => tool.value === selectedValue) ?? tools[0],
     [selectedValue, tools]
   );
-  const [valuesByTool, setValuesByTool] = useState<Record<string, Record<string, string>>>(
+  const [valuesByTool, setValuesByTool] = useState<Record<string, ToolValues>>(
     () => Object.fromEntries(tools.map((tool) => [tool.value, buildInitialValues(tool)]))
   );
   const [result, setResult] = useState<string>("");
@@ -43,10 +43,11 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
   const [recentRuns, setRecentRuns] = useState<
     Array<{ tool: string; result: string; status: "success" | "error" }>
   >([]);
+  const [usedFallback, setUsedFallback] = useState(false);
 
   const values = valuesByTool[selectedTool.value] ?? buildInitialValues(selectedTool);
 
-  const updateValue = (name: string, value: string) => {
+  const updateValue = (name: string, value: string | File) => {
     setValuesByTool((current) => ({
       ...current,
       [selectedTool.value]: {
@@ -61,20 +62,18 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
     setError("");
 
     try {
-      const response =
-        selectedTool.method === "GET"
-          ? await axios.get(selectedTool.endpoint, { params: values })
-          : await axios.post(selectedTool.endpoint, values);
-
+      const response = await requestTool(selectedTool, values);
       const nextResult = response.data?.[selectedTool.resultKey] ?? response.data;
       const formattedResult = formatResult(nextResult);
       setResult(formattedResult);
+      setUsedFallback(response.fallback);
       setRecentRuns((current) => [
         { tool: selectedTool.label, result: formattedResult, status: "success" as const },
         ...current,
       ].slice(0, 4));
-    } catch {
-      setError("API request failed. Check the configured API base URL and inputs.");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Tool request failed.");
+      setUsedFallback(false);
       setRecentRuns((current) => [
         {
           tool: selectedTool.label,
@@ -90,8 +89,8 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
 
   const populatedValues = useMemo(() => {
     return Object.fromEntries(
-      Object.entries(values).filter(([, value]) => value !== "")
-    );
+      Object.entries(values).filter(([, value]) => value !== "" && typeof value === "string")
+    ) as Record<string, string>;
   }, [values]);
 
   const curlPreview = useMemo(() => {
@@ -227,7 +226,7 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
                     {field.options ? (
                       <select
                         className="control-surface select-surface"
-                        value={values[field.name] ?? field.placeholder}
+                        value={String(values[field.name] ?? field.placeholder)}
                         onChange={(event) => updateValue(field.name, event.target.value)}
                       >
                         {field.options.map((option) => (
@@ -240,8 +239,8 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
                       <input
                         type={field.type ?? "text"}
                         className="control-surface placeholder:text-current/45"
-                        value={values[field.name] ?? ""}
-                        onChange={(event) => updateValue(field.name, event.target.value)}
+                        value={field.type === "file" ? undefined : String(values[field.name] ?? "")}
+                        onChange={(event) => updateValue(field.name, field.type === "file" ? event.target.files?.[0] ?? "" : event.target.value)}
                         placeholder={field.placeholder}
                       />
                     )}
@@ -290,6 +289,11 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
             {selectedTool.resultKey === "qrCode" && result ? (
               <div className="mb-3 flex justify-center rounded-lg border border-[var(--secondary)] bg-white p-4">
                 <img src={result} alt="Generated QR code" className="h-56 w-56" />
+              </div>
+            ) : null}
+            {usedFallback ? (
+              <div className="mb-3 rounded-lg border border-emerald-300/70 bg-emerald-300/10 p-3 text-xs font-black uppercase tracking-wide text-emerald-200">
+                API unavailable. The installed CommonFunLib npm package just handled this locally.
               </div>
             ) : null}
             {loading ? (

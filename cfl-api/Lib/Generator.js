@@ -107,6 +107,29 @@ class Generator {
 
     return QRCode.toDataURL(text, { width, margin });
   }
+
+  generateSteganoPass(fileBuffer, fileName = 'file') {
+    if (!Buffer.isBuffer(fileBuffer)) {
+      throw new Error('A file buffer is required.');
+    }
+
+    if (fileBuffer.length > 5 * 1024 * 1024) {
+      throw new Error('SteganoPass only accepts files up to 5 MB.');
+    }
+
+    const digest = crypto.createHash('sha256').update(fileBuffer).digest();
+    const seed = digest.toString('hex');
+    const key = digest.toString('base64url');
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';
+    const password = Array.from({ length: 24 }, (_, index) => alphabet[digest[index % digest.length] % alphabet.length]).join('');
+    const idBytes = Buffer.from(digest);
+    idBytes[6] = (idBytes[6] & 0x0f) | 0x40;
+    idBytes[8] = (idBytes[8] & 0x3f) | 0x80;
+    const idHex = idBytes.toString('hex');
+    const id = `${idHex.slice(0, 8)}-${idHex.slice(8, 12)}-${idHex.slice(12, 16)}-${idHex.slice(16, 20)}-${idHex.slice(20)}`;
+
+    return { fileName, fileSize: fileBuffer.length, algorithm: 'SHA-256', seed, key, password, id };
+  }
 }
 
 module.exports = Generator;

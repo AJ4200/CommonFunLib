@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useMemo, useState } from "react";
 import {
   FaBolt,
@@ -13,9 +12,9 @@ import {
   FaTerminal,
 } from "react-icons/fa";
 import OperationLoader from "@/components/ui/OperationLoader";
-import { API_BASE_URL } from "@/lib/apiConfig";
 import { CommonTool, commonTools } from "@/lib/commonTools";
 import { buildCurlCommand } from "@/lib/utilityTools";
+import { requestTool } from "@/lib/toolRequest";
 
 type CommonRun = {
   result: string;
@@ -42,6 +41,7 @@ const CommonFunctionsPG = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [recentRuns, setRecentRuns] = useState<CommonRun[]>([]);
+  const [usedFallback, setUsedFallback] = useState(false);
 
   const values = valuesByTool[selectedTool.value] ?? buildInitialValues(selectedTool);
   const populatedValues = useMemo(() => {
@@ -73,18 +73,22 @@ const CommonFunctionsPG = () => {
     setError("");
 
     try {
-      const query = new URLSearchParams(values).toString();
-      const response = await axios.get(`${API_BASE_URL}/common/${selectedTool.value}?${query}`);
+      const response = await requestTool(
+        { endpoint: `/common/${selectedTool.value}`, method: "GET" },
+        values
+      );
       const nextResult = response.data[selectedTool.resultKey];
       const formatted = String(nextResult);
 
       setResult(formatted);
+      setUsedFallback(response.fallback);
       setRecentRuns((current) => [
         { tool: selectedTool.label, result: formatted, status: "success" as const },
         ...current,
       ].slice(0, 4));
-    } catch {
-      setError("Unable to compute result. Check the API server and inputs.");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Unable to compute result.");
+      setUsedFallback(false);
       setRecentRuns((current) => [
         { tool: selectedTool.label, result: "Request failed", status: "error" as const },
         ...current,

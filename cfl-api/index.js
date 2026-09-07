@@ -44,6 +44,7 @@ const generate = {
   semver: (major = 0) => generator.generateSemver(major),
   timestamp: (format = "iso") => generator.generateTimestamp(format),
   qrCode: (value, options = {}) => generator.generateQrCode(value, options),
+  steganopass: (fileBuffer, fileName = "file") => generator.generateSteganoPass(fileBuffer, fileName),
 };
 
 const convert = {
@@ -127,6 +128,7 @@ const api = {
   generateSemver: generate.semver,
   generateTimestamp: generate.timestamp,
   generateQrCode: generate.qrCode,
+  generateSteganoPass: generate.steganopass,
   fetchExchangeRates: convert.fetchExchangeRates,
   convertCurrency: convert.currency,
   convertLength: convert.length,

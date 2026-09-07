@@ -45,6 +45,7 @@ export const generateMacAddress = cfl.generateMacAddress;
 export const generateSemver = cfl.generateSemver;
 export const generateTimestamp = cfl.generateTimestamp;
 export const generateQrCode = cfl.generateQrCode;
+export const generateSteganoPass = cfl.generateSteganoPass;
 
 export const fetchExchangeRates = cfl.fetchExchangeRates;
 export const convertCurrency = cfl.convertCurrency;

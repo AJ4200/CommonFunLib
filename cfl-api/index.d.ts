@@ -38,6 +38,15 @@ export class Generator {
   generateSemver(major?: number): string;
   generateTimestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
   generateQrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
+  generateSteganoPass(fileBuffer: Buffer, fileName?: string): {
+    fileName: string;
+    fileSize: number;
+    algorithm: "SHA-256";
+    seed: string;
+    key: string;
+    password: string;
+    id: string;
+  };
 }
 
 export class Converter {
@@ -113,6 +122,7 @@ export const generate: {
   semver(major?: number): string;
   timestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
   qrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
+  steganopass(fileBuffer: Buffer, fileName?: string): ReturnType<Generator["generateSteganoPass"]>;
 };
 
 export const convert: {
@@ -183,6 +193,7 @@ export const generateMacAddress: typeof generate.macAddress;
 export const generateSemver: typeof generate.semver;
 export const generateTimestamp: typeof generate.timestamp;
 export const generateQrCode: typeof generate.qrCode;
+export const generateSteganoPass: typeof generate.steganopass;
 
 export const fetchExchangeRates: typeof convert.fetchExchangeRates;
 export const convertCurrency: typeof convert.currency;

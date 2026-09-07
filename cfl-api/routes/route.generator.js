@@ -1,8 +1,13 @@
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 const Generator = require("../Lib/Generator");
 
 const generator = new Generator();
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
 
 router.get("/randomName", (req, res) => {
   const randomName = generator.generateRandomName();
@@ -86,6 +91,18 @@ router.get("/qrCode", async (req, res) => {
       width: req.query.width,
     });
     res.json({ qrCode });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.post("/steganopass", upload.single("file"), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "A file is required." });
+    }
+
+    res.json({ steganopass: generator.generateSteganoPass(req.file.buffer, req.file.originalname) });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

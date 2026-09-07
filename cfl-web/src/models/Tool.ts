@@ -14,4 +14,5 @@ export interface UtilityTool {
   endpoint: string;
   fields: ToolField[];
   resultKey: string;
+  execution?: "api" | "local";
 }

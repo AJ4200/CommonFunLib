@@ -169,6 +169,15 @@ export const generatorTools: UtilityTool[] = [
     ],
     resultKey: "qrCode",
   },
+  {
+    value: "steganopass",
+    label: "SteganoPass",
+    description: "Turn a file into a deterministic seed, key, password, and ID without uploading it.",
+    method: "POST",
+    endpoint: "/generate/steganopass",
+    fields: [{ name: "file", label: "File (max 5 MB)", placeholder: "Choose a file", type: "file" }],
+    resultKey: "steganopass",
+  },
 ];
 
 export const converterTools: UtilityTool[] = [
