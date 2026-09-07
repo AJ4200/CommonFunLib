@@ -423,20 +423,6 @@ main {
   transform: rotate(-16deg);
 }
 
-.category-splash__stamp {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  z-index: 2;
-  border-bottom: 1px solid var(--secondary);
-  padding-bottom: 0.35rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.65rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  opacity: 0.65;
-}
-
 .category-splash--functions .category-splash__grid {
   background-image: radial-gradient(circle at 18% 24%, var(--secondary) 0 2px, transparent 3px), linear-gradient(color-mix(in srgb, var(--secondary) 35%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--secondary) 35%, transparent) 1px, transparent 1px);
   background-size: 3rem 3rem, 2.5rem 2.5rem, 2.5rem 2.5rem;

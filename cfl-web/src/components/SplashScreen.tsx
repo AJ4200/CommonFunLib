@@ -29,8 +29,8 @@ const SplashScreen = ({ onDone }: { onDone: () => void }) => {
   useEffect(() => {
     setFontName(document.documentElement.dataset.font || "Nunito");
     setThemeName(document.documentElement.dataset.theme || "Classic");
-    const closeTimer = window.setTimeout(() => setClosing(true), 1600);
-    const doneTimer = window.setTimeout(onDone, 1950);
+    const closeTimer = window.setTimeout(() => setClosing(true), 3200);
+    const doneTimer = window.setTimeout(onDone, 3900);
 
     return () => {
       window.clearTimeout(closeTimer);
