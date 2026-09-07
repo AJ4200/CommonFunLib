@@ -2,6 +2,20 @@
 
 All notable changes to CommonFunLib are documented here.
 
+## [1.0.5] - 2026-09-07
+
+### Added
+
+- Added HTTP/HTTPS URL validation and Unicode-aware character counting.
+- Added cryptographic random booleans.
+- Added angle conversion for degrees, radians, and gradians.
+- Added UTF-8 hexadecimal encode/decode helpers.
+- Added all six tools to the API, npm exports, TypeScript declarations, web catalog, and offline npm fallback.
+
+### Changed
+
+- Bumped the npm package to `1.0.5`.
+
 ## [1.0.4] - 2026-09-07
 
 ### Changed
@@ -33,6 +47,7 @@ All notable changes to CommonFunLib are documented here.
 
 - Added the current converter, generator, hashing, and utility expansion before the 1.0.3 release bundle.
 
+[1.0.5]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.5
 [1.0.4]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.4
 [1.0.3]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.3
 [1.0.1]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.1

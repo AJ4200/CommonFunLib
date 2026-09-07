@@ -69,6 +69,7 @@ hash.base64Encode("hello");
 - Hashing: MD5, SHA variants, Base64 encode/decode, URL encode/decode, and HMAC SHA256.
 - Release 1.0.3: email validation, text truncation, username generation, pressure conversion, URL encoding helpers, QR codes, and 5 MB SteganoPass file keys.
 - Release 1.0.4: unique icon-led splash screens for every web tool category, with theme and font-aware presentation.
+- Release 1.0.5: URL validation, character counting, random booleans, angle conversion, and UTF-8 hexadecimal helpers.
 
 ## API Examples
 

@@ -46,7 +46,7 @@ const runFallback = async (
   }
 
   if (category === "generate") {
-    const generated: Record<string, unknown> = {
+    const generated: Record<string, unknown | (() => Promise<unknown>)> = {
       randomName: cfl.generateRandomName(),
       randomNumber: cfl.generateRandomNumber(numberValue(values.min), numberValue(values.max)),
       randomPassword: cfl.generatePassword(numberValue(values.length)),
@@ -62,19 +62,18 @@ const runFallback = async (
       timestamp: cfl.generateTimestamp(values.format as "iso" | "seconds" | "milliseconds"),
       username: cfl.generateUsername(),
       boolean: cfl.generateBoolean(),
-      qrCode: await cfl.generateQrCode(values.value, {
-        width: numberValue(values.width),
-        margin: numberValue(values.margin),
-      }),
-      steganopass: file
-        ? cfl.generateSteganoPass(file.buffer, file.name)
-        : (() => { throw new Error("A file is required."); })(),
+      qrCode: () => cfl.generateQrCode(values.value, { width: numberValue(values.width), margin: numberValue(values.margin) }),
+      steganopass: () => {
+        if (!file) throw new Error("A file is required.");
+        return cfl.generateSteganoPass(file.buffer, file.name);
+      },
     };
-    return { [tool]: generated[tool] };
+    const value = generated[tool];
+    return { [tool]: typeof value === "function" ? await value() : value };
   }
 
   if (category === "hash") {
-    const hashResults: Record<string, unknown> = {
+    const hashResults: Record<string, unknown | (() => unknown)> = {
       md5: cfl.md5(values.input ?? ""), sha1: cfl.sha1(values.input ?? ""),
       sha256: cfl.sha256(values.input ?? ""), sha384: cfl.sha384(values.input ?? ""),
       sha512: cfl.sha512(values.input ?? ""), "sha3-256": cfl.sha3_256(values.input ?? ""),
@@ -85,9 +84,9 @@ const runFallback = async (
       base64UrlEncode: cfl.base64UrlEncode(values.input ?? ""),
       base64UrlDecode: cfl.base64UrlDecode(values.input ?? ""), checksum: cfl.checksum(values.input ?? ""),
       urlEncode: cfl.urlEncode(values.input ?? ""),
-      urlDecode: cfl.urlDecode(values.input ?? ""),
+      urlDecode: () => cfl.urlDecode(values.input ?? ""),
       hexEncode: cfl.hexEncode(values.input ?? ""),
-      hexDecode: cfl.hexDecode(values.input ?? ""),
+      hexDecode: () => cfl.hexDecode(values.input ?? ""),
     };
     const resultKey = ["base64Encode", "base64UrlEncode", "hexEncode"].includes(tool)
       ? "encodedValue"
@@ -96,7 +95,8 @@ const runFallback = async (
         : ["urlDecode", "hexDecode"].includes(tool) ? "decodedValue"
           : ["checksum"].includes(tool) ? "checksum"
             : "hashedValue";
-    return { [resultKey]: hashResults[tool] };
+    const value = hashResults[tool];
+    return { [resultKey]: typeof value === "function" ? value() : value };
   }
 
   if (category === "convert") {

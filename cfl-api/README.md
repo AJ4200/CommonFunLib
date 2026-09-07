@@ -6,7 +6,7 @@ HMAC signing.
 
 It can also run the same utilities as an Express API.
 
-## Version 1.0.4
+## Version 1.0.5
 
 This release expands the computing toolkit with Fibonacci, average, median,
 title case, word count, Nano IDs, API keys, MAC addresses, semver strings,
@@ -22,6 +22,9 @@ passwords, and IDs.
 
 Version 1.0.4 refreshes the web category splash experience with unique icon-led
 visual treatments for every tool family.
+
+Version 1.0.5 adds URL validation, Unicode-aware character counting, random
+booleans, angle conversion, and UTF-8 hexadecimal encoding and decoding.
 
 ## Install
 
