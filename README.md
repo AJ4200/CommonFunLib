@@ -2,6 +2,8 @@
 
 CommonFunLib is a small developer utility toolkit for common functions, sample data generation, unit conversion, and hashing.
 
+Current npm release: `1.0.6`.
+
 Use it three ways:
 
 - Explore and test utilities in the `cfl-web` playground.
@@ -62,11 +64,11 @@ hash.base64Encode("hello");
 
 ## What It Includes
 
-- Common functions: even/odd checks, factorial, GCD, LCM, prime checks, string reversal, palindrome checks, slugify, email validation, truncation, clamp, and percentage.
-- Generators: random names, usernames, numbers, passwords, UUIDs, tokens, PINs, colors, placeholder text, and QR code data URLs.
+- Common functions: even/odd checks, factorial, GCD, LCM, prime checks, leap-year checks, string reversal, palindrome checks, slugify, email validation, truncation, clamp, and percentage.
+- Generators: random names, usernames, numbers, passwords, UUIDs, tokens, PINs, colors, placeholder text, random dates, and QR code data URLs.
 - Link helpers: URL-safe text slugs and URL path slugs.
-- Converters: length, weight, temperature, area, data size, speed, pressure, and optional currency conversion.
-- Hashing: MD5, SHA variants, Base64 encode/decode, URL encode/decode, and HMAC SHA256.
+- Converters: length, weight, temperature, area, data size, volume, speed, pressure, and optional currency conversion.
+- Hashing: MD5, SHA variants including SHA3-384, Base64 encode/decode, URL encode/decode, and HMAC SHA256.
 - Release 1.0.3: email validation, text truncation, username generation, pressure conversion, URL encoding helpers, QR codes, and 5 MB SteganoPass file keys.
 - Release 1.0.4: unique icon-led splash screens for every web tool category, with theme and font-aware presentation.
 - Release 1.0.5: URL validation, character counting, random booleans, angle conversion, and UTF-8 hexadecimal helpers.
@@ -78,10 +80,13 @@ hash.base64Encode("hello");
 - `GET /generate/qrCode?value=https%3A%2F%2Fexample.com`
 - `GET /common/slugifyLink?link=https%3A%2F%2Fexample.com%2Fdocs%2FMy%20Page`
 - `GET /common/isValidEmail?email=dev%40example.com`
+- `GET /common/isLeapYear?year=2024`
 - `GET /common/truncate?str=CommonFunLib%20release%20notes&maxLength=16`
 - `POST /convert/length`
 - `POST /convert/pressure`
+- `POST /convert/volume`
 - `POST /hash/sha256`
+- `POST /hash/sha3-384`
 - `POST /hash/urlEncode`
 - `POST /generate/steganopass` with a multipart `file` field, limited to 5 MB.
 - `GET /status`

@@ -2,6 +2,20 @@
 
 All notable changes to CommonFunLib are documented here.
 
+## [1.0.6] - 2026-09-07
+
+### Added
+
+- Added `isLeapYear` to the common functions catalog.
+- Added bounded `randomDate` generation with ISO output.
+- Added volume conversion for metric, cooking, imperial, and cubic-meter units.
+- Added SHA3-384 hashing.
+- Added all four tools to the API, npm exports, TypeScript declarations, web catalog, offline fallback, and npm navigation sections.
+
+### Changed
+
+- Bumped the npm package to `1.0.6`.
+
 ## [1.0.5] - 2026-09-07
 
 ### Added
@@ -47,6 +61,7 @@ All notable changes to CommonFunLib are documented here.
 
 - Added the current converter, generator, hashing, and utility expansion before the 1.0.3 release bundle.
 
+[1.0.6]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.6
 [1.0.5]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.5
 [1.0.4]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.4
 [1.0.3]: https://github.com/AJ4200/commonfunlib.api/releases/tag/v1.0.3

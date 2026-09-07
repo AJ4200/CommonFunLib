@@ -18,6 +18,7 @@ const runFallback = async (
       gcd: cfl.gcd(numberValue(values.a), numberValue(values.b)),
       lcm: cfl.lcm(numberValue(values.a), numberValue(values.b)),
       prime: cfl.isPrime(numberValue(values.num)),
+      isLeapYear: cfl.isLeapYear(numberValue(values.year)),
       reverse: cfl.reverseString(values.str ?? ""),
       palindrome: cfl.isPalindrome(values.str ?? ""),
       slugify: cfl.slugify(values.str ?? ""),
@@ -36,7 +37,7 @@ const runFallback = async (
     };
     const resultKeys: Record<string, string> = {
       even: "isEven", odd: "isOdd", factorial: "factorial", gcd: "gcd", lcm: "lcm",
-      prime: "isPrime", reverse: "reversedString", palindrome: "isPalindrome", slugify: "slug",
+      prime: "isPrime", isLeapYear: "isLeapYear", reverse: "reversedString", palindrome: "isPalindrome", slugify: "slug",
       slugifyLink: "slug", clamp: "clamped", percentage: "percentage", fibonacci: "fibonacci",
       average: "average", median: "median", titleCase: "titleCase", wordCount: "wordCount",
       isValidEmail: "isValidEmail", truncate: "truncated",
@@ -60,6 +61,7 @@ const runFallback = async (
       macAddress: cfl.generateMacAddress(),
       semver: cfl.generateSemver(numberValue(values.major)),
       timestamp: cfl.generateTimestamp(values.format as "iso" | "seconds" | "milliseconds"),
+      randomDate: cfl.generateRandomDate(values.start, values.end),
       username: cfl.generateUsername(),
       boolean: cfl.generateBoolean(),
       qrCode: () => cfl.generateQrCode(values.value, { width: numberValue(values.width), margin: numberValue(values.margin) }),
@@ -77,6 +79,7 @@ const runFallback = async (
       md5: cfl.md5(values.input ?? ""), sha1: cfl.sha1(values.input ?? ""),
       sha256: cfl.sha256(values.input ?? ""), sha384: cfl.sha384(values.input ?? ""),
       sha512: cfl.sha512(values.input ?? ""), "sha3-256": cfl.sha3_256(values.input ?? ""),
+      "sha3-384": cfl.sha3_384(values.input ?? ""),
       "sha3-512": cfl.sha3_512(values.input ?? ""), base64Encode: cfl.base64Encode(values.input ?? ""),
       base64Decode: cfl.base64Decode(values.input ?? ""),
       hmacSha256: cfl.hmacSha256(values.input ?? "", values.secret ?? ""),
@@ -106,6 +109,7 @@ const runFallback = async (
       temperature: cfl.convertTemperature(numberValue(values.temperature), values.fromUnit, values.toUnit),
       area: cfl.convertArea(numberValue(values.area), values.fromUnit, values.toUnit),
       dataSize: cfl.convertDataSize(numberValue(values.value), values.fromUnit, values.toUnit),
+      volume: cfl.convertVolume(numberValue(values.value), values.fromUnit, values.toUnit),
       speed: cfl.convertSpeed(numberValue(values.value), values.fromUnit, values.toUnit),
       pressure: cfl.convertPressure(numberValue(values.value), values.fromUnit, values.toUnit),
       angle: cfl.convertAngle(numberValue(values.value), values.fromUnit, values.toUnit),
@@ -118,7 +122,7 @@ const runFallback = async (
       length: "convertedLength", weight: "convertedWeight", temperature: "convertedTemperature",
       area: "convertedArea", dataSize: "convertedDataSize", speed: "convertedSpeed",
       numberBase: "convertedNumber", duration: "convertedDuration", timestamp: "convertedTimestamp",
-      color: "convertedColor", pressure: "convertedPressure", angle: "convertedAngle",
+      color: "convertedColor", pressure: "convertedPressure", angle: "convertedAngle", volume: "convertedVolume",
     };
     return { [resultKeys[tool]]: converters[tool] };
   }

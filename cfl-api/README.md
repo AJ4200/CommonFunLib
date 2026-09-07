@@ -6,6 +6,11 @@ HMAC signing.
 
 It can also run the same utilities as an Express API.
 
+## Version 1.0.6
+
+This release adds Gregorian leap-year checks, bounded random ISO dates, volume
+conversion, and SHA3-384 hashing across the API and npm package.
+
 ## Version 1.0.5
 
 This release expands the computing toolkit with Fibonacci, average, median,
@@ -41,10 +46,13 @@ import {
   slugify,
   slugifyLink,
   isValidEmail,
+  isLeapYear,
   truncate,
   generateApiKey,
+  generateRandomDate,
+  convertVolume,
   convertNumberBase,
-  sha3_256,
+  sha3_384,
 } from "commonfunlib";
 
 console.log(isEven(42));
@@ -55,7 +63,11 @@ console.log(generateApiKey("cfl", 24));
 console.log(convertNumberBase("255", 10, 16));
 console.log(sha3_256("CommonFunLib"));
 console.log(isValidEmail("dev@example.com"));
+console.log(isLeapYear(2024));
 console.log(truncate("A long release note", 10));
+console.log(generateRandomDate("2020-01-01", "2030-01-01"));
+console.log(convertVolume(1, "l", "cup"));
+console.log(sha3_384("CommonFunLib"));
 ```
 
 Grouped helpers are also available:
