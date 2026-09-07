@@ -188,7 +188,7 @@ const NavSection: React.FC<NavSectionProps> = ({
             </div>
             <div className="mt-6 flex items-center gap-3 text-xs font-black uppercase tracking-[0.22em] opacity-65">
               <span className="splash-progress" />
-              Opening workspace
+              Loading tool
             </div>
           </div>
         </div>

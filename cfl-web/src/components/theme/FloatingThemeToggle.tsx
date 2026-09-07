@@ -222,9 +222,9 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
               </CardContent>
               <CardFooter className="min-h-14 border-t-2 border-[var(--secondary)] bg-black/10">
                 {loading ? (
-                  <a className="flex items-center space-x-2 font-semibold">
+                  <div className="flex items-center space-x-2 font-semibold">
                     <UniversalLoader label="Applying theme" size="sm" />
-                  </a>
+                  </div>
                 ) : null}
               </CardFooter>
             </Card>
