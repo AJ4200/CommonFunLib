@@ -22,6 +22,13 @@ const toolStats = [
   { icon: <FaLock />, label: `${hashingTools.length} text tools`, detail: "hashing, Base64, and HMAC signing helpers", accent: "Secure" },
 ];
 
+const catalogSections = [
+  { label: "Functions", tools: commonTools.map((tool) => tool.label) },
+  { label: "Generators", tools: generatorTools.map((tool) => tool.label) },
+  { label: "Converters", tools: converterTools.map((tool) => tool.label) },
+  { label: "Hashing", tools: hashingTools.map((tool) => tool.label) },
+];
+
 const apiRoutes = ["/common/:tool", "/generate/:tool", "/convert/:tool", "/hash/:tool"];
 const installCommand = "npm install commonfunlib";
 const importExample = `import { isEven, generatePassword, convertLength, sha256 } from "commonfunlib";
@@ -103,6 +110,26 @@ const MainPage = () => (
     </section>
 
     <RandomizerShowcase />
+
+    <section className="mx-auto mt-4 max-w-6xl min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:mt-6 sm:p-6">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.2em] opacity-70">Full catalog</p>
+          <h2 className="brand-type text-2xl font-black sm:text-3xl">Every category, in one view</h2>
+        </div>
+        <span className="rounded-full border border-[var(--secondary)] px-3 py-1 text-xs font-black uppercase">{commonTools.length + generatorTools.length + converterTools.length + hashingTools.length} tools</span>
+      </div>
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {catalogSections.map((section) => (
+          <div key={section.label} className="tool-card min-w-0 rounded-xl border border-[var(--secondary)] p-3">
+            <h3 className="mb-3 text-sm font-black uppercase">{section.label}</h3>
+            <div className="flex max-h-40 flex-wrap content-start gap-1.5 overflow-y-auto app-scroll">
+              {section.tools.map((tool) => <span key={tool} className="splash-chip">{tool}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
 
     <section className="mx-auto mt-4 grid max-w-6xl min-w-0 gap-4 sm:mt-6 xl:grid-cols-[0.75fr_1fr_1fr]">
       <div className="tool-card min-w-0 rounded-2xl border border-[var(--secondary)] p-4 sm:p-6">

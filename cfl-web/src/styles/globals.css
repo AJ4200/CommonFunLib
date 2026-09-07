@@ -204,9 +204,177 @@ main {
   font-family: var(--font-mono), ui-monospace, monospace;
 }
 
+.file-dropzone {
+  position: relative;
+  display: flex;
+  min-height: 8.5rem;
+  align-items: center;
+  gap: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px dashed color-mix(in srgb, var(--secondary) 82%, transparent);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--secondary) 18%, transparent), transparent 55%),
+    color-mix(in srgb, var(--primary) 38%, transparent);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.file-dropzone::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.28;
+  background: repeating-linear-gradient(135deg, transparent 0 12px, var(--secondary) 12px 13px);
+  mask-image: linear-gradient(90deg, black, transparent 72%);
+  pointer-events: none;
+}
+
+.file-dropzone:hover,
+.file-dropzone:focus-within {
+  border-style: solid;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--secondary) 28%, transparent), transparent 62%),
+    color-mix(in srgb, var(--primary) 46%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 18%, transparent), 0 16px 34px rgba(0, 0, 0, 0.16);
+  transform: translateY(-2px);
+}
+
+.file-dropzone--ready {
+  border-style: solid;
+  border-color: color-mix(in srgb, #34d399 78%, var(--secondary));
+}
+
+.file-dropzone__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.file-dropzone__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--secondary);
+  border-radius: 0.8rem;
+  color: var(--primary);
+  background: var(--secondary);
+  font-size: 1.6rem;
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--secondary) 28%, transparent);
+}
+
 .icon-shadow {
   filter: drop-shadow(2px 2px var(--primary));
 }
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: auto;
+  color: var(--foreground);
+  background-color: var(--background);
+  background-image: var(--background-image);
+  transition: opacity 350ms ease, transform 350ms ease;
+}
+
+.splash-screen--closing {
+  opacity: 0;
+  transform: scale(1.025);
+  pointer-events: none;
+}
+
+.splash-screen__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image: repeating-linear-gradient(0deg, transparent 0 3px, currentColor 3px 4px);
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+  pointer-events: none;
+}
+
+.splash-category {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 78%, transparent);
+  border-radius: 0.75rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)), var(--panel);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 14px 30px rgba(0, 0, 0, 0.14);
+  animation: splash-rise 600ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+.splash-category__icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 0.65rem;
+  color: var(--primary);
+  background: var(--secondary);
+  font-size: 1.2rem;
+}
+
+.splash-chip {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid color-mix(in srgb, var(--secondary) 48%, transparent);
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.splash-progress {
+  display: inline-block;
+  width: 4.5rem;
+  height: 0.25rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 28%, transparent);
+}
+
+.splash-progress::after {
+  display: block;
+  width: 45%;
+  height: 100%;
+  content: "";
+  border-radius: inherit;
+  background: var(--secondary);
+  animation: splash-progress 1.5s ease-in-out infinite;
+}
+
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splash-progress {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(300%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen,
+  .splash-category,
+  .splash-progress::after {
+    animation: none;
+    transition: none;
+  }
+}
+
 .theme-shadow {
   text-shadow:
     0 2px 0 color-mix(in srgb, var(--secondary) 70%, transparent),

@@ -9,10 +9,12 @@ import { getTheme } from "@/lib/themes";
 import { applyTheme, getStoredTheme } from "@/components/theme/ThemeManager";
 import { applyFont, getCurrentFont } from "@/components/font/FontManager";
 import MainPage from "@/components/nasec/MainPage";
+import SplashScreen from "@/components/SplashScreen";
 
 export default function Homepage() {
   const [activeIconContent, setActiveIconContent] =
     useState<React.ReactNode | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const theme = getTheme(getStoredTheme() ?? "Classic");
@@ -21,7 +23,9 @@ export default function Homepage() {
   }, []);
 
   return (
-    <main
+    <>
+      {showSplash ? <SplashScreen onDone={() => setShowSplash(false)} /> : null}
+      <main
       style={{
         backgroundColor: "var(--background)",
         backgroundImage: "var(--background-image)",
@@ -34,6 +38,7 @@ export default function Homepage() {
         <Main>{activeIconContent ? activeIconContent : <MainPage />}</Main>
       </div>
       <Footer />
-    </main>
+      </main>
+    </>
   );
 }

@@ -3,8 +3,10 @@ import {
   FaBolt,
   FaCheckCircle,
   FaCopy,
+  FaCloudUploadAlt,
   FaDice,
   FaEraser,
+  FaFileAlt,
   FaFileCode,
   FaLayerGroup,
   FaPlay,
@@ -13,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { UtilityTool } from "@/models/Tool";
 import { buildCurlCommand } from "@/lib/utilityTools";
-import { requestTool, ToolValues } from "@/lib/toolRequest";
+import { MAX_UPLOAD_BYTES, requestTool, ToolValues } from "@/lib/toolRequest";
 import OperationLoader from "@/components/ui/OperationLoader";
 
 interface ToolPlaygroundProps {
@@ -27,6 +29,9 @@ const formatResult = (value: unknown) =>
   typeof value === "string" || typeof value === "number" || typeof value === "boolean"
     ? String(value)
     : JSON.stringify(value, null, 2);
+
+const asFile = (value: string | File | undefined) =>
+  typeof File !== "undefined" && value instanceof File ? value : null;
 
 const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
   const [selectedValue, setSelectedValue] = useState(tools[0]?.value ?? "");
@@ -46,6 +51,17 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
   const [usedFallback, setUsedFallback] = useState(false);
 
   const values = valuesByTool[selectedTool.value] ?? buildInitialValues(selectedTool);
+
+  const acceptFile = (fieldName: string, file?: File) => {
+    if (file && file.size > MAX_UPLOAD_BYTES) {
+      setError("This file is larger than 5 MB. Choose a smaller file for SteganoPass.");
+      updateValue(fieldName, "");
+      return;
+    }
+
+    setError("");
+    updateValue(fieldName, file ?? "");
+  };
 
   const updateValue = (name: string, value: string | File) => {
     setValuesByTool((current) => ({
@@ -221,6 +237,39 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
                 </div>
               ) : (
                 selectedTool.fields.map((field) => (
+                  field.type === "file" ? (
+                    <div key={field.name} className="field-label sm:col-span-2">
+                      <span>{field.label}</span>
+                      <label
+                        className={`file-dropzone ${asFile(values[field.name]) ? "file-dropzone--ready" : ""}`}
+                        onDragOver={(event) => event.preventDefault()}
+                        onDrop={(event) => {
+                          event.preventDefault();
+                          acceptFile(field.name, event.dataTransfer.files[0]);
+                        }}
+                      >
+                        <input
+                          type="file"
+                          className="file-dropzone__input"
+                          onChange={(event) => acceptFile(field.name, event.target.files?.[0])}
+                        />
+                        <span className="file-dropzone__icon">
+                          {asFile(values[field.name]) ? <FaCheckCircle /> : <FaCloudUploadAlt />}
+                        </span>
+                        <span className="min-w-0">
+                          <strong className="block truncate text-base font-black">
+                            {asFile(values[field.name])?.name ?? "Drop your file here"}
+                          </strong>
+                          <span className="mt-1 block text-xs font-bold opacity-75">
+                            {asFile(values[field.name])
+                              ? `${((asFile(values[field.name]) as File).size / 1024 / 1024).toFixed(2)} MB ready to transform`
+                              : "or click to browse · any file · max 5 MB"}
+                          </span>
+                        </span>
+                        <FaFileAlt className="ml-auto shrink-0 text-lg opacity-50" />
+                      </label>
+                    </div>
+                  ) : (
                   <label key={field.name} className="field-label">
                     <span>{field.label}</span>
                     {field.options ? (
@@ -240,11 +289,19 @@ const ToolPlayground = ({ tools }: ToolPlaygroundProps) => {
                         type={field.type ?? "text"}
                         className="control-surface placeholder:text-current/45"
                         value={field.type === "file" ? undefined : String(values[field.name] ?? "")}
-                        onChange={(event) => updateValue(field.name, field.type === "file" ? event.target.files?.[0] ?? "" : event.target.value)}
+                        onChange={(event) => {
+                          if (field.type !== "file") {
+                            updateValue(field.name, event.target.value);
+                            return;
+                          }
+
+                          acceptFile(field.name, event.target.files?.[0]);
+                        }}
                         placeholder={field.placeholder}
                       />
                     )}
                   </label>
+                  )
                 ))
               )}
             </div>
