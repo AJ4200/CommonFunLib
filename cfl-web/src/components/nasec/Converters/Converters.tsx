@@ -27,6 +27,7 @@ const Converters = () => (
           "convertWeight",
           "convertArea",
           "convertDataSize",
+          "convertVolume",
           "convertSpeed",
           "convertTemperature",
           "convertLengthSystem",
@@ -41,6 +42,7 @@ const Converters = () => (
 
 convertLength(12, "m", "foot");
 convertNumberBase("255", 10, 16);
+convertVolume(1, "l", "cup");
 convert.timestamp("2026-06-28T12:00:00.000Z", "iso", "seconds");`}
         cjsExample={`const { convert, convertWeight } = require("commonfunlib");
 

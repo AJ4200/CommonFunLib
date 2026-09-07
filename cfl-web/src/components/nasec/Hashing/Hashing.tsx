@@ -27,6 +27,7 @@ const Hashing = () => (
           "sha384",
           "sha512",
           "sha3_256",
+          "sha3_384",
           "sha3_512",
           "base64Encode",
           "base64Decode",
@@ -43,6 +44,7 @@ const Hashing = () => (
         esmExample={`import { sha256, sha3_256, base64UrlEncode } from "commonfunlib";
 
 sha256("CommonFunLib");
+sha3_384("CommonFunLib");
 sha3_256("CommonFunLib");
 base64UrlEncode("hello world");`}
         cjsExample={`const { hash, sha512 } = require("commonfunlib");

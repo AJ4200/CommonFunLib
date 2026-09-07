@@ -30,11 +30,12 @@ const CommonFunctions: React.FC<CommonFunctionsProps> = ({ ...props }) => {
             title="Use common functions locally"
             description="Install the package when your app needs number checks, string helpers, or small calculations without making HTTP calls."
             helpers={commonTools.map((tool) => `common.${tool.value}`)}
-            esmExample={`import { isEven, fibonacci, average, common } from "commonfunlib";
+            esmExample={`import { isEven, fibonacci, average, isLeapYear, common } from "commonfunlib";
 
 isEven(42);
 fibonacci(8);
 average("4,8,15,16,23,42");
+isLeapYear(2024);
 common.titleCase("common fun lib");`}
             cjsExample={`const { common, isPrime } = require("commonfunlib");
 

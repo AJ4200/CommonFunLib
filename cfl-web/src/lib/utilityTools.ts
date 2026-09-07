@@ -157,6 +157,18 @@ export const generatorTools: UtilityTool[] = [
     resultKey: "timestamp",
   },
   {
+    value: "randomDate",
+    label: "Random Date",
+    description: "Generate a random ISO date between two optional bounds.",
+    method: "GET",
+    endpoint: "/generate/randomDate",
+    fields: [
+      { name: "start", label: "Start date", placeholder: "2020-01-01" },
+      { name: "end", label: "End date", placeholder: "2030-01-01" },
+    ],
+    resultKey: "randomDate",
+  },
+  {
     value: "username",
     label: "Username",
     description: "Generate a readable username from the bundled name banks.",
@@ -265,6 +277,19 @@ export const converterTools: UtilityTool[] = [
     resultKey: "convertedDataSize",
   },
   {
+    value: "volume",
+    label: "Volume",
+    description: "Convert cooking, liquid, and cubic volume units.",
+    method: "POST",
+    endpoint: "/convert/volume",
+    fields: [
+      { name: "value", label: "Value", placeholder: "1", type: "number" },
+      { name: "fromUnit", label: "From", placeholder: "l", options: ["ml", "l", "tsp", "tbsp", "cup", "pint", "quart", "gallon", "cubicMeter"] },
+      { name: "toUnit", label: "To", placeholder: "cup", options: ["ml", "l", "tsp", "tbsp", "cup", "pint", "quart", "gallon", "cubicMeter"] },
+    ],
+    resultKey: "convertedVolume",
+  },
+  {
     value: "speed",
     label: "Speed",
     description: "Convert m/s, km/h, mph, and knots.",
@@ -364,6 +389,7 @@ export const hashingTools: UtilityTool[] = [
   "sha384",
   "sha512",
   "sha3-256",
+  "sha3-384",
   "sha3-512",
 ].map((algorithm) => ({
   value: algorithm,

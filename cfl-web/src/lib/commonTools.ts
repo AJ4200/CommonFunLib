@@ -13,6 +13,7 @@ export const commonTools: CommonTool[] = [
   { value: "gcd", label: "GCD", description: "Greatest common divisor of two numbers.", inputs: [{ name: "a", label: "A", placeholder: "12", type: "number" }, { name: "b", label: "B", placeholder: "15", type: "number" }], resultKey: "gcd" },
   { value: "lcm", label: "LCM", description: "Least common multiple of two numbers.", inputs: [{ name: "a", label: "A", placeholder: "12", type: "number" }, { name: "b", label: "B", placeholder: "15", type: "number" }], resultKey: "lcm" },
   { value: "prime", label: "Is Prime", description: "Check whether a number is prime.", inputs: [{ name: "num", label: "Number", placeholder: "7", type: "number" }], resultKey: "isPrime" },
+  { value: "isLeapYear", label: "Leap Year", description: "Check whether a year is a Gregorian leap year.", inputs: [{ name: "year", label: "Year", placeholder: "2024", type: "number" }], resultKey: "isLeapYear" },
   { value: "reverse", label: "Reverse String", description: "Reverse any text value.", inputs: [{ name: "str", label: "Text", placeholder: "hello" }], resultKey: "reversedString" },
   { value: "palindrome", label: "Palindrome", description: "Detect a palindrome while ignoring punctuation.", inputs: [{ name: "str", label: "Text", placeholder: "Never odd or even" }], resultKey: "isPalindrome" },
   { value: "slugify", label: "Slugify", description: "Create a URL-safe slug from text.", inputs: [{ name: "str", label: "Text", placeholder: "My New Tool" }], resultKey: "slug" },

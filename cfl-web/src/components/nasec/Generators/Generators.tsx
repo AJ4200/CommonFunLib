@@ -36,6 +36,7 @@ const Generators = () => (
           "generateMacAddress",
           "generateSemver",
           "generate.timestamp",
+          "generateRandomDate",
           "generateUsername",
           "generateBoolean",
           "generateQrCode",
@@ -47,6 +48,7 @@ generateRandomName();
 generatePassword(16);
 generateNanoId(21);
 generate.apiKey("cfl", 24);`}
+        
         cjsExample={`const { generate, generatePin } = require("commonfunlib");
 
 generatePin(6);
