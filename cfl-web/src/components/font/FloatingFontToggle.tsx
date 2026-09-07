@@ -21,6 +21,7 @@ import {
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { FaFont, FaRandom, FaTimes } from "react-icons/fa";
 import UniversalLoader from "@/components/ui/UniversalLoader";
+import UniversalTooltip from "@/components/ui/UniversalTooltip";
 import FontButton from "./FontButton";
 
 interface FloatingFontToggleProps {}
@@ -148,12 +149,13 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
 
   return (
     <div className="relative" {...props}>
-      {notice ? (
-        <span className="pointer-events-none absolute bottom-[calc(100%+0.35rem)] left-1/2 z-20 max-w-32 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--secondary)] bg-[var(--background)] px-1.5 py-0.5 text-[0.62rem] font-black text-[var(--foreground)] shadow-lg">
-          {notice}
-        </span>
-      ) : null}
-      <Drawer
+      <UniversalTooltip
+        message={`Font: ${currentFont?.name ?? "Loading"}`}
+        notice={notice}
+        actionLabel="Shuffle"
+        onAction={handleRandomFont}
+      >
+        <Drawer
         open={open}
         onOpenChange={(nextOpen) => {
           setOpen(nextOpen);
@@ -174,7 +176,6 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
         <DrawerTrigger asChild>
           <button
             className="tool-card grid h-9 w-9 place-items-center rounded-lg border border-[var(--secondary)] text-[0.68rem] font-black transition-transform hover:-translate-y-0.5 active:scale-95"
-            title="Open font picker"
           >
             <span
               className="grid h-6 w-6 place-items-center rounded-md bg-cover bg-center leading-none"
@@ -245,7 +246,8 @@ const FloatingFontToggle: React.FC<FloatingFontToggleProps> = ({ ...props }) => 
             </Card>
           </div>
         </DrawerContent>
-      </Drawer>
+        </Drawer>
+      </UniversalTooltip>
     </div>
   );
 };

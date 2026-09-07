@@ -113,20 +113,20 @@ const Header: React.FC<HeaderProps> = ({ onOpenApiStatus, ...props }) => {
 
   return (
     <header
-      className="chrome-panel h-full w-full rounded-lg border-2 border-[var(--secondary)]"
+      className="chrome-panel h-full w-full overflow-hidden rounded-lg border-2 border-[var(--secondary)]"
       {...props}
     >
-      <div className="flex h-full items-center justify-between gap-3 px-3 sm:px-4">
+      <div className="flex h-full min-h-0 items-center justify-between gap-3 px-3 sm:px-4">
         <button
-          className="brand-type flex min-w-0 items-center text-left text-xl font-black theme-shadow transition hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--secondary)] sm:text-3xl"
+          className="brand-type flex h-full min-h-0 min-w-0 items-center text-left text-xl font-black theme-shadow transition hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--secondary)] sm:text-3xl"
           onClick={() => window.location.assign("/")}
           title="Return to CommonFunLib overview"
           type="button"
         >
-          <span className="flex shrink-0 flex-col items-center">
-            <Logo className="h-11 w-11 sm:h-16 sm:w-16" />
-            <span className="mt-0.5 text-[0.55rem] font-black uppercase tracking-[0.08em] opacity-75 sm:text-[0.65rem]">
-              API v{apiVersion ?? "--"}
+          <span className="flex max-h-full shrink-0 flex-col items-center justify-center">
+            <Logo className="h-9 w-9 sm:h-12 sm:w-12" />
+            <span className="mt-0.5 leading-none text-[0.55rem] font-black tracking-[0.08em] opacity-75 sm:text-[0.65rem]">
+              v{apiVersion ?? "--"}
             </span>
           </span>
           <span className="truncate">CommonFunLib</span>

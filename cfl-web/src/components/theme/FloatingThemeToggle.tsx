@@ -19,6 +19,7 @@ import {
 } from "./ThemeManager";
 import { FaRandom, FaTimes } from "react-icons/fa";
 import UniversalLoader from "@/components/ui/UniversalLoader";
+import UniversalTooltip from "@/components/ui/UniversalTooltip";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "../ui/drawer";
 
 interface FloatingThemeToggleProps {}
@@ -132,12 +133,13 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
 
   return (
     <div className="relative" {...props}>
-      {notice ? (
-        <span className="pointer-events-none absolute bottom-[calc(100%+0.35rem)] left-1/2 z-20 max-w-36 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--secondary)] bg-[var(--background)] px-1.5 py-0.5 text-[0.62rem] font-black text-[var(--foreground)] shadow-lg">
-          {notice}
-        </span>
-      ) : null}
-      <Drawer
+      <UniversalTooltip
+        message={`Theme: ${currentTheme?.name ?? "Loading"}`}
+        notice={notice}
+        actionLabel="Shuffle"
+        onAction={handleRandomTheme}
+      >
+        <Drawer
         open={open}
         onOpenChange={(nextOpen) => {
           setOpen(nextOpen);
@@ -159,7 +161,6 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
         <DrawerTrigger asChild>
           <button
             className="tool-card grid h-11 w-11 place-items-center rounded-lg border border-[var(--secondary)] transition-transform hover:-translate-y-0.5 active:scale-95"
-            title="Open theme picker"
           >
           <RiPaletteFill
             className="h-8 w-8 rounded-md p-1"
@@ -230,7 +231,8 @@ const FloatingThemeToggle: React.FC<FloatingThemeToggleProps> = ({
             </Card>
           </div>
         </DrawerContent>
-      </Drawer>
+        </Drawer>
+      </UniversalTooltip>
     </div>
   );
 };

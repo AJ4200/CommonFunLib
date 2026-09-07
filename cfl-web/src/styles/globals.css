@@ -510,6 +510,8 @@ main {
 .custome-scroll::-webkit-scrollbar {
   width: 14px;
   height: 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 72%, transparent);
 }
 
 .app-scroll::-webkit-scrollbar-track,
@@ -538,7 +540,8 @@ main {
 
 .app-scroll::-webkit-scrollbar-corner,
 .custome-scroll::-webkit-scrollbar-corner {
-  background: transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 72%, transparent);
 }
 
 .app-scroll::-webkit-scrollbar-button:single-button,
