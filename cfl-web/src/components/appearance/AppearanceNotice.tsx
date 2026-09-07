@@ -3,10 +3,12 @@ import Font from "@/models/Font";
 import Theme from "@/models/Theme";
 import { fontChangedEvent } from "@/components/font/FontManager";
 import { themeChangedEvent } from "@/components/theme/ThemeManager";
+import { FaFont, FaMagic, FaPalette } from "react-icons/fa";
 
 const AppearanceNotice: React.FC = () => {
   const [themeName, setThemeName] = useState<string | null>(null);
   const [fontName, setFontName] = useState<string | null>(null);
+  const [activeTheme, setActiveTheme] = useState<Theme | null>(null);
   const [visible, setVisible] = useState(false);
   const readyRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,6 +36,7 @@ const AppearanceNotice: React.FC = () => {
       const nextTheme = (event as CustomEvent<Theme>).detail;
       if (!nextTheme) return;
       setThemeName(nextTheme.name);
+      setActiveTheme(nextTheme);
       showNotice();
     };
 
@@ -58,10 +61,40 @@ const AppearanceNotice: React.FC = () => {
   if (!visible) return null;
 
   return (
-    <div className="pointer-events-none fixed bottom-[4.25rem] left-1/2 z-[1100] -translate-x-1/2 rounded-xl border-2 border-[var(--secondary)] bg-[var(--background)] px-4 py-2 text-center text-xs font-black text-[var(--foreground)] shadow-2xl sm:bottom-[5rem] sm:px-5 sm:py-2.5 sm:text-sm">
-      {themeName ? `Theme: ${themeName}` : null}
-      {themeName && fontName ? " · " : null}
-      {fontName ? `Font: ${fontName}` : null}
+    <div className="appearance-notice pointer-events-none fixed bottom-[4.15rem] left-1/2 z-[1100] w-[min(92vw,25rem)] -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-[var(--secondary)] text-[var(--foreground)] shadow-2xl sm:bottom-[4.9rem]">
+      <div
+        className="absolute inset-0 opacity-80"
+        style={{
+          backgroundColor: activeTheme?.background ?? "var(--background)",
+          backgroundImage: activeTheme?.background_pattern,
+          backgroundSize: "cover",
+        }}
+      />
+      <div className="relative bg-black/15 px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3">
+        <div className="flex items-center justify-between gap-3 border-b border-current/20 pb-2">
+          <div className="flex items-center gap-2 text-[0.65rem] font-black uppercase tracking-[0.2em] opacity-75">
+            <FaMagic className="text-[var(--secondary)]" />
+            Appearance tuned
+          </div>
+          <span className="h-2 w-2 rounded-full bg-[var(--secondary)] shadow-[0_0_12px_var(--secondary)]" />
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <div className="appearance-notice__item">
+            <FaPalette className="text-[var(--secondary)]" />
+            <span>
+              <small>Theme</small>
+              <strong>{themeName ?? "Current"}</strong>
+            </span>
+          </div>
+          <div className="appearance-notice__item">
+            <FaFont className="text-[var(--secondary)]" />
+            <span>
+              <small>Font</small>
+              <strong>{fontName ?? "Current"}</strong>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

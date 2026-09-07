@@ -69,6 +69,18 @@ export const fontNames = [
   "Trade Winds",
   "Wallpoet",
   "Zilla Slab Highlight",
+  "Abril Fatface",
+  "Alata",
+  "Arvo",
+  "Bitter",
+  "IBM Plex Mono",
+  "Lora",
+  "Manrope",
+  "Montserrat",
+  "Oswald",
+  "Quicksand",
+  "Roboto Slab",
+  "Sora",
 ] as const;
 
 const fonts: Record<string, Font> = {
@@ -548,6 +560,18 @@ const fonts: Record<string, Font> = {
     vibe: "Highlighted slab display.",
     sample: "Mark the result important.",
   },
+  "Abril Fatface": { name: "Abril Fatface", cssVariable: "--font-abril-fatface", fallback: "Georgia, serif", vibe: "High-contrast editorial drama.", sample: "A bold title for precise tools." },
+  Alata: { name: "Alata", cssVariable: "--font-alata", fallback: "sans-serif", vibe: "Clean geometric studio voice.", sample: "Simple inputs, useful outputs." },
+  Arvo: { name: "Arvo", cssVariable: "--font-arvo", fallback: "Georgia, serif", vibe: "Sturdy slab-serif documentation.", sample: "Reliable functions, solid results." },
+  Bitter: { name: "Bitter", cssVariable: "--font-bitter", fallback: "Georgia, serif", vibe: "Warm technical editorial texture.", sample: "Read the response carefully." },
+  "IBM Plex Mono": { name: "IBM Plex Mono", cssVariable: "--font-ibm-plex-mono", fallback: "monospace", vibe: "Sharp engineering console.", sample: "const result = ready;" },
+  Lora: { name: "Lora", cssVariable: "--font-lora", fallback: "Georgia, serif", vibe: "Literary notes for practical code.", sample: "Every helper tells a story." },
+  Manrope: { name: "Manrope", cssVariable: "--font-manrope", fallback: "sans-serif", vibe: "Polished modern product UI.", sample: "Build a calmer workflow." },
+  Montserrat: { name: "Montserrat", cssVariable: "--font-montserrat", fallback: "Arial, sans-serif", vibe: "Confident geometric signage.", sample: "TOOLS THAT SHOW UP." },
+  Oswald: { name: "Oswald", cssVariable: "--font-oswald", fallback: "Impact, sans-serif", vibe: "Tall condensed utility labels.", sample: "RUN THE CONVERSION." },
+  Quicksand: { name: "Quicksand", cssVariable: "--font-quicksand", fallback: "sans-serif", vibe: "Soft rounded interface clarity.", sample: "Friendly tools, no fuss." },
+  "Roboto Slab": { name: "Roboto Slab", cssVariable: "--font-roboto-slab", fallback: "Georgia, serif", vibe: "Practical slab documentation.", sample: "Measure twice, convert once." },
+  Sora: { name: "Sora", cssVariable: "--font-sora", fallback: "sans-serif", vibe: "Crisp contemporary control room.", sample: "Ship a better utility." },
 };
 
 export const getFont = (fontName: string): Font => fonts[fontName] || fonts.Nunito;

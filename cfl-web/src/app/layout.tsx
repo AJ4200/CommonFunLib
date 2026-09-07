@@ -72,6 +72,18 @@ import {
   VT323,
   Wallpoet,
   Zilla_Slab_Highlight,
+  Abril_Fatface,
+  Alata,
+  Arvo,
+  Bitter,
+  IBM_Plex_Mono,
+  Lora,
+  Manrope,
+  Montserrat,
+  Oswald,
+  Quicksand,
+  Roboto_Slab,
+  Sora,
 } from "next/font/google";
 
 const nunito = Nunito({
@@ -555,6 +567,19 @@ const zillaSlabHighlight = Zilla_Slab_Highlight({
   display: "swap",
 });
 
+const abrilFatface = Abril_Fatface({ subsets: ["latin"], variable: "--font-abril-fatface", weight: "400", display: "swap" });
+const alata = Alata({ subsets: ["latin"], variable: "--font-alata", weight: "400", display: "swap" });
+const arvo = Arvo({ subsets: ["latin"], variable: "--font-arvo", weight: ["400", "700"], display: "swap" });
+const bitter = Bitter({ subsets: ["latin"], variable: "--font-bitter", weight: ["400", "700", "900"], display: "swap" });
+const ibmPlexMono = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-ibm-plex-mono", weight: ["400", "600", "700"], display: "swap" });
+const lora = Lora({ subsets: ["latin"], variable: "--font-lora", weight: ["400", "600", "700"], display: "swap" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", weight: ["400", "600", "700", "800"], display: "swap" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["400", "600", "700", "900"], display: "swap" });
+const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald", weight: ["400", "600", "700"], display: "swap" });
+const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-quicksand", weight: ["400", "500", "700"], display: "swap" });
+const robotoSlab = Roboto_Slab({ subsets: ["latin"], variable: "--font-roboto-slab", weight: ["400", "600", "700"], display: "swap" });
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora", weight: ["400", "600", "700", "800"], display: "swap" });
+
 export const metadata: Metadata = {
   title: "CommonFunLib",
   description: "Developer utility playground for CommonFunLib APIs.",
@@ -667,6 +692,18 @@ export default function RootLayout({
     tradeWinds.variable,
     wallpoet.variable,
     zillaSlabHighlight.variable,
+    abrilFatface.variable,
+    alata.variable,
+    arvo.variable,
+    bitter.variable,
+    ibmPlexMono.variable,
+    lora.variable,
+    manrope.variable,
+    montserrat.variable,
+    oswald.variable,
+    quicksand.variable,
+    robotoSlab.variable,
+    sora.variable,
   ].join(" ");
 
   return (
