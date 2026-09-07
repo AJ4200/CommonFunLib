@@ -162,6 +162,19 @@ class CommonFunctions {
     return `${value.slice(0, length - ending.length)}${ending}`;
   }
 
+  static isValidUrl(value) {
+    try {
+      const url = new URL(String(value).trim());
+      return url.protocol === "http:" || url.protocol === "https:";
+    } catch {
+      return false;
+    }
+  }
+
+  static characterCount(str) {
+    return Array.from(String(str)).length;
+  }
+
   static toNumberList(input) {
     const values = Array.isArray(input) ? input : String(input).split(",");
 

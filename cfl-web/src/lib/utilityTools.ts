@@ -166,6 +166,15 @@ export const generatorTools: UtilityTool[] = [
     resultKey: "username",
   },
   {
+    value: "boolean",
+    label: "Random Boolean",
+    description: "Generate a cryptographically random true or false value.",
+    method: "GET",
+    endpoint: "/generate/boolean",
+    fields: [],
+    resultKey: "boolean",
+  },
+  {
     value: "qrCode",
     label: "QR Code",
     description: "Generate a QR code data URL from text or a link.",
@@ -280,6 +289,19 @@ export const converterTools: UtilityTool[] = [
       { name: "toUnit", label: "To", placeholder: "psi", options: ["pa", "kpa", "bar", "psi", "atm"] },
     ],
     resultKey: "convertedPressure",
+  },
+  {
+    value: "angle",
+    label: "Angle",
+    description: "Convert degrees, radians, and gradians.",
+    method: "POST",
+    endpoint: "/convert/angle",
+    fields: [
+      { name: "value", label: "Value", placeholder: "180", type: "number" },
+      { name: "fromUnit", label: "From", placeholder: "deg", options: ["deg", "rad", "grad"] },
+      { name: "toUnit", label: "To", placeholder: "rad", options: ["deg", "rad", "grad"] },
+    ],
+    resultKey: "convertedAngle",
   },
   {
     value: "numberBase",
@@ -439,6 +461,24 @@ hashingTools.push(
     method: "POST",
     endpoint: "/hash/urlDecode",
     fields: [{ name: "input", label: "Encoded input", placeholder: "hello%20world%3F" }],
+    resultKey: "decodedValue",
+  },
+  {
+    value: "hexEncode",
+    label: "Hex Encode",
+    description: "Encode UTF-8 text as hexadecimal.",
+    method: "POST",
+    endpoint: "/hash/hexEncode",
+    fields: [{ name: "input", label: "Input", placeholder: "CommonFunLib" }],
+    resultKey: "encodedValue",
+  },
+  {
+    value: "hexDecode",
+    label: "Hex Decode",
+    description: "Decode hexadecimal text as UTF-8.",
+    method: "POST",
+    endpoint: "/hash/hexDecode",
+    fields: [{ name: "input", label: "Hex input", placeholder: "436f6d6d6f6e46756e4c6962" }],
     resultKey: "decodedValue",
   }
 );

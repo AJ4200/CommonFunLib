@@ -31,6 +31,8 @@ const runFallback = async (
       wordCount: cfl.wordCount(values.str ?? ""),
       isValidEmail: cfl.isValidEmail(values.email ?? ""),
       truncate: cfl.truncate(values.str ?? "", numberValue(values.maxLength), values.suffix),
+      isValidUrl: cfl.isValidUrl(values.url ?? ""),
+      characterCount: cfl.characterCount(values.str ?? ""),
     };
     const resultKeys: Record<string, string> = {
       even: "isEven", odd: "isOdd", factorial: "factorial", gcd: "gcd", lcm: "lcm",
@@ -38,6 +40,7 @@ const runFallback = async (
       slugifyLink: "slug", clamp: "clamped", percentage: "percentage", fibonacci: "fibonacci",
       average: "average", median: "median", titleCase: "titleCase", wordCount: "wordCount",
       isValidEmail: "isValidEmail", truncate: "truncated",
+      isValidUrl: "isValidUrl", characterCount: "characterCount",
     };
     return { [resultKeys[tool]]: commonResults[tool] };
   }
@@ -58,6 +61,7 @@ const runFallback = async (
       semver: cfl.generateSemver(numberValue(values.major)),
       timestamp: cfl.generateTimestamp(values.format as "iso" | "seconds" | "milliseconds"),
       username: cfl.generateUsername(),
+      boolean: cfl.generateBoolean(),
       qrCode: await cfl.generateQrCode(values.value, {
         width: numberValue(values.width),
         margin: numberValue(values.margin),
@@ -82,12 +86,16 @@ const runFallback = async (
       base64UrlDecode: cfl.base64UrlDecode(values.input ?? ""), checksum: cfl.checksum(values.input ?? ""),
       urlEncode: cfl.urlEncode(values.input ?? ""),
       urlDecode: cfl.urlDecode(values.input ?? ""),
+      hexEncode: cfl.hexEncode(values.input ?? ""),
+      hexDecode: cfl.hexDecode(values.input ?? ""),
     };
-    const resultKey = ["base64Encode", "base64UrlEncode"].includes(tool)
+    const resultKey = ["base64Encode", "base64UrlEncode", "hexEncode"].includes(tool)
       ? "encodedValue"
       : ["base64Decode", "base64UrlDecode"].includes(tool)
         ? "decodedValue"
-        : tool === "checksum" ? "checksum" : tool === "urlDecode" ? "decodedValue" : "hashedValue";
+        : ["urlDecode", "hexDecode"].includes(tool) ? "decodedValue"
+          : ["checksum"].includes(tool) ? "checksum"
+            : "hashedValue";
     return { [resultKey]: hashResults[tool] };
   }
 
@@ -100,6 +108,7 @@ const runFallback = async (
       dataSize: cfl.convertDataSize(numberValue(values.value), values.fromUnit, values.toUnit),
       speed: cfl.convertSpeed(numberValue(values.value), values.fromUnit, values.toUnit),
       pressure: cfl.convertPressure(numberValue(values.value), values.fromUnit, values.toUnit),
+      angle: cfl.convertAngle(numberValue(values.value), values.fromUnit, values.toUnit),
       numberBase: cfl.convertNumberBase(values.value, numberValue(values.fromBase), numberValue(values.toBase)),
       duration: cfl.convertDuration(numberValue(values.value), values.fromUnit, values.toUnit),
       timestamp: cfl.convertTimestamp(values.value, values.fromUnit, values.toUnit),
@@ -109,7 +118,7 @@ const runFallback = async (
       length: "convertedLength", weight: "convertedWeight", temperature: "convertedTemperature",
       area: "convertedArea", dataSize: "convertedDataSize", speed: "convertedSpeed",
       numberBase: "convertedNumber", duration: "convertedDuration", timestamp: "convertedTimestamp",
-      color: "convertedColor", pressure: "convertedPressure",
+      color: "convertedColor", pressure: "convertedPressure", angle: "convertedAngle",
     };
     return { [resultKeys[tool]]: converters[tool] };
   }

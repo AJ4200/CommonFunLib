@@ -52,6 +52,11 @@ router.post("/pressure", (req, res) => {
   res.json({ convertedPressure: converter.convertPressure(value, fromUnit, toUnit) });
 });
 
+router.post("/angle", (req, res) => {
+  const { value, fromUnit, toUnit } = req.body;
+  res.json({ convertedAngle: converter.convertAngle(value, fromUnit, toUnit) });
+});
+
 router.post("/temperature", (req, res) => {
   const { temperature, fromUnit, toUnit } = req.body;
   const convertedTemperature = converter.convertTemperature(

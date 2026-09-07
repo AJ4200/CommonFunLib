@@ -26,4 +26,6 @@ export const commonTools: CommonTool[] = [
   { value: "wordCount", label: "Word Count", description: "Count words in a text value.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib ships tiny utilities" }], resultKey: "wordCount" },
   { value: "isValidEmail", label: "Email Validator", description: "Check whether text looks like a valid email address.", inputs: [{ name: "email", label: "Email", placeholder: "dev@example.com" }], resultKey: "isValidEmail" },
   { value: "truncate", label: "Truncate", description: "Shorten text to a predictable maximum length.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib release notes" }, { name: "maxLength", label: "Max length", placeholder: "16", type: "number" }, { name: "suffix", label: "Suffix", placeholder: "..." }], resultKey: "truncated" },
+  { value: "isValidUrl", label: "URL Validator", description: "Check whether text is an HTTP or HTTPS URL.", inputs: [{ name: "url", label: "URL", placeholder: "https://example.com" }], resultKey: "isValidUrl" },
+  { value: "characterCount", label: "Character Count", description: "Count visible Unicode characters in text.", inputs: [{ name: "str", label: "Text", placeholder: "CommonFunLib" }], resultKey: "characterCount" },
 ];

@@ -90,4 +90,16 @@ router.post("/urlDecode", (req, res) => {
   }
 });
 
+router.post("/hexEncode", (req, res) => {
+  res.json({ encodedValue: Hashing.hexEncode(req.body.input) });
+});
+
+router.post("/hexDecode", (req, res) => {
+  try {
+    res.json({ decodedValue: Hashing.hexDecode(req.body.input) });
+  } catch {
+    res.status(400).json({ error: "Input is not valid hexadecimal." });
+  }
+});
+
 module.exports = router;

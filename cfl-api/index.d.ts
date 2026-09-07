@@ -19,6 +19,8 @@ export class CommonFunctions {
   static wordCount(str: unknown): number;
   static isValidEmail(email: unknown): boolean;
   static truncate(str: unknown, maxLength?: number, suffix?: string): string;
+  static isValidUrl(value: unknown): boolean;
+  static characterCount(str: unknown): number;
 }
 
 export class Generator {
@@ -40,6 +42,7 @@ export class Generator {
   generateSemver(major?: number): string;
   generateTimestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
   generateUsername(): string;
+  generateBoolean(): boolean;
   generateQrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
   generateSteganoPass(fileBuffer: Buffer, fileName?: string): {
     fileName: string;
@@ -69,6 +72,7 @@ export class Converter {
   convertTimestamp(value: string | number, fromUnit: string, toUnit: string): string | number | null;
   convertColor(value: string, fromFormat: string, toFormat: string): string | null;
   convertPressure(value: number, fromUnit: string, toUnit: string): string | null;
+  convertAngle(value: number, fromUnit: string, toUnit: string): string | null;
 }
 
 export class Hashing {
@@ -88,6 +92,8 @@ export class Hashing {
   static checksum(input: string): string;
   static urlEncode(input: string): string;
   static urlDecode(input: string): string;
+  static hexEncode(input: string): string;
+  static hexDecode(input: string): string;
 }
 
 export const common: {
@@ -111,6 +117,8 @@ export const common: {
   wordCount: typeof CommonFunctions.wordCount;
   isValidEmail: typeof CommonFunctions.isValidEmail;
   truncate: typeof CommonFunctions.truncate;
+  isValidUrl: typeof CommonFunctions.isValidUrl;
+  characterCount: typeof CommonFunctions.characterCount;
 };
 
 export const generate: {
@@ -130,6 +138,7 @@ export const generate: {
   semver(major?: number): string;
   timestamp(format?: "iso" | "seconds" | "milliseconds"): string | number;
   username(): string;
+  boolean(): boolean;
   qrCode(value: unknown, options?: { width?: number; margin?: number }): Promise<string>;
   steganopass(fileBuffer: Buffer, fileName?: string): ReturnType<Generator["generateSteganoPass"]>;
 };
@@ -149,6 +158,7 @@ export const convert: {
   timestamp(value: string | number, fromUnit: string, toUnit: string): string | number | null;
   color(value: string, fromFormat: string, toFormat: string): string | null;
   pressure(value: number, fromUnit: string, toUnit: string): string | null;
+  angle(value: number, fromUnit: string, toUnit: string): string | null;
 };
 
 export const hash: {
@@ -168,6 +178,8 @@ export const hash: {
   checksum: typeof Hashing.checksum;
   urlEncode: typeof Hashing.urlEncode;
   urlDecode: typeof Hashing.urlDecode;
+  hexEncode: typeof Hashing.hexEncode;
+  hexDecode: typeof Hashing.hexDecode;
 };
 
 export const isEven: typeof CommonFunctions.isEven;
@@ -190,6 +202,8 @@ export const titleCase: typeof CommonFunctions.titleCase;
 export const wordCount: typeof CommonFunctions.wordCount;
 export const isValidEmail: typeof CommonFunctions.isValidEmail;
 export const truncate: typeof CommonFunctions.truncate;
+export const isValidUrl: typeof CommonFunctions.isValidUrl;
+export const characterCount: typeof CommonFunctions.characterCount;
 
 export const generateRandomNumber: typeof generate.randomNumber;
 export const generateRandomName: typeof generate.randomName;
@@ -207,6 +221,7 @@ export const generateMacAddress: typeof generate.macAddress;
 export const generateSemver: typeof generate.semver;
 export const generateTimestamp: typeof generate.timestamp;
 export const generateUsername: typeof generate.username;
+export const generateBoolean: typeof generate.boolean;
 export const generateQrCode: typeof generate.qrCode;
 export const generateSteganoPass: typeof generate.steganopass;
 
@@ -224,6 +239,7 @@ export const convertDuration: typeof convert.duration;
 export const convertTimestamp: typeof convert.timestamp;
 export const convertColor: typeof convert.color;
 export const convertPressure: typeof convert.pressure;
+export const convertAngle: typeof convert.angle;
 
 export const md5: typeof Hashing.md5;
 export const sha1: typeof Hashing.sha1;
@@ -241,3 +257,5 @@ export const base64UrlDecode: typeof Hashing.base64UrlDecode;
 export const checksum: typeof Hashing.checksum;
 export const urlEncode: typeof Hashing.urlEncode;
 export const urlDecode: typeof Hashing.urlDecode;
+export const hexEncode: typeof Hashing.hexEncode;
+export const hexDecode: typeof Hashing.hexDecode;

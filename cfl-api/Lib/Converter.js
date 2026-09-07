@@ -146,6 +146,17 @@ class Converter {
     return ((value * units[fromUnit]) / units[toUnit]).toFixed(4);
   }
 
+  convertAngle(value, fromUnit, toUnit) {
+    const units = { deg: 1, rad: 180 / Math.PI, grad: 0.9 };
+
+    if (!Object.prototype.hasOwnProperty.call(units, fromUnit) || !Object.prototype.hasOwnProperty.call(units, toUnit)) {
+      console.error('Invalid angle unit specified.');
+      return null;
+    }
+
+    return ((value * units[fromUnit]) / units[toUnit]).toFixed(6);
+  }
+
   convertTemperature(temperature, fromUnit, toUnit) {
     let convertedTemperature;
 

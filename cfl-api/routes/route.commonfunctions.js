@@ -111,4 +111,12 @@ router.get("/truncate", (req, res) => {
   res.json({ truncated: CommonFunctions.truncate(req.query.str || "", req.query.maxLength, req.query.suffix) });
 });
 
+router.get("/isValidUrl", (req, res) => {
+  res.json({ isValidUrl: CommonFunctions.isValidUrl(req.query.url || "") });
+});
+
+router.get("/characterCount", (req, res) => {
+  res.json({ characterCount: CommonFunctions.characterCount(req.query.str || "") });
+});
+
 module.exports = router;

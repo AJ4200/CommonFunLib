@@ -71,6 +71,20 @@ class Hashing {
   static urlDecode(input) {
     return decodeURIComponent(String(input));
   }
+
+  static hexEncode(input) {
+    return Buffer.from(String(input), 'utf8').toString('hex');
+  }
+
+  static hexDecode(input) {
+    const value = String(input).trim();
+
+    if (!/^(?:[0-9a-fA-F]{2})*$/.test(value)) {
+      throw new Error('Input is not valid hexadecimal.');
+    }
+
+    return Buffer.from(value, 'hex').toString('utf8');
+  }
 }
 
 module.exports = Hashing;

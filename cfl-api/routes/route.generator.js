@@ -88,6 +88,10 @@ router.get("/username", (req, res) => {
   res.json({ username: generator.generateUsername() });
 });
 
+router.get("/boolean", (req, res) => {
+  res.json({ boolean: generator.generateBoolean() });
+});
+
 router.get("/qrCode", async (req, res) => {
   try {
     const qrCode = await generator.generateQrCode(req.query.value, {

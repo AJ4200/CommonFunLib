@@ -101,6 +101,10 @@ class Generator {
     return `${firstName}${lastName}${number}`.toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
+  generateBoolean() {
+    return crypto.randomInt(0, 2) === 1;
+  }
+
   async generateQrCode(value, options = {}) {
     const text = String(value ?? '').trim();
 
