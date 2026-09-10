@@ -39,7 +39,7 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
     closeTimerRef.current = setTimeout(() => {
       setHovered(false);
       closeTimerRef.current = null;
-    }, 1500);
+    }, 220);
   };
 
   return (
@@ -47,6 +47,7 @@ const UniversalTooltip: React.FC<UniversalTooltipProps> = ({
       className="relative"
       onFocus={handleEnter}
       onBlur={handleLeave}
+      onClick={() => setHovered(false)}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
