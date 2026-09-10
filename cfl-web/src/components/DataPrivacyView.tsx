@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaArrowLeft, FaCompress, FaDatabase, FaExpand, FaGithub, FaHeart, FaLock } from "react-icons/fa";
-import AppearanceShuffleButton from "@/components/appearance/AppearanceShuffleButton";
 import FloatingFontToggle from "@/components/font/FloatingFontToggle";
 import FloatingThemeToggle from "@/components/theme/FloatingThemeToggle";
 
@@ -62,10 +61,21 @@ const DataPrivacyView = ({ onBack }: DataPrivacyViewProps) => {
         <a className="flex items-center gap-2 text-xs font-black transition hover:-translate-y-0.5" href="https://github.com/AJ4200" target="_blank" rel="noreferrer" title="AJ4200 on GitHub">
           <span>Made with</span><FaHeart className="text-[var(--secondary)]" /><span>by</span><FaGithub className="text-[var(--secondary)]" /><span>AJ4200</span>
         </a>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <AppearanceShuffleButton />
-          <FloatingFontToggle />
-          <FloatingThemeToggle />
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2">
+            <div>
+              <p className="text-[0.6rem] font-black uppercase tracking-[0.14em] opacity-70">Typography</p>
+              <p className="text-xs font-black">Change font</p>
+            </div>
+            <FloatingFontToggle />
+          </div>
+          <div className="flex items-center gap-2 rounded-xl border border-[var(--secondary)] bg-black/10 px-3 py-2">
+            <div>
+              <p className="text-[0.6rem] font-black uppercase tracking-[0.14em] opacity-70">Appearance</p>
+              <p className="text-xs font-black">Change theme</p>
+            </div>
+            <FloatingThemeToggle />
+          </div>
         </div>
       </footer>
     </section>
