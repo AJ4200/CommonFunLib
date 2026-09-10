@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { FaArrowLeft, FaBolt, FaCircle, FaClock, FaCode, FaRedo, FaServer, FaWifi } from "react-icons/fa";
+import { createPortal } from "react-dom";
+import { FaArrowLeft, FaBolt, FaCircle, FaClock, FaCode, FaCompress, FaExpand, FaRedo, FaServer, FaWifi } from "react-icons/fa";
 import { API_BASE_URL } from "@/lib/apiConfig";
 
 type ApiStatus = {
@@ -26,6 +27,10 @@ const ApiStatusView = ({ onBack }: { onBack: () => void }) => {
   const [apiStatus, setApiStatus] = useState<ApiStatus>(initialStatus);
   const [lastChecked, setLastChecked] = useState<Date | null>(null);
   const [checking, setChecking] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   const checkStatus = useCallback(async () => {
     setChecking(true);
@@ -56,8 +61,17 @@ const ApiStatusView = ({ onBack }: { onBack: () => void }) => {
   const statusColor = healthy ? "text-emerald-300" : apiStatus.status === "checking" ? "text-[var(--secondary)]" : "text-red-300";
   const checkedLabel = lastChecked ? lastChecked.toLocaleTimeString() : "Waiting";
 
-  return (
-    <section className="api-status-view h-full overflow-y-auto p-3 custome-scroll sm:p-6">
+  const renderView = (expanded: boolean) => (
+    <section className={`api-status-view relative h-full overflow-y-auto p-3 custome-scroll sm:p-6 ${expanded ? "rounded-lg border-2 border-[var(--secondary)] shadow-2xl" : ""}`}>
+      <button
+        className="icon-action absolute right-3 top-3 z-20 sm:right-5 sm:top-5"
+        onClick={() => setFullscreen((current) => !current)}
+        title={expanded ? "Exit full view" : "Open full view"}
+        aria-label={expanded ? "Exit full view" : "Open full view"}
+        type="button"
+      >
+        {expanded ? <FaCompress /> : <FaExpand />}
+      </button>
       <div className="mx-auto max-w-6xl">
         <header className="mb-5 flex flex-wrap items-start justify-between gap-4">
           <div>
@@ -108,6 +122,12 @@ const ApiStatusView = ({ onBack }: { onBack: () => void }) => {
       </div>
     </section>
   );
+
+  if (fullscreen && mounted) {
+    return <>{renderView(false)}{createPortal(<div className="p-1.5 sm:p-2" style={{ inset: 0, position: "fixed", zIndex: 1000 }}>{renderView(true)}</div>, document.body)}</>;
+  }
+
+  return renderView(false);
 };
 
 export default ApiStatusView;

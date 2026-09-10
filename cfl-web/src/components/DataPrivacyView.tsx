@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaArrowLeft, FaCompress, FaDatabase, FaExpand, FaGithub, FaHeart, FaLock } from "react-icons/fa";
 import AppearanceShuffleButton from "@/components/appearance/AppearanceShuffleButton";
@@ -15,9 +15,7 @@ const DataPrivacyView = ({ onBack }: DataPrivacyViewProps) => {
   const [fullscreen, setFullscreen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  if (typeof window !== "undefined" && !mounted) {
-    setMounted(true);
-  }
+  useEffect(() => setMounted(true), []);
 
   const renderView = (expanded: boolean) => (
     <section className={`relative flex h-full flex-col overflow-hidden ${expanded ? "chrome-panel w-full rounded-lg border-2 border-[var(--secondary)] shadow-2xl" : "w-full"}`}>

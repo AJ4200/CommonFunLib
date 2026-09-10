@@ -1,6 +1,5 @@
 "use client";
 
-import AppearanceShuffleButton from "@/components/appearance/AppearanceShuffleButton";
 import AppearanceNotice from "@/components/appearance/AppearanceNotice";
 import PwaInstallButton from "@/components/pwa/PwaInstallButton";
 import React from "react";

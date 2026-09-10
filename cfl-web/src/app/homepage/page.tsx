@@ -11,11 +11,14 @@ import { applyFont, getCurrentFont } from "@/components/font/FontManager";
 import MainPage from "@/components/nasec/MainPage";
 import SplashScreen from "@/components/SplashScreen";
 import ApiStatusView from "@/components/ApiStatusView";
+import DataPrivacyView from "@/components/DataPrivacyView";
+
+type MainView = "overview" | "api" | "privacy";
 
 export default function Homepage() {
   const [activeIconContent, setActiveIconContent] =
     useState<React.ReactNode | null>(null);
-  const [showApiStatus, setShowApiStatus] = useState(false);
+  const [mainView, setMainView] = useState<MainView>("overview");
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -34,17 +37,19 @@ export default function Homepage() {
       }}
       className="app-shell grid h-dvh w-dvw grid-rows-[3.75rem_minmax(0,1fr)_3.25rem] gap-1.5 overflow-hidden p-1.5 sm:grid-rows-[4.5rem_minmax(0,1fr)_3.75rem] sm:gap-2 sm:p-2"
     >
-      <Header onOpenApiStatus={() => setShowApiStatus(true)} />
+      <Header onOpenApiStatus={() => setMainView("api")} />
       <div className="flex min-h-0 w-full gap-2 overflow-hidden">
         <IconNav
           setActiveIconContent={(content) => {
-            setShowApiStatus(false);
+            setMainView("overview");
             setActiveIconContent(content);
           }}
         />
-        <Main>{showApiStatus ? <ApiStatusView onBack={() => setShowApiStatus(false)} /> : activeIconContent ? activeIconContent : <MainPage />}</Main>
+        <Main>
+          {mainView === "api" ? <ApiStatusView onBack={() => setMainView("overview")} /> : mainView === "privacy" ? <DataPrivacyView onBack={() => setMainView("overview")} /> : activeIconContent ? activeIconContent : <MainPage />}
+        </Main>
       </div>
-      <Footer />
+      <Footer onOpenDataPrivacy={() => setMainView("privacy")} />
       </main>
     </>
   );
